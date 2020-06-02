@@ -13,6 +13,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var defaultMandelbrotView: MandelbrotView!
     @IBOutlet weak var zoomedMandelbrotImageView: NSImageView!
     
+    @IBOutlet weak var anotherMandelbrotView: AnotherMandelbrotView!
+    
     let sideLength = 300
     let rectScale: CGFloat = 1.0
     let blockiness: CGFloat = 1.0
@@ -32,10 +34,10 @@ class ViewController: NSViewController {
         
         let rect = CGRect(x: 0, y: 0, width: sideLength, height: sideLength)
         
-        //defaultMandelbrotDisplay = MandelbrotDisplay(sideLength: sideLength)
-        //mandelbrotDisplay?.setMandelbrotRect(realOrigin: -2.1, imaginrayOrigin: -1.5, realRange: 3.0, imaginaryRange: 3.0)
-        
-        defaultMandelbrotView = MandelbrotView(frame: rect)
+        defaultMandelbrotDisplay = MandelbrotDisplay(sideLength: sideLength)
+        defaultMandelbrotDisplay?.setMandelbrotRect(realOrigin: -2.1, imaginrayOrigin: -1.5, realRange: 3.0, imaginaryRange: 3.0)
+        anotherMandelbrotView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
+    
         
         print("Elapsed time: \(Date().timeIntervalSince(startTime)) seconds")
         

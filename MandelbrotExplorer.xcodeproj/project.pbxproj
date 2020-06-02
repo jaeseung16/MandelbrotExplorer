@@ -19,6 +19,7 @@
 		906DAE5B247C4C1200A1A47F /* MandelbrotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5A247C4C1200A1A47F /* MandelbrotView.swift */; };
 		906DAE5D247C4C3400A1A47F /* ComplexRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5C247C4C3400A1A47F /* ComplexRect.swift */; };
 		906DAE5F247C4C6000A1A47F /* Complex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5E247C4C6000A1A47F /* Complex.swift */; };
+		90B944462485C1A7005BDC10 /* AnotherMandelbrotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B944452485C1A7005BDC10 /* AnotherMandelbrotView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		906DAE5A247C4C1200A1A47F /* MandelbrotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotView.swift; sourceTree = "<group>"; };
 		906DAE5C247C4C3400A1A47F /* ComplexRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexRect.swift; sourceTree = "<group>"; };
 		906DAE5E247C4C6000A1A47F /* Complex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Complex.swift; sourceTree = "<group>"; };
+		90B944452485C1A7005BDC10 /* AnotherMandelbrotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnotherMandelbrotView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				906DAE5E247C4C6000A1A47F /* Complex.swift */,
 				901CD3F4248074D8005F1F9C /* PixelData.swift */,
 				9031FD482481D011006CCB38 /* MandelbrotDisplay.swift */,
+				90B944452485C1A7005BDC10 /* AnotherMandelbrotView.swift */,
 			);
 			path = MandelbrotExplorer;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				901CD3F5248074D8005F1F9C /* PixelData.swift in Sources */,
 				906DAE5F247C4C6000A1A47F /* Complex.swift in Sources */,
 				906DAE5D247C4C3400A1A47F /* ComplexRect.swift in Sources */,
+				90B944462485C1A7005BDC10 /* AnotherMandelbrotView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
