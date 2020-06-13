@@ -11,16 +11,16 @@ import MetalKit
 
 class ViewController: NSViewController {
 
-    @IBOutlet weak var defaultMandelbrotView: AnotherMandelbrotView!
+    @IBOutlet weak var defaultMandelbrotView: MandelbrotView!
+    @IBOutlet weak var mandelbrotView: AnotherMandelbrotView!
     
     @IBOutlet weak var zoomedMandelbrotImageView: NSImageView!
-    @IBOutlet weak var anotherMandelbrotView: MandelbrotView!
     @IBOutlet weak var mandelbrotMTKView: MTKView!
     
     let sideLength = 300
     let rectScale: CGFloat = 1.0
     let blockiness: CGFloat = 1.0
-    let mandelbrotRect = ComplexRect(Complex(-1.5, -0.5), Complex(-0.5, 0.5))
+    let defualtMandelbrotRect = ComplexRect(Complex(-1.5, -0.5), Complex(-0.5, 0.5))
     
     //var zs: [Complex]!
     var mandelbrotSet: MandelbrotSet?
@@ -35,14 +35,7 @@ class ViewController: NSViewController {
         // Do any additional setup after loading the view.
         let startTime = Date()
         
-        //let rect = CGRect(x: 0, y: 0, width: sideLength, height: sideLength)
-        
-        defaultMandelbrotDisplay = MandelbrotDisplay(sideLength: sideLength)
-        defaultMandelbrotDisplay?.setMandelbrotRect(realOrigin: -2.1, imaginrayOrigin: -1.5, realRange: 3.0, imaginaryRange: 3.0)
-        anotherMandelbrotView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
-    
-        
-        print("Elapsed time: \(Date().timeIntervalSince(startTime)) seconds")
+        displayDefaultMandelbrotSet()
         
         mandelbrotDisplay = MandelbrotDisplay(sideLength: sideLength)
         mandelbrotDisplay?.setMandelbrotRect(realOrigin: -1.5, imaginrayOrigin: -0.5, realRange: 1.0, imaginaryRange: 1.0)
@@ -73,6 +66,13 @@ class ViewController: NSViewController {
         didSet {
         // Update the view, if already loaded.
         }
+    }
+    
+    func displayDefaultMandelbrotSet() -> Void {
+        defaultMandelbrotDisplay = MandelbrotDisplay(sideLength: sideLength)
+        defaultMandelbrotDisplay?.setMandelbrotRect(realOrigin: -2.1, imaginrayOrigin: -1.5, realRange: 3.0, imaginaryRange: 3.0)
+        defaultMandelbrotDisplay?.generateMandelbrotSet()
+        defaultMandelbrotView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
     }
     
 }
