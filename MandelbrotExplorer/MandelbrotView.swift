@@ -120,7 +120,7 @@ class MandelbrotView: NSView {
         */
         
         guard let mandelbrotSet = mandelbrotSet else {
-            print("mandelbrotSet = \(self.mandelbrotSet)")
+            print("mandelbrotSet = \(String(describing: self.mandelbrotSet))")
             return
         }
         
