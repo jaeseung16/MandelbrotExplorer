@@ -718,7 +718,7 @@
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="ELy-Wl-H92" customClass="AnotherMandelbrotView" customModule="MandelbrotExplorer" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                             </customView>
-                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="YUr-uS-LRP">
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="YUr-uS-LRP" customClass="MTKView">
                                                 <rect key="frame" x="300" y="0.0" width="300" height="300"/>
                                             </customView>
                                         </subviews>
@@ -793,6 +793,7 @@
                     <connections>
                         <outlet property="anotherMandelbrotView" destination="ELy-Wl-H92" id="8kA-Ly-pma"/>
                         <outlet property="defaultMandelbrotView" destination="6QZ-Ee-1KT" id="Sne-G7-y1j"/>
+                        <outlet property="mandelbrotMTKView" destination="YUr-uS-LRP" id="c9F-wW-pGo"/>
                         <outlet property="zoomedMandelbrotImageView" destination="wdh-hS-1T6" id="rnU-qb-dRv"/>
                     </connections>
                 </viewController>
