@@ -11,10 +11,10 @@ import MetalKit
 
 class ViewController: NSViewController {
 
-    @IBOutlet weak var defaultMandelbrotView: MandelbrotView!
+    @IBOutlet weak var defaultMandelbrotView: AnotherMandelbrotView!
     
     @IBOutlet weak var zoomedMandelbrotImageView: NSImageView!
-    @IBOutlet weak var anotherMandelbrotView: AnotherMandelbrotView!
+    @IBOutlet weak var anotherMandelbrotView: MandelbrotView!
     @IBOutlet weak var mandelbrotMTKView: MTKView!
     
     let sideLength = 300
