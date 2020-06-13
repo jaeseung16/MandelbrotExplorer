@@ -7,13 +7,15 @@
 //
 
 import Cocoa
+import MetalKit
 
 class ViewController: NSViewController {
 
     @IBOutlet weak var defaultMandelbrotView: MandelbrotView!
-    @IBOutlet weak var zoomedMandelbrotImageView: NSImageView!
     
+    @IBOutlet weak var zoomedMandelbrotImageView: NSImageView!
     @IBOutlet weak var anotherMandelbrotView: AnotherMandelbrotView!
+    @IBOutlet weak var mandelbrotMTKView: MTKView!
     
     let sideLength = 300
     let rectScale: CGFloat = 1.0
@@ -25,6 +27,7 @@ class ViewController: NSViewController {
     
     var defaultMandelbrotDisplay: MandelbrotDisplay?
     var mandelbrotDisplay: MandelbrotDisplay?
+    var renderer: Renderer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +35,7 @@ class ViewController: NSViewController {
         // Do any additional setup after loading the view.
         let startTime = Date()
         
-        let rect = CGRect(x: 0, y: 0, width: sideLength, height: sideLength)
+        //let rect = CGRect(x: 0, y: 0, width: sideLength, height: sideLength)
         
         defaultMandelbrotDisplay = MandelbrotDisplay(sideLength: sideLength)
         defaultMandelbrotDisplay?.setMandelbrotRect(realOrigin: -2.1, imaginrayOrigin: -1.5, realRange: 3.0, imaginaryRange: 3.0)
@@ -47,6 +50,22 @@ class ViewController: NSViewController {
         zoomedMandelbrotImageView.image = mandelbrotDisplay?.mandelbrotImage
         
         print("Elapsed time: \(Date().timeIntervalSince(startTime)) seconds")
+        
+        renderer = Renderer(view: mandelbrotMTKView)
+        mandelbrotMTKView.device = Renderer.device
+        mandelbrotMTKView.delegate = renderer
+        
+        mandelbrotMTKView.clearColor = MTLClearColor(red: 1.0,
+                                             green: 1.0,
+                                             blue: 0.8,
+                                             alpha: 1.0)
+        
+        print("METAL Elapsed time: \(Date().timeIntervalSince(startTime)) seconds")
+        
+        //if (renderer?.mandelbrotImage != nil) {
+            //print("renderer?.mandelbrotImage = \(String(describing: renderer?.mandelbrotImage))")
+            zoomedMandelbrotImageView.image = renderer?.mandelbrotImage
+        //}
         
     }
 
