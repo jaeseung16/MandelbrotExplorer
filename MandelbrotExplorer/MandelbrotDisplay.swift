@@ -79,12 +79,8 @@ class MandelbrotDisplay {
             return
         }
         
-        for x in 0..<sideLength {
-            for y in 0..<sideLength {
-                let index = x * sideLength + y
-                let indexTransposed = y * sideLength + x
-                imgBytes[indexTransposed] = PixelData(a: UInt8(255), r: UInt8(0), g: UInt8(mandelbrotSet.values[index]), b: UInt8(0))
-            }
+        imgBytes = mandelbrotSet.values.map { (value) -> PixelData in
+            PixelData(a: UInt8(255), r: UInt8(0), g: UInt8(value), b: UInt8(0))
         }
         
         let imgData = NSData(bytes: &imgBytes, length: imgBytes.count * MemoryLayout<PixelData>.size)
