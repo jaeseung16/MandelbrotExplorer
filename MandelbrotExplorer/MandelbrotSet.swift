@@ -24,14 +24,9 @@ class MandelbrotSet {
     }
     
     func calculate() -> Void{
-        let start = Date()
-       
         for k in (0..<zs.count) {
             values[k] = mandelbrotFormula(z0: zs[k])
         }
-        
-        let duration = Date().timeIntervalSince(start)
-        print("Generating Mandelbrot values took \(duration) s")
     }
     
     func mandelbrotFormula(z0: Complex) -> Int {
