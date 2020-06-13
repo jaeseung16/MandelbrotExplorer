@@ -24,9 +24,9 @@ class MandelbrotSet {
     }
     
     func calculate() -> Void{
-        for k in (0..<zs.count) {
-            values[k] = mandelbrotFormula(z0: zs[k])
-        }
+        values = zs.map({ (z0) -> Int in
+            mandelbrotFormula(z0: z0)
+        })
     }
     
     func mandelbrotFormula(z0: Complex) -> Int {
