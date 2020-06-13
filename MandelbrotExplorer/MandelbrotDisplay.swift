@@ -26,38 +26,54 @@ class MandelbrotDisplay {
     
     init(sideLength: Int) {
         self.sideLength = sideLength + 1
+        let numberOfPixels = self.sideLength * self.sideLength
         
-        self.imgBytes = [PixelData](repeating: PixelData(a: 255, r: 0, g: 0, b: 0), count: self.sideLength * self.sideLength)
-        self.zs = [Complex](repeating: Complex(), count: self.sideLength * self.sideLength)
+        self.imgBytes = [PixelData](repeating: PixelData(a: 255, r: 0, g: 0, b: 0), count: numberOfPixels)
+        self.zs = [Complex](repeating: Complex(), count: numberOfPixels)
     }
     
     func setMandelbrotRect(realOrigin: Double, imaginrayOrigin: Double, realRange: Double, imaginaryRange: Double) {
         mandelbrotRect = ComplexRect(Complex(realOrigin, imaginrayOrigin), Complex(realOrigin + realRange, imaginrayOrigin + imaginaryRange))
-        
-        generateMandelbrotSet()
     }
     
     func generateMandelbrotSet() -> Void {
+        print("MandelbrotDisplay.generateMandelbrotSet() called for \(mandelbrotRect) with sideLength = \(sideLength)")
+        
+        let startTime = Date()
+        
+        let displaySize = CGSize(width: sideLength - 1, height: sideLength - 1)
         for x in 0..<sideLength {
             for y in 0..<sideLength {
-                zs[x * sideLength + y] = viewCoordinatesToComplexCoordinates(x: Double(x), y: Double(y), rect: CGRect(x: 0, y: 0, width: sideLength - 1, height: sideLength - 1))
+                zs[x * sideLength + y] = viewCoordinatesToComplexCoordinates(x: Double(x), y: Double(y), displaySize: displaySize)
             }
         }
         
+        let timeToPrepare = Date()
+        
         mandelbrotSet = MandelbrotSet(inZs: zs, inMaxIter: 50)
         
-        setImage()
+        let timeToCalculate = Date()
+        
+        setImage(for: mandelbrotSet)
+        
+        let timeToSetImage = Date()
+            
+        print("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToPrepare.timeIntervalSince(startTime)) seconds to populate inputs")
+        
+        print("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToCalculate.timeIntervalSince(timeToPrepare)) seconds to generate mandelbrotSet")
+            
+        print("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToSetImage.timeIntervalSince(timeToCalculate)) seconds")
     }
     
-    func viewCoordinatesToComplexCoordinates(x: Double, y: Double, rect: CGRect) -> Complex {
+    func viewCoordinatesToComplexCoordinates(x: Double, y: Double, displaySize: CGSize) -> Complex {
         let tl = mandelbrotRect.topLeft
         let br = mandelbrotRect.bottomRight
-        let r = tl.real + ( x / Double(rect.size.width) ) * (br.real - tl.real)
-        let i = tl.imaginary + ( y / Double(rect.size.height) ) * (br.imaginary - tl.imaginary)
+        let r = tl.real + ( x / Double(displaySize.width) ) * (br.real - tl.real)
+        let i = tl.imaginary + ( y / Double(displaySize.height) ) * (br.imaginary - tl.imaginary)
         return Complex(r, i)
     }
     
-    func setImage() -> Void {
+    func setImage(for mandelbrotSet: MandelbrotSet?) -> Void {
         guard let mandelbrotSet = self.mandelbrotSet else {
             print("self.mandelbrotSet is null")
             return
