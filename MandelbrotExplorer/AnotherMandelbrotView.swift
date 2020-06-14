@@ -36,7 +36,7 @@ class AnotherMandelbrotView: NSView {
             }
         }
         
-        mandelbrotSet = MandelbrotSet(inZs: zs, inMaxIter: 50)
+        mandelbrotSet = MandelbrotSetCPU(inZs: zs, inMaxIter: 50)
         print("init: = \(self)")
     }
     
