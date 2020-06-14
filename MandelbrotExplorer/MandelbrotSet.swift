@@ -8,43 +8,10 @@
 
 import Foundation
 
-class MandelbrotSet {
-    var zs: [Complex];
-    var values: [Int];
+protocol MandelbrotSet {
+    var zs: [Complex] { get set }
+    var values: [Int] { get set }
+    var maxIter: Int { get set }
     
-    var maxIter = 50;
-    
-    init(inZs: [Complex], inMaxIter: Int) {
-        zs = inZs
-        maxIter = inMaxIter
-            
-        values = [Int](repeating: 0, count: zs.count)
-
-        calculate()
-    }
-    
-    func calculate() -> Void{
-        values = zs.map({ (z0) -> Int in
-            mandelbrotFormula(z0: z0)
-        })
-    }
-    
-    func mandelbrotFormula(z0: Complex) -> Int {
-        var z = z0
-        var iter = 0;
-        while (iter < maxIter)
-        {
-            if (Complex.abs(lhs: z) > 2.0) {
-                break
-            }
-            z = z * z + z0
-            iter += 1
-        }
-
-        return (maxIter == iter) ? 0 : Int((Float(iter) / Float(maxIter) * 255.0))
-    }
-    
-    func toData() -> Data {
-        return Data()
-    }
+    func calculate() -> Void
 }
