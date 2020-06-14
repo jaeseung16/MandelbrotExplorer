@@ -50,7 +50,7 @@ class MandelbrotDisplay {
         
         let timeToPrepare = Date()
         
-        mandelbrotSet = MandelbrotSet(inZs: zs, inMaxIter: 50)
+        mandelbrotSet = MandelbrotSetCPU(inZs: zs, inMaxIter: 50)
         
         let timeToCalculate = Date()
         
