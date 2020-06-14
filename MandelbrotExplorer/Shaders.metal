@@ -129,7 +129,6 @@ kernel void mandelbrot(texture2d<float, access::read> inTexture [[ texture(0) ]]
     float4 z0 = inTexture.read(id);
     
     int iter = 0;
-    
     for (iter = 0; iter<200 && ((z_real * z_real + z_imag * z_imag) < 4); iter++)
     {
         float new_real = z_real * z_real - z_imag * z_imag + z0.x;
@@ -138,6 +137,7 @@ kernel void mandelbrot(texture2d<float, access::read> inTexture [[ texture(0) ]]
         z_real = new_real;
         z_imag = new_imag;
     }
-    
-    outTexture.write(float4(iter, 0, 0, 0), id);
+   
+    float value = (iter == 200) ? 0 : (float(iter) / 200.0 * 255.0);
+    outTexture.write(float4(value, 0, 0, 0), id);
 }
