@@ -11,6 +11,8 @@ import Cocoa
 class MandelbrotView: NSView {
     var selectRect = CGRect(x: 60, y: 100, width: 100, height: 100)
     var selectRectColor = NSColor.white
+    
+    var delegate: MandelbrotViewDelegate?
 
     var mandelbrotImage: NSImage? {
         didSet {
@@ -33,6 +35,7 @@ class MandelbrotView: NSView {
     override func mouseDragged(with event: NSEvent) {
         if (NSColor.yellow == selectRectColor) {
             selectRect.origin = CGPoint(x: selectRect.origin.x + event.deltaX, y: selectRect.origin.y - event.deltaY)
+            //delegate?.update(rect: selectRect)
             self.needsDisplay = true
         }
     }
@@ -51,6 +54,7 @@ class MandelbrotView: NSView {
     override func mouseUp(with event: NSEvent) {
         if (NSColor.yellow == selectRectColor) {
             selectRectColor = NSColor.white
+            delegate?.update(rect: selectRect)
             self.needsDisplay = true
         }
     }
