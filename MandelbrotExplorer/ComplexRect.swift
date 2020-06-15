@@ -14,15 +14,20 @@ struct ComplexRect: Equatable, CustomStringConvertible {
     private(set) var bottomLeft: Complex
     private(set) var topRight: Complex
     
+    var minReal: Double
+    var minImaginary: Double
+    var maxReal: Double
+    var maxImaginary: Double
+    
     init(_ c1: Complex, _ c2: Complex) {
-        let tlr = min(c1.real, c2.real)
-        let tli = max(c1.imaginary, c2.imaginary)
-        let brr = max(c1.real, c2.real)
-        let bri = min(c1.imaginary, c2.imaginary)
-        topLeft = Complex(tlr, tli)
-        bottomRight = Complex(brr, bri)
-        bottomLeft = Complex(tlr, bri)
-        topRight = Complex(brr, tli)
+        minReal = min(c1.real, c2.real)
+        maxImaginary = max(c1.imaginary, c2.imaginary)
+        maxReal = max(c1.real, c2.real)
+        minImaginary = min(c1.imaginary, c2.imaginary)
+        topLeft = Complex(minReal, maxImaginary)
+        bottomRight = Complex(maxReal, minImaginary)
+        bottomLeft = Complex(minReal, minImaginary)
+        topRight = Complex(maxReal, maxImaginary)
     }
     
     var description: String {
