@@ -23,16 +23,18 @@ struct Complex: Equatable, CustomStringConvertible {
     
     var description: String {
         get {
+            let realString = String(format: "%.2f", real)
+            let imaginaryString = String(format: "%.2f", fabs(imaginary))
             var result = ""
             switch (real, imaginary) {
             case _ where imaginary == 0:
-                result = "\(real)"
+                result = "\(realString)"
             case _ where real == 0:
-                result = "\(imaginary)𝒊"
+                result = "\(imaginaryString)𝒊"
             case _ where imaginary < 0:
-                result = "\(real) - \(-imaginary)𝒊"
+                result = "\(realString) - \(imaginaryString)𝒊"
             default:
-                result = "\(real) + \(imaginary)𝒊"
+                result = "\(realString) + \(imaginaryString)𝒊"
             }
             return result
         }
