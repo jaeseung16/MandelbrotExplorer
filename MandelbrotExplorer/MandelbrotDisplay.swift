@@ -44,13 +44,13 @@ class MandelbrotDisplay {
         let displaySize = CGSize(width: sideLength - 1, height: sideLength - 1)
         for x in 0..<sideLength {
             for y in 0..<sideLength {
-                zs[x * sideLength + y] = viewCoordinatesToComplexCoordinates(x: Double(x), y: Double(y), displaySize: displaySize)
+                zs[y * sideLength + x] = viewCoordinatesToComplexCoordinates(x: Double(x), y: Double(y), displaySize: displaySize)
             }
         }
         
         let timeToPrepare = Date()
         
-        mandelbrotSet = MandelbrotSetCPU(inZs: zs, inMaxIter: 50)
+        mandelbrotSet = MandelbrotSetGPU(inZs: zs, inMaxIter: 200)
         
         let timeToCalculate = Date()
         
