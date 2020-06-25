@@ -9,7 +9,7 @@
 import Cocoa
 
 class MandelbrotView: NSView {
-    var selectRect = CGRect(x: 60, y: 100, width: 100, height: 100)
+    var selectRect = CGRect(x: 70, y: 175, width: 32, height: 32)
     var selectRectColor = NSColor.white
     
     var delegate: MandelbrotViewDelegate?
