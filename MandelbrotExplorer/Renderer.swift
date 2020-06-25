@@ -222,12 +222,10 @@ class Renderer: NSObject {
                     }
                 }
             
-                let colorValue = (value == maxIter) ? 0 : UInt8((Float(value) / Float(maxIter) * 255.0))
-            
-                if (max_colorValue < colorValue) {
-                    max_colorValue = colorValue
+                if (max_colorValue < value) {
+                    max_colorValue = UInt8(value)
                 }
-                imgBytes[(l * (maxcount + 1) + k)] = PixelData(a: UInt8(255), r: UInt8(0), g: UInt8(colorValue), b: UInt8(0))
+                imgBytes[(k * (maxcount + 1) + l)] = PixelData(a: UInt8(255), r: UInt8(0), g: UInt8(value), b: UInt8(0))
             }
         }
         
