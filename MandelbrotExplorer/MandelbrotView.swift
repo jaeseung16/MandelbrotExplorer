@@ -9,7 +9,7 @@
 import Cocoa
 
 class MandelbrotView: NSView {
-    var selectRect = CGRect(x: 70, y: 176, width: 32, height: 32)
+    var selectRect: CGRect?
     var selectRectColor = NSColor.white
     
     var delegate: MandelbrotViewDelegate?
@@ -26,22 +26,30 @@ class MandelbrotView: NSView {
         // Drawing code here.
         mandelbrotImage?.draw(at: .zero, from: bounds, operation: .sourceOver, fraction: 1.0)
        
-        let bpath = NSBezierPath(rect: selectRect)
+        guard let rect = selectRect else {
+            return
+        }
+        
+        let bpath = NSBezierPath(rect: rect)
         bpath.lineWidth = 2.0
         selectRectColor.set()
         bpath.stroke()
     }
     
     override func mouseDragged(with event: NSEvent) {
+        guard let rect = selectRect else {
+            return
+        }
+        
         if (NSColor.yellow == selectRectColor) {
-            selectRect.origin = CGPoint(x: selectRect.origin.x + event.deltaX, y: selectRect.origin.y - event.deltaY)
+            selectRect?.origin = CGPoint(x: rect.origin.x + event.deltaX, y: rect.origin.y - event.deltaY)
             //delegate?.update(rect: selectRect)
             self.needsDisplay = true
         }
     }
     
     override func mouseDown(with event: NSEvent) {
-        guard let rectInWindow = self.superview?.convert(selectRect, to: nil) else {
+        guard let rect = selectRect, let rectInWindow = self.superview?.convert(rect, to: nil) else {
             return
         }
         
@@ -52,9 +60,13 @@ class MandelbrotView: NSView {
     }
     
     override func mouseUp(with event: NSEvent) {
+        guard let rect = selectRect else {
+            return
+        }
+        
         if (NSColor.yellow == selectRectColor) {
             selectRectColor = NSColor.white
-            delegate?.update(rect: selectRect)
+            delegate?.update(rect: rect)
             self.needsDisplay = true
         }
     }
