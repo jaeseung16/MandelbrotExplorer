@@ -13,14 +13,14 @@ class ViewController: NSViewController {
 
     @IBOutlet weak var defaultMandelbrotView: MandelbrotView!
     @IBOutlet weak var mandelbrotView: MandelbrotView!
+    @IBOutlet weak var zoomedMandelbrotView: MandelbrotView!
     
-    @IBOutlet weak var zoomedMandelbrotImageView: NSImageView!
     @IBOutlet weak var mandelbrotMTKView: MTKView!
     
     let sideLength = 383
     let rectScale: CGFloat = 1.0
     let blockiness: CGFloat = 1.0
-    let defualtMandelbrotRect = ComplexRect(Complex(-2.1, -1.5), Complex(0.9, 1.5))
+    let defaultMandelbrotRect = ComplexRect(Complex(-2.1, -1.5), Complex(0.9, 1.5))
     
     //var zs: [Complex]!
     var mandelbrotSet: MandelbrotSet?
@@ -78,14 +78,14 @@ class ViewController: NSViewController {
     func displayDefaultMandelbrotSet() -> Void {
         defaultMandelbrotDisplay = MandelbrotDisplay(sideLength: sideLength)
         defaultMandelbrotDisplay?.id = MandelbrotID.first
-        defaultMandelbrotDisplay?.mandelbrotRect = defualtMandelbrotRect
+        defaultMandelbrotDisplay?.mandelbrotRect = defaultMandelbrotRect
         defaultMandelbrotDisplay?.generateMandelbrotSet()
         
         defaultMandelbrotView.id = MandelbrotID.first
         defaultMandelbrotView.rectScale = 1.0
         defaultMandelbrotView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
         defaultMandelbrotView.selectRect = CGRect(x: 70, y: 176, width: 32, height: 32)
-        defaultMandelbrotView.mandelbrotRect = defualtMandelbrotRect
+        defaultMandelbrotView.mandelbrotRect = defaultMandelbrotRect
     }
     
     func displayMandelbrotSet() -> Void {
@@ -100,7 +100,7 @@ class ViewController: NSViewController {
         mandelbrotView.selectRect = CGRect(x: 70, y: 176, width: 32, height: 32)
         mandelbrotView.mandelbrotRect = mandelbrotDisplay!.mandelbrotRect
         
-        mandelbrotView.rectScale = (defualtMandelbrotRect.maxReal - defualtMandelbrotRect.minReal) / (mandelbrotView.mandelbrotRect.maxReal - mandelbrotView.mandelbrotRect.minReal)
+        mandelbrotView.rectScale = (defaultMandelbrotRect.maxReal - defaultMandelbrotRect.minReal) / (mandelbrotView.mandelbrotRect.maxReal - mandelbrotView.mandelbrotRect.minReal)
     }
     
     func displayZoomedMandelbrotSet() -> Void {
@@ -110,7 +110,12 @@ class ViewController: NSViewController {
         mandelbrotDisplay?.child = zoomedMandelbrotDisplay
         mandelbrotDisplay?.updateChild(rect: mandelbrotView.selectRect!)
         
-        zoomedMandelbrotImageView.image = zoomedMandelbrotDisplay?.mandelbrotImage
+        zoomedMandelbrotView.id = MandelbrotID.third
+        zoomedMandelbrotView.mandelbrotImage = zoomedMandelbrotDisplay!.mandelbrotImage
+        zoomedMandelbrotView.mandelbrotRect = zoomedMandelbrotDisplay!.mandelbrotRect
+               
+        zoomedMandelbrotView.rectScale = (defaultMandelbrotRect.maxReal - defaultMandelbrotRect.minReal) / (zoomedMandelbrotView.mandelbrotRect.maxReal - zoomedMandelbrotView.mandelbrotRect.minReal)
+        
     }
     
     func updateZoomedMandelbrotSet() -> Void {
@@ -133,7 +138,7 @@ class ViewController: NSViewController {
         zoomedMandelbrotDisplay?.mandelbrotRect =  zoomedMandelbrotRect
         zoomedMandelbrotDisplay?.generateMandelbrotSet()
         
-        zoomedMandelbrotImageView.image = zoomedMandelbrotDisplay?.mandelbrotImage
+        zoomedMandelbrotView.mandelbrotImage = zoomedMandelbrotDisplay?.mandelbrotImage
         
     }
     
@@ -152,16 +157,16 @@ class ViewController: NSViewController {
 extension ViewController: MandelbrotViewDelegate {
     func update(rect: CGRect, in id: MandelbrotID) {
         if (id == MandelbrotID.first) {
-            let tl = viewCoordinatesToComplexCoordinates(x: Double(rect.minX), y: Double(rect.minY), displaySize: CGSize(width: sideLength, height: sideLength), in: defualtMandelbrotRect)
-            let br = viewCoordinatesToComplexCoordinates(x: Double(rect.maxX), y: Double(rect.maxY), displaySize: CGSize(width: sideLength, height: sideLength), in: defualtMandelbrotRect)
+            let tl = viewCoordinatesToComplexCoordinates(x: Double(rect.minX), y: Double(rect.minY), displaySize: CGSize(width: sideLength, height: sideLength), in: defaultMandelbrotRect)
+            let br = viewCoordinatesToComplexCoordinates(x: Double(rect.maxX), y: Double(rect.maxY), displaySize: CGSize(width: sideLength, height: sideLength), in: defaultMandelbrotRect)
             
             zoomedMandelbrotRect = ComplexRect(tl, br)
             
             defaultMandelbrotDisplay?.updateChild(rect: rect)
-            mandelbrotView.mandelbrotImage = mandelbrotDisplay?.mandelbrotImage
             
+            mandelbrotView.mandelbrotImage = mandelbrotDisplay?.mandelbrotImage
             mandelbrotView.mandelbrotRect = mandelbrotDisplay!.mandelbrotRect
-            mandelbrotView.rectScale = (defualtMandelbrotRect.maxReal - defualtMandelbrotRect.minReal) / (mandelbrotView.mandelbrotRect.maxReal - mandelbrotView.mandelbrotRect.minReal)
+            mandelbrotView.rectScale = (defaultMandelbrotRect.maxReal - defaultMandelbrotRect.minReal) / (mandelbrotView.mandelbrotRect.maxReal - mandelbrotView.mandelbrotRect.minReal)
         }
         
         if (id == MandelbrotID.first || id == MandelbrotID.second) {
@@ -173,7 +178,9 @@ extension ViewController: MandelbrotViewDelegate {
             zoomedMandelbrotRect2 = ComplexRect(tl2, br2)
             mandelbrotDisplay?.updateChild(rect: rect2)
             
-            zoomedMandelbrotImageView.image = zoomedMandelbrotDisplay?.mandelbrotImage
+            zoomedMandelbrotView.mandelbrotImage = zoomedMandelbrotDisplay?.mandelbrotImage
+            zoomedMandelbrotView.mandelbrotRect = zoomedMandelbrotDisplay!.mandelbrotRect
+            zoomedMandelbrotView.rectScale = (defaultMandelbrotRect.maxReal - defaultMandelbrotRect.minReal) / (zoomedMandelbrotView.mandelbrotRect.maxReal - zoomedMandelbrotView.mandelbrotRect.minReal)
         }
         
     }
