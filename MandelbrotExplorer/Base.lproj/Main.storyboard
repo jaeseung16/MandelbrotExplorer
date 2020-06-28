@@ -749,14 +749,13 @@
                                                     <constraint firstAttribute="height" constant="384" id="Fv2-2s-RUF"/>
                                                 </constraints>
                                             </customView>
-                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wdh-hS-1T6">
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="PjG-jO-Ik5" customClass="MandelbrotView" customModule="MandelbrotExplorer" customModuleProvider="target">
                                                 <rect key="frame" x="384" y="0.0" width="384" height="384"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="384" id="g59-H3-Rz5"/>
-                                                    <constraint firstAttribute="width" constant="384" id="xto-Hh-lnE"/>
+                                                    <constraint firstAttribute="height" constant="384" id="kcm-Iq-3nB"/>
+                                                    <constraint firstAttribute="width" constant="384" id="oDb-qs-2vE"/>
                                                 </constraints>
-                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="rk9-lw-4C0"/>
-                                            </imageView>
+                                            </customView>
                                         </subviews>
                                         <visibilityPriorities>
                                             <integer value="1000"/>
@@ -789,12 +788,12 @@
                         <outlet property="defaultMandelbrotView" destination="ELy-Wl-H92" id="8kA-Ly-pma"/>
                         <outlet property="mandelbrotMTKView" destination="YUr-uS-LRP" id="c9F-wW-pGo"/>
                         <outlet property="mandelbrotView" destination="6QZ-Ee-1KT" id="Sne-G7-y1j"/>
-                        <outlet property="zoomedMandelbrotImageView" destination="wdh-hS-1T6" id="rnU-qb-dRv"/>
+                        <outlet property="zoomedMandelbrotView" destination="PjG-jO-Ik5" id="ePT-Qt-oZQ"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="1140"/>
+            <point key="canvasLocation" x="74.5" y="1140"/>
         </scene>
     </scenes>
 </document>
