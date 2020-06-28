@@ -26,6 +26,8 @@ class MandelbrotDisplay {
     var mandelbrotSet: MandelbrotSet?
     var mandelbrotImage: NSImage?
     
+    var id: MandelbrotID?
+    
     init(sideLength: Int) {
         self.sideLength = sideLength + 1
         let numberOfPixels = self.sideLength * self.sideLength
