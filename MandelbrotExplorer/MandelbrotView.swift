@@ -31,7 +31,7 @@ class MandelbrotView: NSView {
             _mandelbrotRect = newValue
             
             if topleftTextField == nil {
-                topleftTextField = NSTextField(frame: NSRect(x: bounds.minX + 10.0, y: bounds.maxY - 20.0, width: 100.0, height: 20.0))
+                topleftTextField = NSTextField(frame: NSRect(x: bounds.minX + 5.0, y: bounds.maxY - 20.0, width: 120.0, height: 20.0))
                 topleftTextField?.cell?.title = "\(newValue.topLeft)"
                 topleftTextField?.textColor = .white
                 topleftTextField?.isSelectable = false
@@ -42,7 +42,7 @@ class MandelbrotView: NSView {
             topleftTextField?.cell?.title = "\(newValue.topLeft)"
             
             if bottomrightTextField == nil {
-                bottomrightTextField = NSTextField(frame: NSRect(x: bounds.maxX - 110.0, y: bounds.minY + 10.0, width: 100.0, height: 20.0))
+                bottomrightTextField = NSTextField(frame: NSRect(x: bounds.maxX - 125.0, y: bounds.minY + 10.0, width: 120.0, height: 20.0))
                 bottomrightTextField?.cell?.title = "\(newValue.bottomRight)"
                 bottomrightTextField?.textColor = .white
                 bottomrightTextField?.isSelectable = false
@@ -66,7 +66,7 @@ class MandelbrotView: NSView {
             _rectScale = CGFloat(newValue)
             
             if scaleTextField == nil {
-                scaleTextField = NSTextField(frame: NSRect(x: bounds.maxX - 60.0, y: bounds.maxY - 20.0, width: 50.0, height: 20.0))
+                scaleTextField = NSTextField(frame: NSRect(x: bounds.maxX - 55.0, y: bounds.maxY - 20.0, width: 50.0, height: 20.0))
                 scaleTextField?.cell?.title = "⨉\(rectScale)"
                 scaleTextField?.textColor = .white
                 scaleTextField?.isSelectable = false
