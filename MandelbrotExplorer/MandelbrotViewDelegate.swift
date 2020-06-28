@@ -9,6 +9,6 @@
 import Foundation
 
 protocol MandelbrotViewDelegate {
-    func update(rect: CGRect) -> Void
+    func update(rect: CGRect, in id: MandelbrotID) -> Void
 }
 
