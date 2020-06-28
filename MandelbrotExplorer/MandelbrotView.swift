@@ -12,11 +12,70 @@ class MandelbrotView: NSView {
     var selectRect: CGRect?
     var selectRectColor = NSColor.white
     
+    var id: MandelbrotID?
     var delegate: MandelbrotViewDelegate?
 
     var mandelbrotImage: NSImage? {
         didSet {
             needsDisplay = true
+        }
+    }
+    var topleftTextField: NSTextField?
+    var bottomrightTextField: NSTextField?
+    var scaleTextField: NSTextField?
+    
+    var _mandelbrotRect: ComplexRect?
+    
+    var mandelbrotRect: ComplexRect {
+        set {
+            _mandelbrotRect = newValue
+            print("newValue = \(newValue)")
+            
+            if topleftTextField == nil {
+                topleftTextField = NSTextField(frame: NSRect(x: frame.minX + 10.0, y: frame.maxY - 20.0, width: 100.0, height: 20.0))
+                topleftTextField?.cell?.title = "\(newValue.topLeft)"
+                topleftTextField?.textColor = .white
+                topleftTextField?.isSelectable = false
+                topleftTextField?.alignment = .center
+                addSubview(topleftTextField!)
+            }
+            
+            topleftTextField?.cell?.title = "\(newValue.topLeft)"
+            
+            if bottomrightTextField == nil {
+                bottomrightTextField = NSTextField(frame: NSRect(x: frame.maxX - 110.0, y: frame.minY + 10.0, width: 100.0, height: 20.0))
+                bottomrightTextField?.cell?.title = "\(newValue.bottomRight)"
+                bottomrightTextField?.textColor = .white
+                bottomrightTextField?.isSelectable = false
+                bottomrightTextField?.alignment = .center
+                addSubview(bottomrightTextField!)
+            }
+            
+            bottomrightTextField?.cell?.title = "\(newValue.bottomRight)"
+        }
+        get {
+            return _mandelbrotRect!
+        }
+    }
+    
+    var _rectScale: CGFloat = 1.0
+    var rectScale: Double {
+        get {
+            return Double(_rectScale)
+        }
+        set {
+            _rectScale = CGFloat(newValue)
+            
+            if scaleTextField == nil {
+                scaleTextField = NSTextField(frame: NSRect(x: frame.maxX - 60.0, y: frame.maxY - 20.0, width: 50.0, height: 20.0))
+                scaleTextField?.cell?.title = "⨉\(rectScale)"
+                scaleTextField?.textColor = .white
+                scaleTextField?.isSelectable = false
+                scaleTextField?.alignment = .center
+                addSubview(scaleTextField!)
+            }
+            
+            scaleTextField?.cell?.title = "x\(rectScale)"
         }
     }
     
@@ -66,7 +125,7 @@ class MandelbrotView: NSView {
         
         if (NSColor.yellow == selectRectColor) {
             selectRectColor = NSColor.white
-            delegate?.update(rect: rect)
+            delegate?.update(rect: rect, in: self.id!)
             self.needsDisplay = true
         }
     }
