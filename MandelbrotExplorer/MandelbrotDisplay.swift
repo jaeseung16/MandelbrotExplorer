@@ -10,6 +10,8 @@ import Foundation
 import Cocoa
 
 class MandelbrotDisplay {
+    var child: MandelbrotDisplay?
+    
     let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
     let bitmapInfo:CGBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue)
     let bitsPerComponent: Int = 8
@@ -44,7 +46,7 @@ class MandelbrotDisplay {
         let displaySize = CGSize(width: sideLength - 1, height: sideLength - 1)
         for x in 0..<sideLength {
             for y in 0..<sideLength {
-                zs[y * sideLength + x] = viewCoordinatesToComplexCoordinates(x: Double(x), y: Double(y), displaySize: displaySize)
+                zs[(sideLength - y - 1) * sideLength + x] = viewCoordinatesToComplexCoordinates(x: Double(x), y: Double(y), displaySize: displaySize)
             }
         }
         
@@ -66,11 +68,38 @@ class MandelbrotDisplay {
     }
     
     func viewCoordinatesToComplexCoordinates(x: Double, y: Double, displaySize: CGSize) -> Complex {
-        let tl = mandelbrotRect.topLeft
-        let br = mandelbrotRect.bottomRight
-        let r = tl.real + ( x / Double(displaySize.width) ) * (br.real - tl.real)
-        let i = tl.imaginary + ( y / Double(displaySize.height) ) * (br.imaginary - tl.imaginary)
+        let minReal = mandelbrotRect.minReal
+        let maxReal = mandelbrotRect.maxReal
+        let minImaginary = mandelbrotRect.minImaginary
+        let maxImaginary = mandelbrotRect.maxImaginary
+        
+        let r = minReal + ( x / Double(displaySize.width) ) * (maxReal - minReal)
+        let i = minImaginary + ( y / Double(displaySize.height) ) * (maxImaginary - minImaginary)
         return Complex(r, i)
+    }
+    
+    func viewCoordinatesToComplexCoordinates(x: Double, y: Double, displaySize: CGSize, in complexRect: ComplexRect) -> Complex {
+        let minReal = complexRect.minReal
+        let maxReal = complexRect.maxReal
+        let minImaginary = complexRect.minImaginary
+        let maxImaginary = complexRect.maxImaginary
+        
+        let r = minReal + ( x / Double(displaySize.width) ) * (maxReal - minReal)
+        let i = (maxImaginary - minImaginary) / 2.0 - ( y / Double(displaySize.height) ) * (maxImaginary - minImaginary)
+        return Complex(r, i)
+    }
+    
+    func updateChild(rect: CGRect) {
+        guard let child = child else {
+            return
+        }
+        
+        let tl = viewCoordinatesToComplexCoordinates(x: Double(rect.minX), y: Double(rect.minY), displaySize: CGSize(width: sideLength, height: sideLength))
+        let br = viewCoordinatesToComplexCoordinates(x: Double(rect.maxX), y: Double(rect.maxY), displaySize: CGSize(width: sideLength, height: sideLength))
+        
+        child.mandelbrotRect = ComplexRect(tl, br)
+        child.generateMandelbrotSet()
+        
     }
     
     func setImage(for mandelbrotSet: MandelbrotSet?) -> Void {
