@@ -101,6 +101,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		90481D8824AFB8FF00DDACF9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				90B944452485C1A7005BDC10 /* MandelbrotView.swift */,
+				902B7FA824982AD20082B8F6 /* MandelbrotViewDelegate.swift */,
+				906DAE5A247C4C1200A1A47F /* ZoomedMandelbrotView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		90481D8924AFB91500DDACF9 /* MandelbrotSet */ = {
+			isa = PBXGroup;
+			children = (
+				906DAE5C247C4C3400A1A47F /* ComplexRect.swift */,
+				906DAE5E247C4C6000A1A47F /* Complex.swift */,
+				905DA92F247C16D800B9DA71 /* MandelbrotSet.swift */,
+				90481D8624AFA7E300DDACF9 /* MandelbrotSetFactory.swift */,
+				90BDEAB72496521700733DFC /* MandelbrotSetCPU.swift */,
+				90BDEAB9249664BA00733DFC /* MandelbrotSetGPU.swift */,
+				900FB59B2487065000695AD4 /* Shaders.metal */,
+			);
+			path = MandelbrotSet;
+			sourceTree = "<group>";
+		};
+		90481D8A24AFB93A00DDACF9 /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				901CD3F4248074D8005F1F9C /* PixelData.swift */,
+				900FB599248705B500695AD4 /* Renderer.swift */,
+			);
+			path = Deprecated;
+			sourceTree = "<group>";
+		};
+		90481D8B24AFB96D00DDACF9 /* MandelbrotDisplay */ = {
+			isa = PBXGroup;
+			children = (
+				90E9D36024A90F5900FCB3A4 /* MandelbrotID.swift */,
+				9031FD482481D011006CCB38 /* MandelbrotDisplay.swift */,
+			);
+			path = MandelbrotDisplay;
+			sourceTree = "<group>";
+		};
 		905DA8F7247C16A300B9DA71 = {
 			isa = PBXGroup;
 			children = (
@@ -124,26 +166,16 @@
 		905DA902247C16A300B9DA71 /* MandelbrotExplorer */ = {
 			isa = PBXGroup;
 			children = (
+				90481D8B24AFB96D00DDACF9 /* MandelbrotDisplay */,
+				90481D8A24AFB93A00DDACF9 /* Deprecated */,
+				90481D8924AFB91500DDACF9 /* MandelbrotSet */,
+				90481D8824AFB8FF00DDACF9 /* Views */,
 				905DA903247C16A300B9DA71 /* AppDelegate.swift */,
 				905DA905247C16A300B9DA71 /* ViewController.swift */,
 				905DA907247C16A500B9DA71 /* Assets.xcassets */,
 				905DA909247C16A500B9DA71 /* Main.storyboard */,
 				905DA90C247C16A500B9DA71 /* Info.plist */,
 				905DA90D247C16A500B9DA71 /* MandelbrotExplorer.entitlements */,
-				906DAE5C247C4C3400A1A47F /* ComplexRect.swift */,
-				906DAE5E247C4C6000A1A47F /* Complex.swift */,
-				901CD3F4248074D8005F1F9C /* PixelData.swift */,
-				90B944452485C1A7005BDC10 /* MandelbrotView.swift */,
-				902B7FA824982AD20082B8F6 /* MandelbrotViewDelegate.swift */,
-				906DAE5A247C4C1200A1A47F /* ZoomedMandelbrotView.swift */,
-				9031FD482481D011006CCB38 /* MandelbrotDisplay.swift */,
-				905DA92F247C16D800B9DA71 /* MandelbrotSet.swift */,
-				90BDEAB72496521700733DFC /* MandelbrotSetCPU.swift */,
-				90BDEAB9249664BA00733DFC /* MandelbrotSetGPU.swift */,
-				90481D8624AFA7E300DDACF9 /* MandelbrotSetFactory.swift */,
-				900FB59B2487065000695AD4 /* Shaders.metal */,
-				90E9D36024A90F5900FCB3A4 /* MandelbrotID.swift */,
-				900FB599248705B500695AD4 /* Renderer.swift */,
 			);
 			path = MandelbrotExplorer;
 			sourceTree = "<group>";
