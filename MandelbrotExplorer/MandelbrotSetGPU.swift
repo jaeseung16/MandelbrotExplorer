@@ -21,11 +21,12 @@ class MandelbrotSetGPU: MandelbrotSet {
     let maxcount: Int
     let bytesPerRow: Int
     let region: MTLRegion
+    let threadWidth = 32
     
     var inputTexture: MTLTexture
     var outputTexture: MTLTexture
     
-    var _zs: [Complex]
+    private var _zs: [Complex]
     var zs: [Complex] {
         get {
             return _zs
@@ -35,7 +36,7 @@ class MandelbrotSetGPU: MandelbrotSet {
         }
     }
     
-    var _maxIter: Int
+    private var _maxIter: Int
     var maxIter: Int {
         get {
             return _maxIter
@@ -45,13 +46,23 @@ class MandelbrotSetGPU: MandelbrotSet {
         }
     }
     
-    var _values: [Int]
+    private var _values: [Int]
     var values: [Int] {
         get {
             return _values
         }
         set {
             _values = newValue
+        }
+    }
+    
+    private var _cgImage: CGImage?
+    var cgImage: CGImage {
+        get {
+            return _cgImage!
+        }
+        set {
+            _cgImage = newValue;
         }
     }
     
@@ -83,77 +94,76 @@ class MandelbrotSetGPU: MandelbrotSet {
         inputTexture = device.makeTexture(descriptor: textureDescriptor)!
         
         textureDescriptor.usage = MTLTextureUsage(rawValue: MTLTextureUsage.shaderWrite.rawValue | MTLTextureUsage.shaderRead.rawValue)
+
         outputTexture = device.makeTexture(descriptor: textureDescriptor)!
-        
-        calculate()
     }
     
     func calculate() -> Void{
+        populateInputTexture()
+        
         guard let commandBuffer = commandQueue.makeCommandBuffer(),
             let computeCommandEncoder = commandBuffer.makeComputeCommandEncoder() else {
                 return
         }
         
-        computeCommandEncoder.setComputePipelineState(computePipelineState)
-        
-        let zs2 = _zs.map { (z) -> SIMD4<Float> in
-            return SIMD4<Float>(x: Float(z.real), y: Float(z.imaginary), z: 0.0, w: 0.0)
+        encode(computeCommandEncoder)
+        prepareBlitCommandEncoder(for: commandBuffer)
+
+        commandBuffer.addCompletedHandler { (commandBuffer) in
+            print("gpuTime = \(commandBuffer.gpuEndTime - commandBuffer.gpuStartTime)")
         }
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
         
-        inputTexture.replace(region: region, mipmapLevel: 0, withBytes: zs2, bytesPerRow: bytesPerRow)
-        
+        generateCGImage()
+    }
+    
+    private func encode(_ computeCommandEncoder: MTLComputeCommandEncoder) -> Void {
+        computeCommandEncoder.setComputePipelineState(computePipelineState)
         computeCommandEncoder.setTexture(inputTexture, index: 0)
         computeCommandEncoder.setTexture(outputTexture, index: 1)
         
-        print("computePipelineState.maxTotalThreadsPerThreadgroup = \(computePipelineState.maxTotalThreadsPerThreadgroup)")
-        print("computePipelineState.threadExecutionWidth = \(computePipelineState.threadExecutionWidth)")
+        //print("computePipelineState.maxTotalThreadsPerThreadgroup = \(computePipelineState.maxTotalThreadsPerThreadgroup)")
+        //print("computePipelineState.threadExecutionWidth = \(computePipelineState.threadExecutionWidth)")
         
-        // hardcoded to 32 for now (recommendation: read about threadExecutionWidth)
-        let threadWidth = 32
         let numThreadgroups = MTLSize(width: (maxcount + threadWidth) / threadWidth, height: (maxcount + threadWidth) / threadWidth, depth: 1)
         let threadsPerGroup = MTLSize(width: threadWidth, height: threadWidth, depth: 1)
         computeCommandEncoder.dispatchThreadgroups(numThreadgroups, threadsPerThreadgroup: threadsPerGroup)
         
         computeCommandEncoder.endEncoding()
-        
+    }
+    
+    private func prepareBlitCommandEncoder(for commandBuffer: MTLCommandBuffer) -> Void{
         let blitCommandEncoder = commandBuffer.makeBlitCommandEncoder()!
         blitCommandEncoder.synchronize(resource: outputTexture)
         blitCommandEncoder.endEncoding()
-        
-        commandBuffer.addCompletedHandler { (commandBuffer) in
-            print("gpuStartTime = \(commandBuffer.gpuStartTime)")
-            print("gpuEndTime = \(commandBuffer.gpuEndTime)")
-            print("gpuTime = \(commandBuffer.gpuEndTime - commandBuffer.gpuStartTime)")
-        }
-        
-        commandBuffer.commit()
-            
-        commandBuffer.waitUntilCompleted()
-        
-        let data = UnsafeMutableRawPointer.allocate(byteCount: MemoryLayout<SIMD4<Float>>.stride * textureDescriptor.width * textureDescriptor.height, alignment: MemoryLayout<SIMD4<Float>>.stride)
-        
-        defer {
-          data.deallocate()
-        }
-        
-        outputTexture.getBytes(data, bytesPerRow: bytesPerRow, from: region, mipmapLevel: 0)
-        
-        for k in 0..<maxcount {
-            for l in 0..<maxcount {
-                let offset = (k * maxcount + l) * MemoryLayout<SIMD4<Float>>.stride
-                
-                let offsetPointer = data.advanced(by: offset)
-                _values[k * maxcount + l] = Int(offsetPointer.load(as: SIMD4<Float>.self).x)
-            }
-        }
     }
     
-    static func createComputePipelineState() -> MTLComputePipelineState {
+    private func populateInputTexture() -> Void {
+        let zs2 = _zs.map { (z) -> SIMD4<Float> in
+            return SIMD4<Float>(x: Float(z.real), y: Float(z.imaginary), z: 0.0, w: 0.0)
+        }
+        
+        inputTexture.replace(region: region, mipmapLevel: 0, withBytes: zs2, bytesPerRow: bytesPerRow)
+    }
+    
+    private func generateCGImage() -> Void {
+        let ciImageOptions: [CIImageOption: Any] = [.colorSpace: CGColorSpaceCreateDeviceRGB()]
+        let ciImage = CIImage(mtlTexture: outputTexture, options: ciImageOptions)!
+        
+        let contextOptions: [CIContextOption: Any] = [.outputPremultiplied: true,
+                              .useSoftwareRenderer: false]
+        let context = CIContext(options: contextOptions)
+        
+        cgImage = context.createCGImage(ciImage, from: ciImage.extent)!
+    }
+    
+    static private func createComputePipelineState() -> MTLComputePipelineState {
         let mandelbrotKernel = MandelbrotSetGPU.library.makeFunction(name: MandelbrotSetGPU.kernelName)
         return try! device.makeComputePipelineState(function: mandelbrotKernel!)
     }
     
-    static func createTextureDescriptor(width: Int, height: Int) -> MTLTextureDescriptor {
+    static private func createTextureDescriptor(width: Int, height: Int) -> MTLTextureDescriptor {
         let descriptor = MTLTextureDescriptor()
         descriptor.textureType = MTLTextureType.type2D
         descriptor.pixelFormat = MTLPixelFormat.rgba32Float
