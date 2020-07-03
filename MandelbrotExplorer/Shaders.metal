@@ -138,6 +138,6 @@ kernel void mandelbrot(texture2d<float, access::read> inTexture [[ texture(0) ]]
         z_imag = new_imag;
     }
    
-    float value = (iter == 200) ? 0 : (float(iter) / 200.0 * 255.0);
-    outTexture.write(float4(value, 0, 0, 0), id);
+    float value = (iter == 200) ? 0 : (float(iter) / 200.0);
+    outTexture.write(float4(0, value, 0, 1), id);
 }
