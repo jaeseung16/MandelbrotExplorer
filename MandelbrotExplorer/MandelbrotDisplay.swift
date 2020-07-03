@@ -15,7 +15,6 @@ class MandelbrotDisplay {
     var sideLength: Int
     
     var zs: [Complex]
-    var imgBytes: [SIMD4<UInt8>]
     
     var mandelbrotRect = ComplexRect(Complex(-2.1, -1.5), Complex(0.9, 1.5))
     var mandelbrotSet: MandelbrotSet?
@@ -27,7 +26,6 @@ class MandelbrotDisplay {
         self.sideLength = sideLength + 1
         let numberOfPixels = self.sideLength * self.sideLength
         
-        self.imgBytes = [SIMD4<UInt8>](repeating: SIMD4<UInt8>(x: 0, y: 0, z: 0, w: 255), count: numberOfPixels)
         self.zs = [Complex](repeating: Complex(), count: numberOfPixels)
     }
     
