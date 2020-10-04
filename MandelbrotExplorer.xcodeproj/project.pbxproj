@@ -24,13 +24,14 @@
 		906DAE5B247C4C1200A1A47F /* ZoomedMandelbrotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5A247C4C1200A1A47F /* ZoomedMandelbrotView.swift */; };
 		906DAE5D247C4C3400A1A47F /* ComplexRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5C247C4C3400A1A47F /* ComplexRect.swift */; };
 		906DAE5F247C4C6000A1A47F /* Complex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5E247C4C6000A1A47F /* Complex.swift */; };
-		908C7BC7252A74D2003D803B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908C7BC6252A74D2003D803B /* AppDelegate.swift */; };
+		908C7BC7252A74D2003D803B /* AppDelegateIPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908C7BC6252A74D2003D803B /* AppDelegateIPad.swift */; };
 		908C7BC9252A74D2003D803B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908C7BC8252A74D2003D803B /* SceneDelegate.swift */; };
 		908C7BCB252A74D2003D803B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908C7BCA252A74D2003D803B /* ViewController.swift */; };
 		908C7BCE252A74D2003D803B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 908C7BCC252A74D2003D803B /* Main.storyboard */; };
 		908C7BD1252A74D2003D803B /* MandelbrotExplorer_iPad.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 908C7BCF252A74D2003D803B /* MandelbrotExplorer_iPad.xcdatamodeld */; };
 		908C7BD3252A74D4003D803B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 908C7BD2252A74D4003D803B /* Assets.xcassets */; };
 		908C7BD6252A74D4003D803B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 908C7BD4252A74D4003D803B /* LaunchScreen.storyboard */; };
+		9097CC39252A83BA00AE9805 /* MandelbrotExplorerRootViewControllerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9097CC38252A83BA00AE9805 /* MandelbrotExplorerRootViewControllerTableViewController.swift */; };
 		90B944462485C1A7005BDC10 /* MandelbrotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B944452485C1A7005BDC10 /* MandelbrotView.swift */; };
 		90BDEAB82496521700733DFC /* MandelbrotSetCPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BDEAB72496521700733DFC /* MandelbrotSetCPU.swift */; };
 		90BDEABA249664BA00733DFC /* MandelbrotSetGPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BDEAB9249664BA00733DFC /* MandelbrotSetGPU.swift */; };
@@ -80,7 +81,7 @@
 		906DAE5C247C4C3400A1A47F /* ComplexRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexRect.swift; sourceTree = "<group>"; };
 		906DAE5E247C4C6000A1A47F /* Complex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Complex.swift; sourceTree = "<group>"; };
 		908C7BC4252A74D2003D803B /* MandelbrotExplorer iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MandelbrotExplorer iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		908C7BC6252A74D2003D803B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		908C7BC6252A74D2003D803B /* AppDelegateIPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateIPad.swift; sourceTree = "<group>"; };
 		908C7BC8252A74D2003D803B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		908C7BCA252A74D2003D803B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		908C7BCD252A74D2003D803B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 		908C7BD2252A74D4003D803B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		908C7BD5252A74D4003D803B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		908C7BD7252A74D4003D803B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9097CC38252A83BA00AE9805 /* MandelbrotExplorerRootViewControllerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerRootViewControllerTableViewController.swift; sourceTree = "<group>"; };
 		90B944452485C1A7005BDC10 /* MandelbrotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotView.swift; sourceTree = "<group>"; };
 		90BDEAB72496521700733DFC /* MandelbrotSetCPU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotSetCPU.swift; sourceTree = "<group>"; };
 		90BDEAB9249664BA00733DFC /* MandelbrotSetGPU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotSetGPU.swift; sourceTree = "<group>"; };
@@ -237,7 +239,7 @@
 		908C7BC5252A74D2003D803B /* MandelbrotExplorer iPad */ = {
 			isa = PBXGroup;
 			children = (
-				908C7BC6252A74D2003D803B /* AppDelegate.swift */,
+				908C7BC6252A74D2003D803B /* AppDelegateIPad.swift */,
 				908C7BC8252A74D2003D803B /* SceneDelegate.swift */,
 				908C7BCA252A74D2003D803B /* ViewController.swift */,
 				908C7BCC252A74D2003D803B /* Main.storyboard */,
@@ -245,6 +247,7 @@
 				908C7BD4252A74D4003D803B /* LaunchScreen.storyboard */,
 				908C7BD7252A74D4003D803B /* Info.plist */,
 				908C7BCF252A74D2003D803B /* MandelbrotExplorer_iPad.xcdatamodeld */,
+				9097CC38252A83BA00AE9805 /* MandelbrotExplorerRootViewControllerTableViewController.swift */,
 			);
 			path = "MandelbrotExplorer iPad";
 			sourceTree = "<group>";
@@ -451,9 +454,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				908C7BCB252A74D2003D803B /* ViewController.swift in Sources */,
-				908C7BC7252A74D2003D803B /* AppDelegate.swift in Sources */,
+				908C7BC7252A74D2003D803B /* AppDelegateIPad.swift in Sources */,
 				908C7BD1252A74D2003D803B /* MandelbrotExplorer_iPad.xcdatamodeld in Sources */,
 				908C7BC9252A74D2003D803B /* SceneDelegate.swift in Sources */,
+				9097CC39252A83BA00AE9805 /* MandelbrotExplorerRootViewControllerTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
