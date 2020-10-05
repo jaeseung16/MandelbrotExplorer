@@ -45,7 +45,15 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let splitViewController = self.splitViewController, let detailViewController = splitViewController.viewControllers.last as? UINavigationController else {
+            print("splitViewController = \(self.splitViewController)")
+            print("splitViewController?.viewControllers = \(self.splitViewController?.viewControllers)")
+            return
+        }
         
+        if let viewController = detailViewController.topViewController as? MandelbrotExplorerDetailViewController {
+            print("MandelbrotExplorerDetailViewController = \(viewController)")
+        }
     }
     /*
     // Override to support conditional editing of the table view.

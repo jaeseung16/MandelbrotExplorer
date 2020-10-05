@@ -1,15 +1,15 @@
 //
-//  MandelbrotSet.swift
-//  MandelbrotExplorer
+//  MandelbrotSetIPad.swift
+//  MandelbrotExplorer iPad
 //
-//  Created by Jae Seung Lee on 5/25/20.
+//  Created by Jae Seung Lee on 10/5/20.
 //  Copyright © 2020 Jae Seung Lee. All rights reserved.
 //
 
 import Foundation
 import CoreGraphics
 
-protocol MandelbrotSet {
+protocol MandelbrotSetIPad {
     var zs: [Complex] { get set }
     var values: [Int] { get set }
     var maxIter: Int { get set }

@@ -8,20 +8,37 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Mandelbrot Explorer Detail View Controller-->
         <scene sceneID="8E8-jq-MOS">
             <objects>
-                <viewController id="cFm-AQ-jEn" sceneMemberID="viewController">
+                <viewController id="cFm-AQ-jEn" customClass="MandelbrotExplorerDetailViewController" customModule="MandelbrotExplorer_iPad" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="muF-uC-znk">
                         <rect key="frame" x="0.0" y="0.0" width="1045.5" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mj7-hv-MSt" customClass="MandelbrotUIView" customModule="MandelbrotExplorer_iPad" customModuleProvider="target">
+                                <rect key="frame" x="331.5" y="335.5" width="383" height="383"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="mj7-hv-MSt" secondAttribute="height" id="a00-Qs-d0r"/>
+                                    <constraint firstAttribute="width" constant="383" id="p0C-zM-dg0"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="XUf-xq-E5R"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="mj7-hv-MSt" firstAttribute="centerY" secondItem="XUf-xq-E5R" secondAttribute="centerY" id="BqW-Bp-Dhs"/>
+                            <constraint firstItem="mj7-hv-MSt" firstAttribute="centerX" secondItem="XUf-xq-E5R" secondAttribute="centerX" id="CeB-zR-2NN"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mandelbrotUIView" destination="mj7-hv-MSt" id="qdT-AO-pdg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLf-ah-are" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1050" y="-38"/>
+            <point key="canvasLocation" x="-1050.2196193265006" y="8.7890625"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="0sx-oa-oJD">
