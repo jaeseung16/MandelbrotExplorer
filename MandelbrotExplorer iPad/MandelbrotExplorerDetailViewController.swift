@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ComplexModule
 
 class MandelbrotExplorerDetailViewController: UIViewController {
 
@@ -17,7 +18,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     let sideLength = 383
     let rectScale: CGFloat = 1.0
     let blockiness: CGFloat = 1.0
-    let defaultMandelbrotRect = ComplexRect(Complex(-2.1, -1.5), Complex(0.9, 1.5))
+    let defaultMandelbrotRect = ComplexRect(Complex<Double>(-2.1, -1.5), Complex<Double>(0.9, 1.5))
     
     override func viewDidLoad() {
         super.viewDidLoad()

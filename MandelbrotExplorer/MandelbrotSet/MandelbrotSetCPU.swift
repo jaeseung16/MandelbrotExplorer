@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreGraphics
+import ComplexModule
 
 class MandelbrotSetCPU: MandelbrotSet {
     private let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
@@ -15,8 +16,8 @@ class MandelbrotSetCPU: MandelbrotSet {
     private let bitsPerComponent: Int = 8
     private let bitsPerPixel: Int = 32
     
-    private var _zs: [Complex]
-    var zs: [Complex] {
+    private var _zs: [Complex<Double>]
+    var zs: [Complex<Double>] {
         get {
             return _zs
         }
@@ -57,7 +58,7 @@ class MandelbrotSetCPU: MandelbrotSet {
     
     var imgBytes: [SIMD4<UInt8>]
     
-    init(inZs: [Complex], inMaxIter: Int) {
+    init(inZs: [Complex<Double>], inMaxIter: Int) {
         _zs = inZs
         _maxIter = inMaxIter
         _values = [Int](repeating: 0, count: _zs.count)
@@ -73,12 +74,12 @@ class MandelbrotSetCPU: MandelbrotSet {
         })
     }
     
-    private func mandelbrotFormula(z0: Complex) -> Int {
+    private func mandelbrotFormula(z0: Complex<Double>) -> Int {
         var z = z0
         var iter = 0;
         while (iter < maxIter)
         {
-            if (Complex.abs(lhs: z) > 2.0) {
+            if (z.length > 2.0) {
                 break
             }
             z = z * z + z0

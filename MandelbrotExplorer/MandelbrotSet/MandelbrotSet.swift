@@ -8,9 +8,10 @@
 
 import Foundation
 import CoreGraphics
+import ComplexModule
 
 protocol MandelbrotSet {
-    var zs: [Complex] { get set }
+    var zs: [Complex<Double>] { get set }
     var values: [Int] { get set }
     var maxIter: Int { get set }
     var cgImage: CGImage {get set}

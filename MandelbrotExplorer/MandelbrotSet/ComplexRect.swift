@@ -7,27 +7,28 @@
 //
 
 import Foundation
+import ComplexModule
 
 struct ComplexRect: Equatable, CustomStringConvertible {
-    var topLeft: Complex
-    var bottomRight: Complex
-    private(set) var bottomLeft: Complex
-    private(set) var topRight: Complex
+    var topLeft: Complex<Double>
+    var bottomRight: Complex<Double>
+    private(set) var bottomLeft: Complex<Double>
+    private(set) var topRight: Complex<Double>
     
     var minReal: Double
     var minImaginary: Double
     var maxReal: Double
     var maxImaginary: Double
     
-    init(_ c1: Complex, _ c2: Complex) {
+    init(_ c1: Complex<Double>, _ c2: Complex<Double>) {
         minReal = min(c1.real, c2.real)
         maxImaginary = max(c1.imaginary, c2.imaginary)
         maxReal = max(c1.real, c2.real)
         minImaginary = min(c1.imaginary, c2.imaginary)
-        topLeft = Complex(minReal, maxImaginary)
-        bottomRight = Complex(maxReal, minImaginary)
-        bottomLeft = Complex(minReal, minImaginary)
-        topRight = Complex(maxReal, maxImaginary)
+        topLeft = Complex<Double>(minReal, maxImaginary)
+        bottomRight = Complex<Double>(maxReal, minImaginary)
+        bottomLeft = Complex<Double>(minReal, minImaginary)
+        topRight = Complex<Double>(maxReal, maxImaginary)
     }
     
     var description: String {

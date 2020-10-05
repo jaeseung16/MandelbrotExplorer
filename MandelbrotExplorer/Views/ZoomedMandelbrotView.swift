@@ -7,12 +7,13 @@
 //
 
 import Cocoa
+import ComplexModule
 
 class ZoomedMandelbrotView: NSView {
     var selectRect = CGRect(x: 70, y: 175, width: 32, height: 32)
     var selectRectColor = NSColor.white
     
-    var _mandelbrotRect = ComplexRect(Complex(-1.55, -0.13), Complex(-1.30, 0.12))
+    var _mandelbrotRect = ComplexRect(Complex<Double>(-1.55, -0.13), Complex<Double>(-1.30, 0.12))
     
     var mandelbrotRect: ComplexRect {
         set {

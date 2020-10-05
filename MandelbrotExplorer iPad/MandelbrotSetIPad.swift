@@ -10,7 +10,7 @@ import Foundation
 import CoreGraphics
 
 protocol MandelbrotSetIPad {
-    var zs: [Complex] { get set }
+    var zs: [MyComplex] { get set }
     var values: [Int] { get set }
     var maxIter: Int { get set }
     var cgImage: CGImage {get set}

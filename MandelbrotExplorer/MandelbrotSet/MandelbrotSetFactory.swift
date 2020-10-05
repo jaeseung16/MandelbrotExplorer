@@ -8,9 +8,10 @@
 
 import Foundation
 import MetalKit
+import ComplexModule
 
 class MandelbrotSetFactory {
-    static func createMandelbrotSet(inZs: [Complex], inMaxIter: Int) -> MandelbrotSet {
+    static func createMandelbrotSet(inZs: [Complex<Double>], inMaxIter: Int) -> MandelbrotSet {
         let mandelbrotSet: MandelbrotSet
         
         let device = MTLCreateSystemDefaultDevice()

@@ -8,6 +8,7 @@
 
 import Foundation
 import MetalKit
+import ComplexModule
 
 class MandelbrotSetGPU: MandelbrotSet {
     static var device: MTLDevice!
@@ -26,8 +27,8 @@ class MandelbrotSetGPU: MandelbrotSet {
     var inputTexture: MTLTexture
     var outputTexture: MTLTexture
     
-    private var _zs: [Complex]
-    var zs: [Complex] {
+    private var _zs: [Complex<Double>]
+    var zs: [Complex<Double>] {
         get {
             return _zs
         }
@@ -66,7 +67,7 @@ class MandelbrotSetGPU: MandelbrotSet {
         }
     }
     
-    init(inZs: [Complex], inMaxIter: Int) {
+    init(inZs: [Complex<Double>], inMaxIter: Int) {
         _zs = inZs
         _maxIter = inMaxIter
         _values = [Int](repeating: 0, count: _zs.count)

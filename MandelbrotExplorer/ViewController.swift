@@ -8,6 +8,7 @@
 
 import Cocoa
 import MetalKit
+import ComplexModule
 
 class ViewController: NSViewController {
 
@@ -20,7 +21,7 @@ class ViewController: NSViewController {
     let sideLength = 383
     let rectScale: CGFloat = 1.0
     let blockiness: CGFloat = 1.0
-    let defaultMandelbrotRect = ComplexRect(Complex(-2.1, -1.5), Complex(0.9, 1.5))
+    let defaultMandelbrotRect = ComplexRect(Complex<Double>(-2.1, -1.5), Complex<Double>(0.9, 1.5))
     
     //var zs: [Complex]!
     var mandelbrotSet: MandelbrotSet?
@@ -132,7 +133,7 @@ class ViewController: NSViewController {
         mandelbrotView.rectScale = (defaultMandelbrotRect.maxReal - defaultMandelbrotRect.minReal) / (mandelbrotView.mandelbrotRect.maxReal - mandelbrotView.mandelbrotRect.minReal)
     }
     
-    func viewCoordinatesToComplexCoordinates(x: Double, y: Double, displaySize: CGSize, in complexRect: ComplexRect) -> Complex {
+    func viewCoordinatesToComplexCoordinates(x: Double, y: Double, displaySize: CGSize, in complexRect: ComplexRect) -> Complex<Double> {
         let minReal = complexRect.minReal
         let maxReal = complexRect.maxReal
         let minImaginary = complexRect.minImaginary
@@ -140,7 +141,7 @@ class ViewController: NSViewController {
         
         let r = minReal + ( x / Double(displaySize.width) ) * (maxReal - minReal)
         let i = minImaginary + ( y / Double(displaySize.height) ) * (maxImaginary - minImaginary)
-        return Complex(r, i)
+        return Complex<Double>(r, i)
     }
 }
 

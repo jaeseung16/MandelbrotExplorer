@@ -8,6 +8,7 @@
 
 import Foundation
 import MetalKit
+import ComplexModule
 
 struct Vertex {
     let position: SIMD3<Float>
@@ -94,7 +95,7 @@ class Renderer: NSObject {
         
         var zs2 = Array(repeating: SIMD4<Float>(0.0, 0.0, 0.0, 0.0), count: (maxcount + 1) * (maxcount+1))
         
-        let mandelbrotRect = ComplexRect(Complex(-2.1, -1.5), Complex(0.9, 1.5))
+        let mandelbrotRect = ComplexRect(Complex<Double>(-2.1, -1.5), Complex<Double>(0.9, 1.5))
         
         for x in stride(from: 0, through: Double(maxcount), by: Double(blockiness)) {
             for y in stride(from: 0, through: Double(maxcount), by: Double(blockiness)) {
