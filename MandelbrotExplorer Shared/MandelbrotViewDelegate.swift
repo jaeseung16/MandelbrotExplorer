@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 protocol MandelbrotViewDelegate {
     func update(rect: CGRect, in id: MandelbrotID) -> Void
