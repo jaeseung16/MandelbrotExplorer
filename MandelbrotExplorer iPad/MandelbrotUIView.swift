@@ -13,7 +13,7 @@ class MandelbrotUIView: UIView {
     var selectRectColor = UIColor.white
     
     var id: MandelbrotID?
-    //var delegate: MandelbrotViewDelegate?
+    var delegate: MandelbrotViewDelegate?
 
     var mandelbrotImage: UIImage? {
         didSet {

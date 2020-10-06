@@ -14,6 +14,7 @@
 		9031FD492481D011006CCB38 /* MandelbrotDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9031FD482481D011006CCB38 /* MandelbrotDisplay.swift */; };
 		90481D8724AFA7E300DDACF9 /* MandelbrotSetFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90481D8624AFA7E300DDACF9 /* MandelbrotSetFactory.swift */; };
 		90481D8D24AFBA8E00DDACF9 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 90481D8C24AFBA8E00DDACF9 /* README.md */; };
+		905C80D3252D2C94003B5954 /* MandelbrotViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B7FA824982AD20082B8F6 /* MandelbrotViewDelegate.swift */; };
 		905DA904247C16A300B9DA71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905DA903247C16A300B9DA71 /* AppDelegate.swift */; };
 		905DA906247C16A300B9DA71 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905DA905247C16A300B9DA71 /* ViewController.swift */; };
 		905DA908247C16A500B9DA71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 905DA907247C16A500B9DA71 /* Assets.xcassets */; };
@@ -145,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				90B944452485C1A7005BDC10 /* MandelbrotView.swift */,
-				902B7FA824982AD20082B8F6 /* MandelbrotViewDelegate.swift */,
 				906DAE5A247C4C1200A1A47F /* ZoomedMandelbrotView.swift */,
 			);
 			path = Views;
@@ -252,6 +252,7 @@
 		908C7B44252A69FA003D803B /* MandelbrotExplorer Shared */ = {
 			isa = PBXGroup;
 			children = (
+				902B7FA824982AD20082B8F6 /* MandelbrotViewDelegate.swift */,
 				90481D8924AFB91500DDACF9 /* MandelbrotSet */,
 			);
 			path = "MandelbrotExplorer Shared";
@@ -491,6 +492,7 @@
 				908C7BC7252A74D2003D803B /* AppDelegateIPad.swift in Sources */,
 				90898F4D252BDD380084ACB4 /* MandelbrotID.swift in Sources */,
 				90898F5D252BDEAF0084ACB4 /* MandelbrotSetCPU.swift in Sources */,
+				905C80D3252D2C94003B5954 /* MandelbrotViewDelegate.swift in Sources */,
 				908C7BD1252A74D2003D803B /* MandelbrotExplorer_iPad.xcdatamodeld in Sources */,
 				90898F42252BDC050084ACB4 /* ComplexRect.swift in Sources */,
 				908C7BC9252A74D2003D803B /* SceneDelegate.swift in Sources */,

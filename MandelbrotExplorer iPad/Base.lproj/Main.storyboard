@@ -16,9 +16,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="1045.5" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mj7-hv-MSt" customClass="MandelbrotUIView" customModule="MandelbrotExplorer_iPad" customModuleProvider="target">
-                                <rect key="frame" x="331.5" y="335.5" width="383" height="383"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sbp-qQ-lxb" customClass="MandelbrotUIView" customModule="MandelbrotExplorer_iPad" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="383" height="383"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="383" id="bna-hp-Pwa"/>
+                                    <constraint firstAttribute="width" secondItem="Sbp-qQ-lxb" secondAttribute="height" id="fZj-gk-S8y"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="mj7-hv-MSt" customClass="MandelbrotUIView" customModule="MandelbrotExplorer_iPad" customModuleProvider="target">
+                                <rect key="frame" x="383" y="427" width="383" height="383"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="mj7-hv-MSt" secondAttribute="height" id="a00-Qs-d0r"/>
                                     <constraint firstAttribute="width" constant="383" id="p0C-zM-dg0"/>
@@ -28,12 +36,16 @@
                         <viewLayoutGuide key="safeArea" id="XUf-xq-E5R"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="mj7-hv-MSt" firstAttribute="centerY" secondItem="XUf-xq-E5R" secondAttribute="centerY" id="BqW-Bp-Dhs"/>
-                            <constraint firstItem="mj7-hv-MSt" firstAttribute="centerX" secondItem="XUf-xq-E5R" secondAttribute="centerX" id="CeB-zR-2NN"/>
+                            <constraint firstItem="mj7-hv-MSt" firstAttribute="top" secondItem="Sbp-qQ-lxb" secondAttribute="bottom" id="A4H-j6-lze"/>
+                            <constraint firstItem="Sbp-qQ-lxb" firstAttribute="width" secondItem="Sbp-qQ-lxb" secondAttribute="height" id="F9B-pl-jrL"/>
+                            <constraint firstItem="Sbp-qQ-lxb" firstAttribute="top" secondItem="muF-uC-znk" secondAttribute="top" constant="44" id="SEc-eE-PaK"/>
+                            <constraint firstItem="Sbp-qQ-lxb" firstAttribute="leading" secondItem="XUf-xq-E5R" secondAttribute="leading" id="fDe-zL-Y16"/>
+                            <constraint firstItem="mj7-hv-MSt" firstAttribute="leading" secondItem="Sbp-qQ-lxb" secondAttribute="trailing" id="qEC-8e-Vap"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="mandelbrotUIView" destination="mj7-hv-MSt" id="qdT-AO-pdg"/>
+                        <outlet property="zoomedMandelbrotUIView" destination="Sbp-qQ-lxb" id="8dl-xT-VqP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLf-ah-are" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -109,6 +121,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
