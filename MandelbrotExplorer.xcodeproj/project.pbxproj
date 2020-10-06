@@ -156,9 +156,9 @@
 		90481D8924AFB91500DDACF9 /* MandelbrotSet */ = {
 			isa = PBXGroup;
 			children = (
+				905DA92F247C16D800B9DA71 /* MandelbrotSet.swift */,
 				906DAE5C247C4C3400A1A47F /* ComplexRect.swift */,
 				906DAE5E247C4C6000A1A47F /* MyComplex.swift */,
-				905DA92F247C16D800B9DA71 /* MandelbrotSet.swift */,
 				90481D8624AFA7E300DDACF9 /* MandelbrotSetFactory.swift */,
 				90BDEAB72496521700733DFC /* MandelbrotSetCPU.swift */,
 				90BDEAB9249664BA00733DFC /* MandelbrotSetGPU.swift */,
@@ -215,7 +215,6 @@
 			children = (
 				90481D8B24AFB96D00DDACF9 /* MandelbrotDisplay */,
 				90481D8A24AFB93A00DDACF9 /* Deprecated */,
-				90481D8924AFB91500DDACF9 /* MandelbrotSet */,
 				90481D8824AFB8FF00DDACF9 /* Views */,
 				905DA903247C16A300B9DA71 /* AppDelegate.swift */,
 				905DA905247C16A300B9DA71 /* ViewController.swift */,
@@ -255,6 +254,7 @@
 		908C7B44252A69FA003D803B /* MandelbrotExplorer Shared */ = {
 			isa = PBXGroup;
 			children = (
+				90481D8924AFB91500DDACF9 /* MandelbrotSet */,
 			);
 			path = "MandelbrotExplorer Shared";
 			sourceTree = "<group>";
