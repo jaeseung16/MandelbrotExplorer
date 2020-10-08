@@ -22,6 +22,7 @@ class MandelbrotDisplayIPad {
     var mandelbrotImage: UIImage?
     
     var id: MandelbrotID?
+    var color: CGColor?
     
     init(sideLength: Int) {
         self.sideLength = sideLength + 1
@@ -105,9 +106,13 @@ class MandelbrotDisplayIPad {
             print("self.mandelbrotSet is null")
             return
         }
-        
         print("mandelbrotSet = \(mandelbrotSet)")
-        self.mandelbrotImage = UIImage(cgImage: mandelbrotSet.cgImage)
+        
+        let cgColor = CGColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        let mandelbrotImageGenerator = MandelbrotImageGenerator(cgColor: cgColor)
+        mandelbrotImageGenerator.generateCGImage(values: mandelbrotSet.values, lengthOfRow: Int(sqrt(Double(mandelbrotSet.values.count))))
+        
+        self.mandelbrotImage = UIImage(cgImage: mandelbrotImageGenerator.cgImage)
     }
     
 }

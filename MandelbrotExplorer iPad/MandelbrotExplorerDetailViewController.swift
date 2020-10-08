@@ -23,10 +23,14 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     let defaultMandelbrotRect = ComplexRect(Complex<Double>(-2.1, -1.5), Complex<Double>(0.9, 1.5))
     var zoomedMandelbrotRect: ComplexRect?
     
+    var mandelbrotImageGenerator: MandelbrotImageGenerator?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
         initializeDefaultMandelbrotDisplay()
+        
         
         initializeDefaultMandelbrotView()
         
@@ -41,6 +45,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         defaultMandelbrotDisplay?.id = MandelbrotID.first
         defaultMandelbrotDisplay?.mandelbrotRect = defaultMandelbrotRect
         defaultMandelbrotDisplay?.generateMandelbrotSet()
+        defaultMandelbrotDisplay?.color = CGColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0)
     }
     
     func initializeDefaultMandelbrotView() {

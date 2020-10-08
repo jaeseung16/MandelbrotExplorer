@@ -155,7 +155,7 @@ class MandelbrotUIView: UIView {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touchesEnded: \(touches) \(event)");
+        print("touchesEnded");
 
         guard let touch = touches.first else {
             return
