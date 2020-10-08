@@ -98,41 +98,86 @@ class MandelbrotUIView: UIView {
         bpath.stroke()
     }
     
-    /*
-    
-    override func mouseDragged(with event: UIEvent) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        
+        print("touchesBegan: \(touch)")
+        
         guard let rect = selectRect else {
             return
         }
         
-        if (NSColor.yellow == selectRectColor) {
-            selectRect?.origin = CGPoint(x: rect.origin.x + event.deltaX, y: rect.origin.y - event.deltaY)
-            //delegate?.update(rect: selectRect)
-            self.needsDisplay = true
+        let touchLocation = touch.location(in: self)
+        
+        print("rect: \(rect)")
+        print("touchLocation: \(touchLocation)")
+        print("rect.contains(touchLocation)? \((rect.contains(touchLocation)))")
+        
+        if (rect.contains(touchLocation)) {
+            selectRectColor = UIColor.yellow
+            self.setNeedsDisplay()
         }
-    }
-    
-    override func mouseDown(with event: NSEvent) {
+        
+        /*
         guard let rect = selectRect, let rectInWindow = self.superview?.convert(rect, to: nil) else {
             return
         }
         
         if (rectInWindow.contains(event.locationInWindow)) {
-            selectRectColor = NSColor.yellow
-            self.needsDisplay = true
-        }
+            selectRectColor = UIColor.yellow
+            self.setNeedsDisplay()
+        }*/
     }
     
-    override func mouseUp(with event: NSEvent) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchesMoved")
+        
+        guard let touch = touches.first else {
+            return
+        }
+        
         guard let rect = selectRect else {
             return
         }
         
-        if (NSColor.yellow == selectRectColor) {
-            selectRectColor = NSColor.white
-            delegate?.update(rect: rect, in: self.id!)
-            self.needsDisplay = true
+        let touchLocation = touch.location(in: self)
+        let previousLocation = touch.previousLocation(in: self)
+        
+        if (rect.contains(previousLocation) && bounds.contains(touchLocation)) {
+            if (UIColor.yellow == selectRectColor) {
+                let delta = CGPoint(x: touchLocation.x - previousLocation.x, y: touchLocation.y - previousLocation.y)
+                selectRect?.origin = CGPoint(x: rect.origin.x + delta.x, y: rect.origin.y + delta.y)
+                self.setNeedsDisplay()
+            }            
         }
     }
-     */
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchesEnded: \(touches) \(event)");
+
+        guard let touch = touches.first else {
+            return
+        }
+        
+        guard let rect = selectRect else {
+            return
+        }
+        
+        let touchLocation = touch.location(in: self)
+        let previousLocation = touch.previousLocation(in: self)
+        
+        print("touch.location(in: self)): \(touch.location(in: self)))")
+        
+        if (rect.contains(previousLocation) && bounds.contains(touchLocation)) {
+            if (UIColor.yellow == selectRectColor) {
+                let delta = CGPoint(x: touchLocation.x - previousLocation.x, y: touchLocation.y - previousLocation.y)
+                selectRect?.origin = CGPoint(x: rect.origin.x + delta.x, y: rect.origin.y + delta.y)
+                selectRectColor = UIColor.white
+                delegate?.update(rect: rect, in: self.id!)
+                self.setNeedsDisplay()
+            }
+        }
+    }
 }

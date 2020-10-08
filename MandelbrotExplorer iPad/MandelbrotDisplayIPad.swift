@@ -42,13 +42,13 @@ class MandelbrotDisplayIPad {
         let displaySize = CGSize(width: sideLength - 1, height: sideLength - 1)
         for x in 0..<sideLength {
             for y in 0..<sideLength {
-                zs[y * sideLength + x] = viewCoordinatesToComplexCoordinates(x: Double(x), y: Double(y), displaySize: displaySize)
+                zs[y * sideLength + x] = viewCoordinatesToComplexCoordinates(x: Double(x), y: Double((sideLength - 1 - y)), displaySize: displaySize)
             }
         }
         
         let timeToPrepare = Date()
         
-        mandelbrotSet = MandelbrotSetCPU(inZs: zs, inMaxIter: 200)
+        mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(inZs: zs, inMaxIter: 200)
         mandelbrotSet?.calculate()
         
         let timeToCalculate = Date()
@@ -94,6 +94,8 @@ class MandelbrotDisplayIPad {
         let tl = viewCoordinatesToComplexCoordinates(x: Double(rect.minX), y: Double(rect.minY), displaySize: CGSize(width: sideLength, height: sideLength))
         let br = viewCoordinatesToComplexCoordinates(x: Double(rect.maxX), y: Double(rect.maxY), displaySize: CGSize(width: sideLength, height: sideLength))
         
+        print("tl = \(tl)")
+        print("br = \(br)")
         child.mandelbrotRect = ComplexRect(tl, br)
         child.generateMandelbrotSet()
     }

@@ -45,7 +45,10 @@
 		90B944462485C1A7005BDC10 /* MandelbrotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B944452485C1A7005BDC10 /* MandelbrotView.swift */; };
 		90BDEAB82496521700733DFC /* MandelbrotSetCPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BDEAB72496521700733DFC /* MandelbrotSetCPU.swift */; };
 		90BDEABA249664BA00733DFC /* MandelbrotSetGPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BDEAB9249664BA00733DFC /* MandelbrotSetGPU.swift */; };
+		90C68D96252E8DF1005EF916 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 900FB59B2487065000695AD4 /* Shaders.metal */; };
 		90E9D36124A90F5900FCB3A4 /* MandelbrotID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E9D36024A90F5900FCB3A4 /* MandelbrotID.swift */; };
+		90FB74C6252E8A63005B0F83 /* MandelbrotSetGPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BDEAB9249664BA00733DFC /* MandelbrotSetGPU.swift */; };
+		90FB74CB252E8A66005B0F83 /* MandelbrotSetFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90481D8624AFA7E300DDACF9 /* MandelbrotSetFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -362,7 +365,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Jae Seung Lee";
 				TargetAttributes = {
 					905DA8FF247C16A300B9DA71 = {
@@ -491,8 +494,11 @@
 				90898F48252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift in Sources */,
 				908C7BC7252A74D2003D803B /* AppDelegateIPad.swift in Sources */,
 				90898F4D252BDD380084ACB4 /* MandelbrotID.swift in Sources */,
+				90FB74C6252E8A63005B0F83 /* MandelbrotSetGPU.swift in Sources */,
 				90898F5D252BDEAF0084ACB4 /* MandelbrotSetCPU.swift in Sources */,
 				905C80D3252D2C94003B5954 /* MandelbrotViewDelegate.swift in Sources */,
+				90C68D96252E8DF1005EF916 /* Shaders.metal in Sources */,
+				90FB74CB252E8A66005B0F83 /* MandelbrotSetFactory.swift in Sources */,
 				908C7BD1252A74D2003D803B /* MandelbrotExplorer_iPad.xcdatamodeld in Sources */,
 				90898F42252BDC050084ACB4 /* ComplexRect.swift in Sources */,
 				908C7BC9252A74D2003D803B /* SceneDelegate.swift in Sources */,
@@ -571,6 +577,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -631,6 +638,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -663,6 +671,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MandelbrotExplorer/MandelbrotExplorer.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = RWVTTVMWBE;
@@ -684,6 +693,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MandelbrotExplorer/MandelbrotExplorer.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = RWVTTVMWBE;
