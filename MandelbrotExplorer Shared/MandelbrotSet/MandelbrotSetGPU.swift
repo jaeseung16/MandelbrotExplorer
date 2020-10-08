@@ -136,7 +136,9 @@ class MandelbrotSetGPU: MandelbrotSet {
     
     private func prepareBlitCommandEncoder(for commandBuffer: MTLCommandBuffer) -> Void{
         let blitCommandEncoder = commandBuffer.makeBlitCommandEncoder()!
-        blitCommandEncoder.synchronize(resource: outputTexture)
+        #if os(macOS)
+            blitCommandEncoder.synchronize(resource: outputTexture)
+        #endif
         blitCommandEncoder.endEncoding()
     }
     
