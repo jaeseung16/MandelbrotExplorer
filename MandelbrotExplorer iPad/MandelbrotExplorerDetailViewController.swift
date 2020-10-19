@@ -14,6 +14,10 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     @IBOutlet weak var mandelbrotUIView: MandelbrotUIView!
     @IBOutlet weak var zoomedMandelbrotUIView: MandelbrotUIView!
     
+    @IBOutlet weak var redSlider: UISlider!
+    @IBOutlet weak var greenSlider: UISlider!
+    @IBOutlet weak var blueSlider: UISlider!
+    
     var defaultMandelbrotDisplay: MandelbrotDisplayIPad?
     var zoomedMandelbrotDisplay: MandelbrotDisplayIPad?
     
@@ -31,7 +35,6 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         
         initializeDefaultMandelbrotDisplay()
         
-        
         initializeDefaultMandelbrotView()
         
         initializeZoomedMandelbrotDisplay()
@@ -42,10 +45,10 @@ class MandelbrotExplorerDetailViewController: UIViewController {
 
     func initializeDefaultMandelbrotDisplay() {
         defaultMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength)
+        defaultMandelbrotDisplay?.color = CGColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0)
         defaultMandelbrotDisplay?.id = MandelbrotID.first
         defaultMandelbrotDisplay?.mandelbrotRect = defaultMandelbrotRect
         defaultMandelbrotDisplay?.generateMandelbrotSet()
-        defaultMandelbrotDisplay?.color = CGColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0)
     }
     
     func initializeDefaultMandelbrotView() {
@@ -59,6 +62,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     
     func initializeZoomedMandelbrotDisplay() -> Void {
         zoomedMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength)
+        zoomedMandelbrotDisplay?.color = CGColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0)
         zoomedMandelbrotDisplay?.id = MandelbrotID.second
         
         defaultMandelbrotDisplay?.child = zoomedMandelbrotDisplay
@@ -78,6 +82,14 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         mandelbrotUIView.mandelbrotRect = mandelbrotDisplayIPad.mandelbrotRect
         mandelbrotUIView.rectScale = (defaultMandelbrotRect.maxReal - defaultMandelbrotRect.minReal) / (mandelbrotUIView.mandelbrotRect.maxReal - mandelbrotUIView.mandelbrotRect.minReal)
     }
+    
+    
+    @IBAction func refreshColor(_ sender: UIButton) {
+        defaultMandelbrotDisplay?.color = CGColor(red: CGFloat(redSlider.value), green: CGFloat(greenSlider.value), blue: CGFloat(blueSlider.value), alpha: 1.0)
+        defaultMandelbrotDisplay?.generateMandelbrotSet()
+        mandelbrotUIView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
+    }
+    
 }
 
 extension MandelbrotExplorerDetailViewController: MandelbrotViewDelegate {

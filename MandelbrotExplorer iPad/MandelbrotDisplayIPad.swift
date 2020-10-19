@@ -37,7 +37,7 @@ class MandelbrotDisplayIPad {
     
     func generateMandelbrotSet() -> Void {
         print("MandelbrotDisplay.generateMandelbrotSet() called for \(mandelbrotRect) with sideLength = \(sideLength)")
-        
+        print("color = \(color)")
         let startTime = Date()
         
         let displaySize = CGSize(width: sideLength - 1, height: sideLength - 1)
@@ -107,9 +107,8 @@ class MandelbrotDisplayIPad {
             return
         }
         print("mandelbrotSet = \(mandelbrotSet)")
-        
-        let cgColor = CGColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
-        let mandelbrotImageGenerator = MandelbrotImageGenerator(cgColor: cgColor)
+        print("color = \(color)")
+        let mandelbrotImageGenerator = MandelbrotImageGenerator(cgColor: color!)
         mandelbrotImageGenerator.generateCGImage(values: mandelbrotSet.values, lengthOfRow: Int(sqrt(Double(mandelbrotSet.values.count))))
         
         self.mandelbrotImage = UIImage(cgImage: mandelbrotImageGenerator.cgImage)
