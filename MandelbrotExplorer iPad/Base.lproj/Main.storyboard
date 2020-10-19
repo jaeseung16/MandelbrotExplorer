@@ -8,6 +8,22 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="yxO-E9-lFl">
+            <objects>
+                <navigationController id="eZj-dq-xre" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="dIp-DI-bTl">
+                        <rect key="frame" x="0.0" y="0.0" width="1045.5" height="50"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="cFm-AQ-jEn" kind="relationship" relationship="rootViewController" id="5ZH-oa-hcG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0kh-ed-fgY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1050" y="49"/>
+        </scene>
         <!--Mandelbrot Explorer Detail View Controller-->
         <scene sceneID="8E8-jq-MOS">
             <objects>
@@ -33,10 +49,10 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gmr-HU-c3g">
-                                <rect key="frame" x="312.5" y="818" width="524" height="90"/>
+                                <rect key="frame" x="276.5" y="818" width="596" height="90"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qbc-MJ-a6X">
-                                        <rect key="frame" x="0.0" y="0.0" width="524" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="596" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="R" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r4Y-YB-EBz">
                                                 <rect key="frame" x="0.0" y="0.0" width="11" height="30"/>
@@ -45,12 +61,12 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="3C0-BL-glu">
-                                                <rect key="frame" x="9" y="0.0" width="517" height="31"/>
+                                                <rect key="frame" x="9" y="0.0" width="589" height="31"/>
                                             </slider>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R8E-jh-Wsy">
-                                        <rect key="frame" x="0.0" y="30" width="524" height="30"/>
+                                        <rect key="frame" x="0.0" y="30" width="596" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="G" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HNM-UV-byJ">
                                                 <rect key="frame" x="0.0" y="0.0" width="12.5" height="30"/>
@@ -59,12 +75,12 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="PAu-U8-vQD">
-                                                <rect key="frame" x="10.5" y="0.0" width="515.5" height="31"/>
+                                                <rect key="frame" x="10.5" y="0.0" width="587.5" height="31"/>
                                             </slider>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBp-W8-UA3">
-                                        <rect key="frame" x="0.0" y="60" width="524" height="30"/>
+                                        <rect key="frame" x="0.0" y="60" width="596" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="B" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="got-4R-m5C">
                                                 <rect key="frame" x="0.0" y="0.0" width="11" height="30"/>
@@ -73,14 +89,14 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="VGk-so-Nhq">
-                                                <rect key="frame" x="9" y="0.0" width="517" height="31"/>
+                                                <rect key="frame" x="9" y="0.0" width="589" height="31"/>
                                             </slider>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gb-eW-arE">
-                                <rect key="frame" x="312.5" y="925" width="524" height="30"/>
+                                <rect key="frame" x="276.5" y="925" width="596" height="30"/>
                                 <state key="normal" title="Referesh Color"/>
                                 <connections>
                                     <action selector="refreshColor:" destination="cFm-AQ-jEn" eventType="touchUpInside" id="Ooh-nS-EIa"/>
@@ -103,6 +119,16 @@
                             <constraint firstItem="XUf-xq-E5R" firstAttribute="bottom" secondItem="7gb-eW-arE" secondAttribute="bottom" constant="49" id="wTo-og-M62"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="dGv-ba-XV0">
+                        <leftBarButtonItems>
+                            <barButtonItem title="Save" id="IpR-b2-yEH"/>
+                            <barButtonItem title="Reset" id="DY3-Kk-N73">
+                                <connections>
+                                    <action selector="reset:" destination="cFm-AQ-jEn" id="rQH-Fh-820"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="blueSlider" destination="VGk-so-Nhq" id="Uxz-de-NV9"/>
                         <outlet property="greenSlider" destination="PAu-U8-vQD" id="tXX-uh-098"/>
@@ -113,7 +139,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLf-ah-are" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1050.2196193265006" y="8.7890625"/>
+            <point key="canvasLocation" x="-362" y="49"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="0sx-oa-oJD">
@@ -173,9 +199,10 @@
         <scene sceneID="OiZ-s0-DrN">
             <objects>
                 <splitViewController allowDoubleColumnStyle="YES" id="UvU-kE-sml" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Fe0-v3-4Lf"/>
                     <connections>
                         <segue destination="EMb-Hg-kWU" kind="relationship" relationship="masterViewController" id="tcT-fV-gac"/>
-                        <segue destination="cFm-AQ-jEn" kind="relationship" relationship="detailViewController" id="tjG-Ia-dv8"/>
+                        <segue destination="eZj-dq-xre" kind="relationship" relationship="detailViewController" id="bDl-ua-ETo"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ys7-MK-bo9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

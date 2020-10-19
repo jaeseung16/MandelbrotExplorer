@@ -9,7 +9,17 @@
 import UIKit
 
 class MandelbrotUIView: UIView {
-    var selectRect: CGRect?
+    var _selectRect: CGRect?
+    var selectRect: CGRect {
+        set {
+            _selectRect = newValue
+            self.setNeedsDisplay()
+        }
+        get {
+            return _selectRect!
+        }
+    }
+    
     var selectRectColor = UIColor.white
     
     var id: MandelbrotID?
@@ -88,7 +98,7 @@ class MandelbrotUIView: UIView {
         // Drawing code here.
         mandelbrotImage?.draw(in: dirtyRect)
        
-        guard let rect = selectRect else {
+        guard let rect = _selectRect else {
             return
         }
         
@@ -105,7 +115,7 @@ class MandelbrotUIView: UIView {
         
         print("touchesBegan: \(touch)")
         
-        guard let rect = selectRect else {
+        guard let rect = _selectRect else {
             return
         }
         
@@ -138,7 +148,7 @@ class MandelbrotUIView: UIView {
             return
         }
         
-        guard let rect = selectRect else {
+        guard let rect = _selectRect else {
             return
         }
         
@@ -148,7 +158,7 @@ class MandelbrotUIView: UIView {
         if (rect.contains(previousLocation) && bounds.contains(touchLocation)) {
             if (UIColor.yellow == selectRectColor) {
                 let delta = CGPoint(x: touchLocation.x - previousLocation.x, y: touchLocation.y - previousLocation.y)
-                selectRect?.origin = CGPoint(x: rect.origin.x + delta.x, y: rect.origin.y + delta.y)
+                _selectRect?.origin = CGPoint(x: rect.origin.x + delta.x, y: rect.origin.y + delta.y)
                 self.setNeedsDisplay()
             }            
         }
@@ -161,7 +171,7 @@ class MandelbrotUIView: UIView {
             return
         }
         
-        guard let rect = selectRect else {
+        guard let rect = _selectRect else {
             return
         }
         
@@ -173,7 +183,7 @@ class MandelbrotUIView: UIView {
         if (rect.contains(previousLocation) && bounds.contains(touchLocation)) {
             if (UIColor.yellow == selectRectColor) {
                 let delta = CGPoint(x: touchLocation.x - previousLocation.x, y: touchLocation.y - previousLocation.y)
-                selectRect?.origin = CGPoint(x: rect.origin.x + delta.x, y: rect.origin.y + delta.y)
+                _selectRect?.origin = CGPoint(x: rect.origin.x + delta.x, y: rect.origin.y + delta.y)
                 selectRectColor = UIColor.white
                 delegate?.update(rect: rect, in: self.id!)
                 self.setNeedsDisplay()

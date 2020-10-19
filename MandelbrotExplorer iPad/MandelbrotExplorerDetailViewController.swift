@@ -66,7 +66,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         zoomedMandelbrotDisplay?.id = MandelbrotID.second
         
         defaultMandelbrotDisplay?.child = zoomedMandelbrotDisplay
-        defaultMandelbrotDisplay?.updateChild(rect: mandelbrotUIView.selectRect!)
+        defaultMandelbrotDisplay?.updateChild(rect: mandelbrotUIView.selectRect)
     }
     
     func initializeZoomedMandelbrotView() -> Void {
@@ -90,6 +90,13 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         mandelbrotUIView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
     }
     
+    @IBAction func reset(_ sender: UIBarButtonItem) {
+        mandelbrotUIView.selectRect = CGRect(x: 70, y: 176, width: 32, height: 32)
+        
+        defaultMandelbrotDisplay?.updateChild(rect: mandelbrotUIView.selectRect)
+        
+        update(mandelbrotUIView: zoomedMandelbrotUIView, with: zoomedMandelbrotDisplay!)
+    }
 }
 
 extension MandelbrotExplorerDetailViewController: MandelbrotViewDelegate {
