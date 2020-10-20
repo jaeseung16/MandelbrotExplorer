@@ -86,6 +86,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     
     @IBAction func refreshColor(_ sender: UIButton) {
         defaultMandelbrotDisplay?.color = CGColor(red: CGFloat(redSlider.value), green: CGFloat(greenSlider.value), blue: CGFloat(blueSlider.value), alpha: 1.0)
+        defaultMandelbrotDisplay?.colorMap = nil
         defaultMandelbrotDisplay?.generateMandelbrotSet()
         mandelbrotUIView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
     }
@@ -97,6 +98,14 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         
         update(mandelbrotUIView: zoomedMandelbrotUIView, with: zoomedMandelbrotDisplay!)
     }
+    
+    @IBAction func refreshColorWithParula256(_ sender: UIButton) {
+        defaultMandelbrotDisplay?.colorMap = Parula256.colors
+        defaultMandelbrotDisplay?.color = nil
+        defaultMandelbrotDisplay?.generateMandelbrotSet()
+        mandelbrotUIView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
+    }
+    
 }
 
 extension MandelbrotExplorerDetailViewController: MandelbrotViewDelegate {

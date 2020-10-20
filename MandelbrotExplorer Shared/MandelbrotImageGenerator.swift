@@ -26,10 +26,15 @@ class MandelbrotImageGenerator {
         }
     }
     
-    var cgColor: CGColor
+    var cgColor: CGColor?
+    var cgColors: [CGColor]?
     
     init(cgColor: CGColor) {
         self.cgColor = cgColor
+    }
+    
+    init(cgColors: [CGColor]) {
+        self.cgColors = cgColors
     }
     
     private func generateCGImage(from mtlTexture: MTLTexture) -> Void {
@@ -49,9 +54,11 @@ class MandelbrotImageGenerator {
         for x in 0..<lengthOfRow {
             for y in 0..<lengthOfRow {
                 let value = values[y * lengthOfRow + x]
-                let colorSIMD4 = cgColor.components!.map { UInt8($0 * CGFloat(value)) }
                 
-                imgBytes[(lengthOfRow - y - 1) * lengthOfRow + x] = SIMD4<UInt8>(x: colorSIMD4[0], y: colorSIMD4[1], z: colorSIMD4[2], w: UInt8(cgColor.alpha * CGFloat(UInt8.max)))
+                let color = cgColors?[value] ?? cgColor
+                let colorSIMD4 = color!.components!.map { UInt8($0 * CGFloat(value)) }
+                
+                imgBytes[(lengthOfRow - y - 1) * lengthOfRow + x] = SIMD4<UInt8>(x: colorSIMD4[0], y: colorSIMD4[1], z: colorSIMD4[2], w: UInt8(color!.alpha * CGFloat(UInt8.max)))
             }
         }
         
