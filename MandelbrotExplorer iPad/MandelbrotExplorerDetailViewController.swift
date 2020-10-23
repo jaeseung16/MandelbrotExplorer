@@ -45,7 +45,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
 
     func initializeDefaultMandelbrotDisplay() {
         defaultMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength)
-        defaultMandelbrotDisplay?.color = CGColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0)
+        defaultMandelbrotDisplay?.color = SIMD4<Float>(x: 0.0, y: 1.0, z: 0.0, w: 1.0)
         defaultMandelbrotDisplay?.id = MandelbrotID.first
         defaultMandelbrotDisplay?.mandelbrotRect = defaultMandelbrotRect
         defaultMandelbrotDisplay?.generateMandelbrotSet()
@@ -62,7 +62,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     
     func initializeZoomedMandelbrotDisplay() -> Void {
         zoomedMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength)
-        zoomedMandelbrotDisplay?.color = CGColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0)
+        zoomedMandelbrotDisplay?.color = SIMD4<Float>(x: 0.0, y: 1.0, z: 0.0, w: 1.0)
         zoomedMandelbrotDisplay?.id = MandelbrotID.second
         
         defaultMandelbrotDisplay?.child = zoomedMandelbrotDisplay
@@ -85,7 +85,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     
     
     @IBAction func refreshColor(_ sender: UIButton) {
-        defaultMandelbrotDisplay?.color = CGColor(red: CGFloat(redSlider.value), green: CGFloat(greenSlider.value), blue: CGFloat(blueSlider.value), alpha: 1.0)
+        defaultMandelbrotDisplay?.color = SIMD4<Float>(x: redSlider.value, y: greenSlider.value, z: blueSlider.value, w: 1.0)
         defaultMandelbrotDisplay?.colorMap = nil
         defaultMandelbrotDisplay?.generateMandelbrotSet()
         mandelbrotUIView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
@@ -100,7 +100,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     }
     
     @IBAction func refreshColorWithParula256(_ sender: UIButton) {
-        defaultMandelbrotDisplay?.colorMap = Parula256.colors
+        defaultMandelbrotDisplay?.colorMap = Parula256.colorsInSIMD4
         defaultMandelbrotDisplay?.color = nil
         defaultMandelbrotDisplay?.generateMandelbrotSet()
         mandelbrotUIView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage

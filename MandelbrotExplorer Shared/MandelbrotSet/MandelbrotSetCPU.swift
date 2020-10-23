@@ -12,9 +12,9 @@ import ComplexModule
 
 class MandelbrotSetCPU: MandelbrotSet {
     private let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
-    private let bitmapInfo:CGBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
-    private let bitsPerComponent: Int = 8
-    private let bitsPerPixel: Int = 32
+    private let bitmapInfo:CGBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.last.rawValue)
+    private let bitsPerComponent: Int = 32
+    private let bitsPerPixel: Int = 128
     
     private var _zs: [Complex<Double>]
     var zs: [Complex<Double>] {
@@ -56,13 +56,15 @@ class MandelbrotSetCPU: MandelbrotSet {
         }
     }
     
-    var imgBytes: [SIMD4<UInt8>]
+    var imgBytes: [SIMD4<Float>]
+    var colorMap: [SIMD4<Float>]
     
-    init(inZs: [Complex<Double>], inMaxIter: Int) {
+    init(inZs: [Complex<Double>], inMaxIter: Int, inColorMap: [SIMD4<Float>]) {
         _zs = inZs
         _maxIter = inMaxIter
         _values = [Int](repeating: 0, count: _zs.count)
-        imgBytes = [SIMD4<UInt8>](repeating: SIMD4<UInt8>(x: 0, y: 0, z: 0, w: 255), count: _zs.count)
+        imgBytes = [SIMD4<Float>](repeating: SIMD4<Float>(x: 0.0, y: 0.0, z: 0.0, w: 1.0), count: _zs.count)
+        colorMap = inColorMap
 
         calculate()
         generateCGImage(lengthOfRow: Int(sqrt(Double(values.count))))
@@ -92,19 +94,19 @@ class MandelbrotSetCPU: MandelbrotSet {
     private func generateCGImage(lengthOfRow: Int) -> Void {
         for x in 0..<lengthOfRow {
             for y in 0..<lengthOfRow {
-                let value = values[y * lengthOfRow + x]
-                imgBytes[(lengthOfRow - y - 1) * lengthOfRow + x] = SIMD4<UInt8>(x: UInt8(0), y: UInt8(value), z: UInt8(0), w: UInt8(255))
+                let index = values[y * lengthOfRow + x]
+                imgBytes[(lengthOfRow - y - 1) * lengthOfRow + x] = colorMap[index]
             }
         }
         
-        let imgData = NSData(bytes: &imgBytes, length: imgBytes.count * MemoryLayout<SIMD4<UInt8>>.size)
+        let imgData = NSData(bytes: &imgBytes, length: imgBytes.count * MemoryLayout<SIMD4<Float>>.size)
         let providerRef = CGDataProvider(data: imgData)
         
         _cgImage = CGImage(width: lengthOfRow,
                            height: lengthOfRow,
                            bitsPerComponent: bitsPerComponent,
                            bitsPerPixel: bitsPerPixel,
-                           bytesPerRow: lengthOfRow * MemoryLayout<SIMD4<UInt8>>.size,
+                           bytesPerRow: lengthOfRow * MemoryLayout<SIMD4<Float>>.size,
                            space: rgbColorSpace,
                            bitmapInfo: bitmapInfo,
                            provider: providerRef!,

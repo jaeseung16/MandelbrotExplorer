@@ -22,8 +22,8 @@ class MandelbrotDisplayIPad {
     var mandelbrotImage: UIImage?
     
     var id: MandelbrotID?
-    var color: CGColor?
-    var colorMap: [CGColor]?
+    var color: SIMD4<Float>?
+    var colorMap: [SIMD4<Float>]?
     
     init(sideLength: Int) {
         self.sideLength = sideLength + 1
@@ -38,8 +38,6 @@ class MandelbrotDisplayIPad {
     
     func generateMandelbrotSet() -> Void {
         print("MandelbrotDisplay.generateMandelbrotSet() called for \(mandelbrotRect) with sideLength = \(sideLength)")
-        print("color = \(color)")
-        print("colorMap = \(colorMap)")
         let startTime = Date()
         
         let displaySize = CGSize(width: sideLength - 1, height: sideLength - 1)
@@ -51,7 +49,17 @@ class MandelbrotDisplayIPad {
         
         let timeToPrepare = Date()
         
-        mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(inZs: zs, inMaxIter: 200)
+        if (colorMap == nil) {
+            colorMap = [SIMD4<Float>]()
+            for k in 0..<256 {
+                let factor = Float(k) / 255
+                var colorToAdd = SIMD4<Float>(factor * color!)
+                colorToAdd.w = 1.0
+                colorMap!.append(colorToAdd)
+            }
+        }
+        
+        mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(inZs: zs, inMaxIter: 200, inColorMap: colorMap!)
         mandelbrotSet?.calculate()
         
         let timeToCalculate = Date()
@@ -109,14 +117,14 @@ class MandelbrotDisplayIPad {
             return
         }
         print("mandelbrotSet = \(mandelbrotSet)")
-        print("color = \(color)")
-        print("colorMap = \(colorMap)")
+        //print("color = \(color)")
+        //print("colorMap = \(colorMap)")
         
         let mandelbrotImageGenerator: MandelbrotImageGenerator
         if (colorMap != nil) {
             mandelbrotImageGenerator = MandelbrotImageGenerator(cgColors: colorMap!)
         } else {
-            mandelbrotImageGenerator = MandelbrotImageGenerator(cgColor: color!)
+            mandelbrotImageGenerator = MandelbrotImageGenerator(cgColor: ColorConverter.toCGColor(inSIMD4: color!))
         }
         
         mandelbrotImageGenerator.generateCGImage(values: mandelbrotSet.values, lengthOfRow: Int(sqrt(Double(mandelbrotSet.values.count))))

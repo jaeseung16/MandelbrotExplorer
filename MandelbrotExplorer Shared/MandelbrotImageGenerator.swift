@@ -12,9 +12,9 @@ import CoreImage
 
 class MandelbrotImageGenerator {
     private let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
-    private let bitmapInfo:CGBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
-    private let bitsPerComponent: Int = 8
-    private let bitsPerPixel: Int = 32
+    private let bitmapInfo: CGBitmapInfo = CGBitmapInfo(rawValue:  CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Little.rawValue | CGBitmapInfo.floatComponents.rawValue)
+    private let bitsPerComponent: Int = 32
+    private let bitsPerPixel: Int = 128
     
     private var _cgImage: CGImage?
     var cgImage: CGImage {
@@ -27,13 +27,13 @@ class MandelbrotImageGenerator {
     }
     
     var cgColor: CGColor?
-    var cgColors: [CGColor]?
+    var cgColors: [SIMD4<Float>]?
     
     init(cgColor: CGColor) {
         self.cgColor = cgColor
     }
     
-    init(cgColors: [CGColor]) {
+    init(cgColors: [SIMD4<Float>]) {
         self.cgColors = cgColors
     }
     
@@ -49,32 +49,32 @@ class MandelbrotImageGenerator {
     }
     
     func generateCGImage(values: [Int], lengthOfRow: Int) -> Void {
-        var imgBytes = [SIMD4<UInt8>](repeating: SIMD4<UInt8>(x: 0, y: 0, z: 0, w: 255), count: values.count)
+        var imgBytes = [SIMD4<Float>](repeating: SIMD4<Float>(x: 0.0, y: 0.0, z: 0.0, w: 1.0), count: values.count)
+        
+        print("cgColors = \(cgColors)")
         
         for x in 0..<lengthOfRow {
             for y in 0..<lengthOfRow {
-                let value = values[y * lengthOfRow + x]
-                
-                let color = cgColors?[value] ?? cgColor
-                let colorSIMD4 = color!.components!.map { UInt8($0 * CGFloat(value)) }
-                
-                imgBytes[(lengthOfRow - y - 1) * lengthOfRow + x] = SIMD4<UInt8>(x: colorSIMD4[0], y: colorSIMD4[1], z: colorSIMD4[2], w: UInt8(color!.alpha * CGFloat(UInt8.max)))
+                let index = values[y * lengthOfRow + x]
+                imgBytes[(lengthOfRow - y - 1) * lengthOfRow + x] = cgColors![index]
             }
         }
         
-        let imgData = NSData(bytes: &imgBytes, length: imgBytes.count * MemoryLayout<SIMD4<UInt8>>.size)
+        let imgData = NSData(bytes: &imgBytes, length: imgBytes.count * MemoryLayout<SIMD4<Float>>.size)
         let providerRef = CGDataProvider(data: imgData)
         
         _cgImage = CGImage(width: lengthOfRow,
                            height: lengthOfRow,
                            bitsPerComponent: bitsPerComponent,
                            bitsPerPixel: bitsPerPixel,
-                           bytesPerRow: lengthOfRow * MemoryLayout<SIMD4<UInt8>>.size,
+                           bytesPerRow: lengthOfRow * MemoryLayout<SIMD4<Float>>.size,
                            space: rgbColorSpace,
                            bitmapInfo: bitmapInfo,
                            provider: providerRef!,
                            decode: nil,
                            shouldInterpolate: true,
                            intent: CGColorRenderingIntent.defaultIntent)
+        
+        print("bitmapInfo = \(_cgImage!.bitmapInfo)")
     }
 }

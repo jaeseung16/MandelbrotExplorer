@@ -115,6 +115,7 @@ kernel void sigmoid(const device float *inVector [[ buffer(0) ]],
 
 kernel void mandelbrot(texture2d<float, access::read> inTexture [[ texture(0) ]],
                        texture2d<float, access::write> outTexture [[ texture(1) ]],
+                       texture1d<float, access::read> valueTexture [[ texture(2) ]],
                        uint2 id [[ thread_position_in_grid ]]) {
     // Check if the pixel is within the bounds of the output texture
     if((id.x >= outTexture.get_width()) || (id.y >= outTexture.get_height()))
@@ -138,6 +139,7 @@ kernel void mandelbrot(texture2d<float, access::read> inTexture [[ texture(0) ]]
         z_imag = new_imag;
     }
    
-    float value = (iter == 200) ? 0 : (float(iter) / 200.0);
-    outTexture.write(float4(0, value, 0, 1), id);
+    float index = (iter == 200) ? 0 : (float(iter) / 200.0);
+    float4 value = valueTexture.read(uint(index * 256.0));
+    outTexture.write(value, id);
 }

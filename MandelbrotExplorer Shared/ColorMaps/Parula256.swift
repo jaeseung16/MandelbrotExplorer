@@ -267,7 +267,14 @@ struct Parula256 {
                   CGColor(red: 0.9736, green: 0.9752, blue: 0.0597, alpha: 1.0),
                   CGColor(red: 0.9763, green: 0.9831, blue: 0.0538, alpha: 1.0)]
     
+    static var colorsInSIMD4: [SIMD4<Float>] {
+        get {
+            return Parula256.colors.map { ColorConverter.toSIMD4(inColor: $0) }
+        }
+    }
+    
     static func get(_ value: UInt8) -> CGColor? {
         return colors[Int(value)]
     }
+    
 }
