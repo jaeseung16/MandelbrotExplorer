@@ -17,12 +17,29 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="cFm-AQ-jEn" kind="relationship" relationship="rootViewController" id="5ZH-oa-hcG"/>
+                        <segue destination="P0I-UX-LMi" kind="relationship" relationship="rootViewController" id="uq4-Cc-8Tp"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0kh-ed-fgY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1050" y="49"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Gi1-pq-bAl">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wHn-sI-oiD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController id="zFm-3w-xFw" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="7rW-Md-NsW"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9KQ-mA-nr1">
+                        <rect key="frame" x="0.0" y="0.0" width="1045.5" height="50"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="cFm-AQ-jEn" kind="relationship" relationship="rootViewController" id="PTF-iz-wkh"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="337" y="49"/>
         </scene>
         <!--Mandelbrot Explorer Detail View Controller-->
         <scene sceneID="8E8-jq-MOS">
@@ -39,13 +56,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="540.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="R" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r4Y-YB-EBz">
-                                                <rect key="frame" x="0.0" y="0.0" width="11" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="26.5" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="3C0-BL-glu">
-                                                <rect key="frame" x="9" y="0.0" width="533.5" height="31"/>
+                                                <rect key="frame" x="24.5" y="0.0" width="518" height="31"/>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -53,13 +70,13 @@
                                         <rect key="frame" x="0.0" y="30" width="540.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="G" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HNM-UV-byJ">
-                                                <rect key="frame" x="0.0" y="0.0" width="12.5" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="PAu-U8-vQD">
-                                                <rect key="frame" x="10.5" y="0.0" width="532" height="31"/>
+                                                <rect key="frame" x="28" y="0.0" width="514.5" height="31"/>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -67,13 +84,13 @@
                                         <rect key="frame" x="0.0" y="60" width="540.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="B" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="got-4R-m5C">
-                                                <rect key="frame" x="0.0" y="0.0" width="11" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="26.5" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="VGk-so-Nhq">
-                                                <rect key="frame" x="9" y="0.0" width="533.5" height="31"/>
+                                                <rect key="frame" x="24.5" y="0.0" width="518" height="31"/>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -209,14 +226,19 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dGv-ba-XV0">
-                        <leftBarButtonItems>
-                            <barButtonItem title="Save" id="IpR-b2-yEH"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="dcv-tG-WL8">
+                            <connections>
+                                <action selector="cancel:" destination="cFm-AQ-jEn" id="TfK-3T-Sha"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
                             <barButtonItem title="Reset" id="DY3-Kk-N73">
                                 <connections>
                                     <action selector="reset:" destination="cFm-AQ-jEn" id="rQH-Fh-820"/>
                                 </connections>
                             </barButtonItem>
-                        </leftBarButtonItems>
+                            <barButtonItem title="Save" id="IpR-b2-yEH"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="blueSlider" destination="VGk-so-Nhq" id="Uxz-de-NV9"/>
@@ -228,7 +250,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLf-ah-are" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-362.37188872620789" y="48.6328125"/>
+            <point key="canvasLocation" x="1026" y="49"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="0sx-oa-oJD">
@@ -267,6 +289,28 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZrI-5y-TPa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-362" y="-645"/>
+        </scene>
+        <!--Mandelbrot Explorer Examine View Controller-->
+        <scene sceneID="1LZ-1T-Hmp">
+            <objects>
+                <viewController id="P0I-UX-LMi" customClass="MandelbrotExplorerExamineViewController" customModule="MandelbrotExplorer_iPad" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="027-K7-nW3">
+                        <rect key="frame" x="0.0" y="0.0" width="1045.5" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Bpx-LZ-j6q"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="jei-Wg-K46">
+                        <barButtonItem key="rightBarButtonItem" title="Explore" id="cSt-hJ-bc6">
+                            <connections>
+                                <segue destination="zFm-3w-xFw" kind="presentation" modalPresentationStyle="currentContext" modalTransitionStyle="coverVertical" id="uY7-ZC-Y9J"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zDx-Gm-FPP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-354" y="49"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qq8-TQ-Yqo">

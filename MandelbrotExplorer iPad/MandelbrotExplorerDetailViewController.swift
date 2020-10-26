@@ -136,6 +136,12 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         mandelbrotUIView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
     }
     
+    
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        //self.navigationController?.dismiss(animated: true)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension MandelbrotExplorerDetailViewController: MandelbrotViewDelegate {
