@@ -32,6 +32,10 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         initializeDefaultMandelbrotDisplay()
         
@@ -40,7 +44,6 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         initializeZoomedMandelbrotDisplay()
         
         initializeZoomedMandelbrotView()
-        
     }
 
     func initializeDefaultMandelbrotDisplay() {
@@ -55,7 +58,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         mandelbrotUIView.delegate = self
         mandelbrotUIView.id = MandelbrotID.first
         mandelbrotUIView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
-        mandelbrotUIView.selectRect = CGRect(x: 70, y: 176, width: 32, height: 32)
+        mandelbrotUIView.selectRect = toViewRect(displayRect: CGRect(x: 70, y: 176, width: 32, height: 32))
         mandelbrotUIView.mandelbrotRect = defaultMandelbrotRect
         mandelbrotUIView.rectScale = 1.0
     }
@@ -66,7 +69,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         zoomedMandelbrotDisplay?.id = MandelbrotID.second
         
         defaultMandelbrotDisplay?.child = zoomedMandelbrotDisplay
-        defaultMandelbrotDisplay?.updateChild(rect: mandelbrotUIView.selectRect)
+        defaultMandelbrotDisplay?.updateChild(rect: toDisplayRect(viewRect: mandelbrotUIView.selectRect))
     }
     
     func initializeZoomedMandelbrotView() -> Void {
@@ -83,6 +86,33 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         mandelbrotUIView.rectScale = (defaultMandelbrotRect.maxReal - defaultMandelbrotRect.minReal) / (mandelbrotUIView.mandelbrotRect.maxReal - mandelbrotUIView.mandelbrotRect.minReal)
     }
     
+    func toViewRect(displayRect: CGRect) -> CGRect {
+        let displaySideLength = defaultMandelbrotDisplay?.sideLength
+        let viewSideLength = mandelbrotUIView.sideLength
+        
+        let scale = CGFloat(viewSideLength) / CGFloat(displaySideLength!)
+        
+        print("displaySideLength = \(displaySideLength)")
+        print("viewSideLength = \(viewSideLength)")
+        print("displayRect = \(displayRect)")
+        print("viewRect = \(CGRect(x: scale * displayRect.origin.x, y: scale * displayRect.origin.y, width: scale * displayRect.width, height: scale * displayRect.height))")
+        
+        return CGRect(x: scale * displayRect.origin.x, y: scale * displayRect.origin.y, width: scale * displayRect.width, height: scale * displayRect.height)
+    }
+    
+    func toDisplayRect(viewRect: CGRect) -> CGRect {
+        let displaySideLength = defaultMandelbrotDisplay?.sideLength
+        let viewSideLength = mandelbrotUIView.sideLength
+        
+        let scale = CGFloat(displaySideLength!) / CGFloat(viewSideLength)
+        
+        print("displaySideLength = \(displaySideLength)")
+        print("viewSideLength = \(viewSideLength)")
+        print("viewRect = \(viewRect)")
+        print("displayRect = \(CGRect(x: scale * viewRect.origin.x, y: scale * viewRect.origin.y, width: scale * viewRect.width, height: scale * viewRect.height))")
+        
+        return CGRect(x: scale * viewRect.origin.x, y: scale * viewRect.origin.y, width: scale * viewRect.width, height: scale * viewRect.height)
+    }
     
     @IBAction func refreshColor(_ sender: UIButton) {
         defaultMandelbrotDisplay?.color = SIMD4<Float>(x: redSlider.value, y: greenSlider.value, z: blueSlider.value, w: 1.0)
@@ -92,9 +122,9 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     }
     
     @IBAction func reset(_ sender: UIBarButtonItem) {
-        mandelbrotUIView.selectRect = CGRect(x: 70, y: 176, width: 32, height: 32)
+        mandelbrotUIView.selectRect = toViewRect(displayRect: CGRect(x: 70, y: 176, width: 32, height: 32))
         
-        defaultMandelbrotDisplay?.updateChild(rect: mandelbrotUIView.selectRect)
+        defaultMandelbrotDisplay?.updateChild(rect: toDisplayRect(viewRect: mandelbrotUIView.selectRect))
         
         update(mandelbrotUIView: zoomedMandelbrotUIView, with: zoomedMandelbrotDisplay!)
     }
@@ -111,7 +141,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
 extension MandelbrotExplorerDetailViewController: MandelbrotViewDelegate {
     func update(rect: CGRect, in id: MandelbrotID) {
         if (id == MandelbrotID.first) {
-            defaultMandelbrotDisplay?.updateChild(rect: rect)
+            defaultMandelbrotDisplay?.updateChild(rect: toDisplayRect(viewRect: rect))
             update(mandelbrotUIView: zoomedMandelbrotUIView, with: zoomedMandelbrotDisplay!)
         }
     }

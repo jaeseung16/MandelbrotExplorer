@@ -92,6 +92,12 @@ class MandelbrotUIView: UIView {
         }
     }
     
+    var sideLength: Int {
+        get {
+            return Int(self.frame.width)
+        }
+    }
+    
     override func draw(_ dirtyRect: CGRect) {
         super.draw(dirtyRect)
 
@@ -102,6 +108,7 @@ class MandelbrotUIView: UIView {
             return
         }
         
+        print("rect = \(rect)")
         let bpath = UIBezierPath(rect: rect)
         bpath.lineWidth = 2.0
         selectRectColor.set()
