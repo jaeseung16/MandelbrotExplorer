@@ -15,9 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        if let splitViewController = window?.rootViewController as? UISplitViewController {
-            configure(splitViewController)
-        }
         return true
     }
 
@@ -80,26 +77,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-}
-
-extension AppDelegate {
-    func configure(_ splitViewController: UISplitViewController) {
-        let viewControllers = splitViewController.viewControllers
-        
-        print("viewControllers=\(viewControllers)")
-        
-        guard let navigationViewController = viewControllers.first as? UINavigationController else {
-            return
-        }
-        
-        print("navigationViewController=\(navigationViewController)")
-        
-        //guard let topViewController = navigationViewController.topViewController as? iPadMasterTableViewController else {
-        //    return
-        //}
-        
-        //print("topViewController=\(topViewController)")
-        
-        //topViewController.dataController = dataController
-    }
 }

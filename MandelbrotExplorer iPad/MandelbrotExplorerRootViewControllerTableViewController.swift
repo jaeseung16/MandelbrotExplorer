@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class MandelbrotExplorerRootViewControllerTableViewController: UITableViewController {
     let menuItems = ["Default"]
+    
+    var dataController: DataController!
+    var fetchedResultsController: NSFetchedResultsController<MandelbrotEntity>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +23,28 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        setUpFetchedResultsController()
+    }
+    
+    func setUpFetchedResultsController() {
+        let fetchRequest: NSFetchRequest<MandelbrotEntity> = setupFetchRequest()
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "mandelbrotEntities")
+        fetchedResultsController.delegate = self
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("Compounds cannot be fetched: \(error.localizedDescription)")
+        }
+    }
+    
+    func setupFetchRequest() -> NSFetchRequest<MandelbrotEntity> {
+        let fetchRequest: NSFetchRequest<MandelbrotEntity> = MandelbrotEntity.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "created", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        return fetchRequest
     }
 
     // MARK: - Table view data source
@@ -35,16 +61,23 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let mandelbrotEntity = fetchedResultsController.object(at: indexPath)
+        print("\(mandelbrotEntity)")
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "RootViewControllerTableViewCell", for: indexPath)
 
         print("cell = \(cell)")
         // Configure the cell...
-        cell.textLabel!.text = menuItems[0]
+        cell.textLabel!.text = mandelbrotEntity.created?.description
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let mandelbrotEntity = fetchedResultsController.object(at: indexPath)
+        print("\(mandelbrotEntity)")
+        
         guard let splitViewController = self.splitViewController, let detailViewController = splitViewController.viewControllers.last as? UINavigationController else {
             print("splitViewController = \(self.splitViewController)")
             print("splitViewController?.viewControllers = \(self.splitViewController?.viewControllers)")
@@ -100,4 +133,44 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
     }
     */
 
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+extension MandelbrotExplorerRootViewControllerTableViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        let set = IndexSet(integer: sectionIndex)
+        
+        switch (type) {
+        case .insert:
+            tableView.insertSections(set, with: .fade)
+        case .delete:
+            tableView.deleteSections(set, with: .fade)
+        default:
+            break
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch(type) {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .fade)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        @unknown default:
+            fatalError("Unkown change type: \(type)")
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
 }

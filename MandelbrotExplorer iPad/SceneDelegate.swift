@@ -11,13 +11,18 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    let dataController = DataController(modelName: "MandelbrotExplorer_iPad")
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        checkIfFirstLaunch()
+        if let splitViewController = window?.rootViewController as? UISplitViewController {
+            configure(splitViewController)
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -35,6 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
+        saveData()
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
@@ -48,9 +54,75 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+        //(UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+        saveData()
     }
 
 
 }
 
+extension SceneDelegate {
+    func configure(_ splitViewController: UISplitViewController) {
+        let viewControllers = splitViewController.viewControllers
+        
+        print("viewControllers=\(viewControllers)")
+        
+        guard let navigationViewController = viewControllers.first as? UINavigationController else {
+            return
+        }
+        
+        print("navigationViewController=\(navigationViewController)")
+        
+        guard let topViewController = navigationViewController.topViewController as? MandelbrotExplorerRootViewControllerTableViewController else {
+            return
+        }
+        
+        print("topViewController=\(topViewController)")
+        
+        topViewController.dataController = dataController
+        
+        //guard let topViewController = navigationViewController.topViewController as? iPadMasterTableViewController else {
+        //    return
+        //}
+        
+        //print("topViewController=\(topViewController)")
+        
+        //topViewController.dataController = dataController
+    }
+    
+    func checkIfFirstLaunch() {
+        if !UserDefaults.standard.bool(forKey: "HasLaunchedBefore") {
+            print("here")
+            preloadData()
+            saveData()
+            UserDefaults.standard.set(true, forKey: "HasLaunchedBefore")
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
+    func preloadData() {
+        do {
+            try dataController.dropAllData()
+        } catch {
+            NSLog("Error while dropping all objects in DB")
+        }
+        
+        let mandelbrotEntity = MandelbrotEntity(context: dataController.viewContext)
+        mandelbrotEntity.minReal = -2.1
+        mandelbrotEntity.maxReal = 0.9
+        mandelbrotEntity.minImaginary = -1.5
+        mandelbrotEntity.maxImaginary = 1.5
+        mandelbrotEntity.red = 0.0
+        mandelbrotEntity.green = 1.0
+        mandelbrotEntity.blue = 0.0
+        
+    }
+    
+    func saveData() {
+        do {
+            try dataController.viewContext.save()
+        } catch {
+            NSLog("Error while saving by AppDelegate")
+        }
+    }
+}
