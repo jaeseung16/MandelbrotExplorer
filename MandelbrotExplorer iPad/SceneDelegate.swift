@@ -92,7 +92,6 @@ extension SceneDelegate {
     
     func checkIfFirstLaunch() {
         if !UserDefaults.standard.bool(forKey: "HasLaunchedBefore") {
-            print("here")
             preloadData()
             saveData()
             UserDefaults.standard.set(true, forKey: "HasLaunchedBefore")
