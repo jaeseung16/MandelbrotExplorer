@@ -22,6 +22,9 @@ class MandelbrotExplorerExamineViewController: UIViewController {
     
     var mandelbrotImageGenerator: MandelbrotImageGenerator?
     
+    var dataController: DataController?
+    var mandelbrotEntity: MandelbrotEntity?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,9 +42,30 @@ class MandelbrotExplorerExamineViewController: UIViewController {
     
     func initializeDefaultMandelbrotDisplay() {
         mandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength)
-        mandelbrotDisplay?.color = SIMD4<Float>(x: 0.0, y: 1.0, z: 0.0, w: 1.0)
         mandelbrotDisplay?.id = MandelbrotID.first
-        mandelbrotDisplay?.mandelbrotRect = defaultMandelbrotRect
+        
+        if (mandelbrotEntity == nil) {
+            mandelbrotDisplay?.color = SIMD4<Float>(x: 1.0, y: 1.0, z: 0.0, w: 1.0)
+            mandelbrotDisplay?.mandelbrotRect = defaultMandelbrotRect
+        } else {
+            let minReal = Double(mandelbrotEntity!.minReal)
+            let maxReal = Double(mandelbrotEntity!.maxReal)
+            let minImaginary = Double(mandelbrotEntity!.minImaginary)
+            let maxImaginary = Double(mandelbrotEntity!.maxImaginary)
+            
+            
+            if mandelbrotEntity!.colorMap == 0 {
+                mandelbrotDisplay?.color = SIMD4<Float>(x: mandelbrotEntity!.red, y: mandelbrotEntity!.green, z: mandelbrotEntity!.blue, w: 1.0)
+            } else {
+                mandelbrotDisplay?.colorMap = nil
+            }
+            
+            let mandelbrotRect = ComplexRect(Complex<Double>(minReal, minImaginary), Complex<Double>(maxReal, maxImaginary))
+            
+            
+            mandelbrotDisplay?.mandelbrotRect = mandelbrotRect
+        }
+        
         mandelbrotDisplay?.generateMandelbrotSet()
     }
     

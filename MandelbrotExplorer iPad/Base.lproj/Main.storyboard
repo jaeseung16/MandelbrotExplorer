@@ -271,7 +271,7 @@
         <!--Mandelbrot Explorer Examine View Controller-->
         <scene sceneID="1LZ-1T-Hmp">
             <objects>
-                <viewController id="P0I-UX-LMi" customClass="MandelbrotExplorerExamineViewController" customModule="MandelbrotExplorer_iPad" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MandelbrotExamineViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="P0I-UX-LMi" customClass="MandelbrotExplorerExamineViewController" customModule="MandelbrotExplorer_iPad" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="027-K7-nW3">
                         <rect key="frame" x="0.0" y="0.0" width="703.5" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

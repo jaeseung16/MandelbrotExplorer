@@ -96,6 +96,8 @@ extension SceneDelegate {
             saveData()
             UserDefaults.standard.set(true, forKey: "HasLaunchedBefore")
             UserDefaults.standard.synchronize()
+        } else {
+            dataController.load()
         }
     }
     

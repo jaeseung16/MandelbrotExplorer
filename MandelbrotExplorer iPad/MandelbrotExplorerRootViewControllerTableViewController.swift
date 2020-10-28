@@ -78,16 +78,22 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
         let mandelbrotEntity = fetchedResultsController.object(at: indexPath)
         print("\(mandelbrotEntity)")
         
-        guard let splitViewController = self.splitViewController, let detailViewController = splitViewController.viewControllers.last as? UINavigationController else {
-            print("splitViewController = \(self.splitViewController)")
-            print("splitViewController?.viewControllers = \(self.splitViewController?.viewControllers)")
-            return
-        }
+        let detailViewNavigationController = splitViewController?.viewControllers.last as? UINavigationController
         
-        if let viewController = detailViewController.topViewController as? MandelbrotExplorerDetailViewController {
-            print("MandelbrotExplorerDetailViewController = \(viewController)")
-        }
+        let detailViewController = setupDetailViewController(for: mandelbrotEntity)
+        detailViewNavigationController?.pushViewController(detailViewController, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    func setupDetailViewController(for mandelbrotEntity: MandelbrotEntity) -> MandelbrotExplorerExamineViewController {
+        let detailViewController = storyboard?.instantiateViewController(withIdentifier: "MandelbrotExamineViewController") as! MandelbrotExplorerExamineViewController
+        detailViewController.dataController = dataController
+        detailViewController.mandelbrotEntity = mandelbrotEntity
+        
+        return detailViewController
+    }
+    
+        
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
