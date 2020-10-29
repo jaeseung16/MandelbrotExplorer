@@ -82,7 +82,7 @@ class MandelbrotDisplayIPad {
         let maxImaginary = mandelbrotRect.maxImaginary
         
         let r = minReal + ( x / Double(displaySize.width) ) * (maxReal - minReal)
-        let i = minImaginary + ( y / Double(displaySize.height) ) * (maxImaginary - minImaginary)
+        let i = maxImaginary - ( y / Double(displaySize.height) ) * (maxImaginary - minImaginary)
         return Complex<Double>(r, i)
     }
     
