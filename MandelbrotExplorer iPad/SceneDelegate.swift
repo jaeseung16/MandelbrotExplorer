@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ComplexModule
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -116,6 +117,23 @@ extension SceneDelegate {
         mandelbrotEntity.red = 0.0
         mandelbrotEntity.green = 1.0
         mandelbrotEntity.blue = 0.0
+        
+        var mandelbrotDisplay = MandelbrotDisplayIPad(sideLength: 383)
+        
+        let minReal = mandelbrotEntity.minReal
+        let maxReal = mandelbrotEntity.maxReal
+        let minImaginary = mandelbrotEntity.minImaginary
+        let maxImaginary = mandelbrotEntity.maxImaginary
+        
+        mandelbrotDisplay.color = SIMD4<Float>(x: mandelbrotEntity.red, y: mandelbrotEntity.green, z: mandelbrotEntity.blue, w: 1.0)
+        
+        
+        let mandelbrotRect = ComplexRect(Complex<Double>(minReal, minImaginary), Complex<Double>(maxReal, maxImaginary))
+        mandelbrotDisplay.mandelbrotRect = mandelbrotRect
+        
+        mandelbrotDisplay.generateMandelbrotSet()
+        
+        mandelbrotEntity.image = mandelbrotDisplay.mandelbrotImage?.pngData()
         
     }
     
