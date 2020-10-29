@@ -51,12 +51,12 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return fetchedResultsController.sections?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return menuItems.count
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
     
@@ -68,8 +68,7 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
 
         print("cell = \(cell)")
         // Configure the cell...
-        cell.textLabel!.text = mandelbrotEntity.created?.description
-        
+        cell.textLabel!.text = "\(mandelbrotEntity.description)"
         return cell
     }
     
@@ -81,8 +80,9 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
         let detailViewNavigationController = splitViewController?.viewControllers.last as? UINavigationController
         
         let detailViewController = setupDetailViewController(for: mandelbrotEntity)
+        detailViewNavigationController?.popToRootViewController(animated: false)
         detailViewNavigationController?.pushViewController(detailViewController, animated: true)
-        tableView.deselectRow(at: indexPath, animated: true)
+        //tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func setupDetailViewController(for mandelbrotEntity: MandelbrotEntity) -> MandelbrotExplorerExamineViewController {

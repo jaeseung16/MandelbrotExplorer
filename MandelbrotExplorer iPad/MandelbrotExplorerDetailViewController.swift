@@ -29,6 +29,9 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     
     var mandelbrotImageGenerator: MandelbrotImageGenerator?
     
+    var dataController: DataController!
+    var defaultMandelbrotEntity: MandelbrotEntity!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -48,9 +51,22 @@ class MandelbrotExplorerDetailViewController: UIViewController {
 
     func initializeDefaultMandelbrotDisplay() {
         defaultMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength)
-        defaultMandelbrotDisplay?.color = SIMD4<Float>(x: 0.0, y: 1.0, z: 0.0, w: 1.0)
         defaultMandelbrotDisplay?.id = MandelbrotID.first
-        defaultMandelbrotDisplay?.mandelbrotRect = defaultMandelbrotRect
+        
+        let minReal = defaultMandelbrotEntity.minReal
+        let maxReal = defaultMandelbrotEntity.maxReal
+        let minImaginary = defaultMandelbrotEntity.minImaginary
+        let maxImaginary = defaultMandelbrotEntity.maxImaginary
+        
+        if defaultMandelbrotEntity.colorMap == 0 {
+            defaultMandelbrotDisplay?.color = SIMD4<Float>(x: defaultMandelbrotEntity.red, y: defaultMandelbrotEntity.green, z: defaultMandelbrotEntity.blue, w: 1.0)
+        } else {
+            defaultMandelbrotDisplay?.colorMap = nil
+        }
+        
+        let mandelbrotRect = ComplexRect(Complex<Double>(minReal, minImaginary), Complex<Double>(maxReal, maxImaginary))
+        defaultMandelbrotDisplay?.mandelbrotRect = mandelbrotRect
+        
         defaultMandelbrotDisplay?.generateMandelbrotSet()
     }
     
@@ -115,10 +131,36 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     }
     
     @IBAction func refreshColor(_ sender: UIButton) {
-        defaultMandelbrotDisplay?.color = SIMD4<Float>(x: redSlider.value, y: greenSlider.value, z: blueSlider.value, w: 1.0)
-        defaultMandelbrotDisplay?.colorMap = nil
-        defaultMandelbrotDisplay?.generateMandelbrotSet()
-        mandelbrotUIView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
+        zoomedMandelbrotDisplay?.color = SIMD4<Float>(x: redSlider.value, y: greenSlider.value, z: blueSlider.value, w: 1.0)
+        zoomedMandelbrotDisplay?.colorMap = nil
+        zoomedMandelbrotDisplay?.generateMandelbrotSet()
+        zoomedMandelbrotUIView.mandelbrotImage = zoomedMandelbrotDisplay?.mandelbrotImage
+    }
+    
+    @IBAction func save(_ sender: UIBarButtonItem) {
+        let mandelbrotEntity = MandelbrotEntity(context: dataController.viewContext)
+        
+        let mandelbrotRect = zoomedMandelbrotDisplay!.mandelbrotRect
+        
+        mandelbrotEntity.minReal = mandelbrotRect.minReal
+        mandelbrotEntity.maxReal = mandelbrotRect.maxReal
+        mandelbrotEntity.minImaginary = mandelbrotRect.minImaginary
+        mandelbrotEntity.maxImaginary = mandelbrotRect.maxImaginary
+        
+        if let color = zoomedMandelbrotDisplay!.color {
+            mandelbrotEntity.red = color.x
+            mandelbrotEntity.green = color.y
+            mandelbrotEntity.blue = color.z
+        }
+        
+        do {
+            try dataController.viewContext.save()
+            NSLog("Saved in SearchByNameViewController.saveCompound(:)")
+        } catch {
+            NSLog("Error while saving in SearchByNameViewController.saveCompound(:)")
+        }
+        
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func reset(_ sender: UIBarButtonItem) {

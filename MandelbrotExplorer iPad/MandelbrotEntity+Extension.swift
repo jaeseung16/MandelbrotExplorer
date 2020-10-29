@@ -14,4 +14,13 @@ extension MandelbrotEntity {
         super.awakeFromInsert()
         created = Date()
     }
+    
+    public override var description: String {
+        let minReal = String(format: "%.2f", self.minReal)
+        let maxReal = String(format: "%.2f", self.maxReal)
+        let minImaginary = String(format: "%.2f", self.minImaginary)
+        let maxImaginary = String(format: "%.2f", self.maxImaginary)
+        
+        return ("Real: from \(minReal) to \(maxReal)\nImaginary: from \(minImaginary) to \(maxImaginary)")
+    }
 }

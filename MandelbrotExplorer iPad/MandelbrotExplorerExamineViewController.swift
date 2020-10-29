@@ -45,13 +45,13 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         mandelbrotDisplay?.id = MandelbrotID.first
         
         if (mandelbrotEntity == nil) {
-            mandelbrotDisplay?.color = SIMD4<Float>(x: 1.0, y: 1.0, z: 0.0, w: 1.0)
+            mandelbrotDisplay?.color = SIMD4<Float>(x: 0.0, y: 1.0, z: 1.0, w: 1.0)
             mandelbrotDisplay?.mandelbrotRect = defaultMandelbrotRect
         } else {
-            let minReal = Double(mandelbrotEntity!.minReal)
-            let maxReal = Double(mandelbrotEntity!.maxReal)
-            let minImaginary = Double(mandelbrotEntity!.minImaginary)
-            let maxImaginary = Double(mandelbrotEntity!.maxImaginary)
+            let minReal = mandelbrotEntity!.minReal
+            let maxReal = mandelbrotEntity!.maxReal
+            let minImaginary = mandelbrotEntity!.minImaginary
+            let maxImaginary = mandelbrotEntity!.maxImaginary
             
             
             if mandelbrotEntity!.colorMap == 0 {
@@ -61,7 +61,6 @@ class MandelbrotExplorerExamineViewController: UIViewController {
             }
             
             let mandelbrotRect = ComplexRect(Complex<Double>(minReal, minImaginary), Complex<Double>(maxReal, maxImaginary))
-            
             
             mandelbrotDisplay?.mandelbrotRect = mandelbrotRect
         }
@@ -76,14 +75,19 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         mandelbrotIUIView.rectScale = 1.0
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        if let mandelbrotExplorerDetailViewController = segue.destination as? MandelbrotExplorerDetailViewController {
+            mandelbrotExplorerDetailViewController.dataController = dataController
+            mandelbrotExplorerDetailViewController.defaultMandelbrotEntity = mandelbrotEntity
+        }
     }
-    */
+    
 
 }
