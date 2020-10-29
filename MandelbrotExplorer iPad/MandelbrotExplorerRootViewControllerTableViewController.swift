@@ -69,6 +69,11 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
         print("cell = \(cell)")
         // Configure the cell...
         cell.textLabel!.text = "\(mandelbrotEntity.description)"
+        
+        if let imageData = mandelbrotEntity.image {
+            cell.imageView?.image = UIImage(data: imageData as Data, scale: 10.0)
+        }
+        
         return cell
     }
     

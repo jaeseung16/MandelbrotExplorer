@@ -153,6 +153,8 @@ class MandelbrotExplorerDetailViewController: UIViewController {
             mandelbrotEntity.blue = color.z
         }
         
+        mandelbrotEntity.image = zoomedMandelbrotUIView.mandelbrotImage?.pngData()
+        
         do {
             try dataController.viewContext.save()
             NSLog("Saved in SearchByNameViewController.saveCompound(:)")
