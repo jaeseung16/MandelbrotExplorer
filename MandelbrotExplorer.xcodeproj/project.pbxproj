@@ -17,8 +17,8 @@
 		9031FD492481D011006CCB38 /* MandelbrotDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9031FD482481D011006CCB38 /* MandelbrotDisplay.swift */; };
 		903DD7B1254F322D00288FA5 /* ColorMapFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903DD7B0254F322D00288FA5 /* ColorMapFactory.swift */; };
 		903DD7B2254F322D00288FA5 /* ColorMapFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903DD7B0254F322D00288FA5 /* ColorMapFactory.swift */; };
-		903DD7B8254F324A00288FA5 /* MandelbrotExplorerColorMaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903DD7B7254F324A00288FA5 /* MandelbrotExplorerColorMaps.swift */; };
-		903DD7B9254F324A00288FA5 /* MandelbrotExplorerColorMaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903DD7B7254F324A00288FA5 /* MandelbrotExplorerColorMaps.swift */; };
+		903DD7B8254F324A00288FA5 /* MandelbrotExplorerColorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903DD7B7254F324A00288FA5 /* MandelbrotExplorerColorMap.swift */; };
+		903DD7B9254F324A00288FA5 /* MandelbrotExplorerColorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903DD7B7254F324A00288FA5 /* MandelbrotExplorerColorMap.swift */; };
 		903DD7BF254F32B300288FA5 /* ColorMapFromSingleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903DD7BE254F32B300288FA5 /* ColorMapFromSingleColor.swift */; };
 		903DD7C0254F32B300288FA5 /* ColorMapFromSingleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903DD7BE254F32B300288FA5 /* ColorMapFromSingleColor.swift */; };
 		903DD7C6254F360800288FA5 /* MandelbrotExplorerColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903DD7C5254F360800288FA5 /* MandelbrotExplorerColors.swift */; };
@@ -113,7 +113,7 @@
 		902B7FA824982AD20082B8F6 /* MandelbrotViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotViewDelegate.swift; sourceTree = "<group>"; };
 		9031FD482481D011006CCB38 /* MandelbrotDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotDisplay.swift; sourceTree = "<group>"; };
 		903DD7B0254F322D00288FA5 /* ColorMapFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMapFactory.swift; sourceTree = "<group>"; };
-		903DD7B7254F324A00288FA5 /* MandelbrotExplorerColorMaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerColorMaps.swift; sourceTree = "<group>"; };
+		903DD7B7254F324A00288FA5 /* MandelbrotExplorerColorMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerColorMap.swift; sourceTree = "<group>"; };
 		903DD7BE254F32B300288FA5 /* ColorMapFromSingleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMapFromSingleColor.swift; sourceTree = "<group>"; };
 		903DD7C5254F360800288FA5 /* MandelbrotExplorerColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerColors.swift; sourceTree = "<group>"; };
 		903E91D5254E174B00659377 /* ColorMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMap.swift; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 				908079CF254CDCC8006B461A /* Winter.swift */,
 				903E91D5254E174B00659377 /* ColorMap.swift */,
 				903DD7B0254F322D00288FA5 /* ColorMapFactory.swift */,
-				903DD7B7254F324A00288FA5 /* MandelbrotExplorerColorMaps.swift */,
+				903DD7B7254F324A00288FA5 /* MandelbrotExplorerColorMap.swift */,
 				903DD7BE254F32B300288FA5 /* ColorMapFromSingleColor.swift */,
 				903DD7C5254F360800288FA5 /* MandelbrotExplorerColors.swift */,
 			);
@@ -549,7 +549,7 @@
 				906DAE5B247C4C1200A1A47F /* ZoomedMandelbrotView.swift in Sources */,
 				903DD7BF254F32B300288FA5 /* ColorMapFromSingleColor.swift in Sources */,
 				905DA930247C16D800B9DA71 /* MandelbrotSet.swift in Sources */,
-				903DD7B8254F324A00288FA5 /* MandelbrotExplorerColorMaps.swift in Sources */,
+				903DD7B8254F324A00288FA5 /* MandelbrotExplorerColorMap.swift in Sources */,
 				908079A6254CDC80006B461A /* HSV.swift in Sources */,
 				90BDEAB82496521700733DFC /* MandelbrotSetCPU.swift in Sources */,
 				90C0934C252FC82600FA9A7B /* MandelbrotImageGenerator.swift in Sources */,
@@ -617,7 +617,7 @@
 				908C7BC9252A74D2003D803B /* SceneDelegate.swift in Sources */,
 				9027F820253E597C00F4EBB3 /* Parula256.swift in Sources */,
 				90898F52252BDD6A0084ACB4 /* MyComplex.swift in Sources */,
-				903DD7B9254F324A00288FA5 /* MandelbrotExplorerColorMaps.swift in Sources */,
+				903DD7B9254F324A00288FA5 /* MandelbrotExplorerColorMap.swift in Sources */,
 				90AF89FC254248DF008A5472 /* ColorConverter.swift in Sources */,
 				9097CC39252A83BA00AE9805 /* MandelbrotExplorerRootViewControllerTableViewController.swift in Sources */,
 				908079A7254CDC80006B461A /* HSV.swift in Sources */,

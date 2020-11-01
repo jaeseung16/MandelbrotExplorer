@@ -9,7 +9,7 @@
 import Foundation
 
 class ColorMapFactory {
-    static func getColormap(_ name: MandelbrotExplorerColorMaps, length: Int) -> ColorMap {
+    static func getColorMap(_ name: MandelbrotExplorerColorMap, length: Int) -> ColorMap {
         var colorMap: ColorMap
         
         switch (name) {
