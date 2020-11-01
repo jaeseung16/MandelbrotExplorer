@@ -48,7 +48,7 @@ class MandelbrotDisplay {
         
         let timeToPrepare = Date()
         
-        mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(inZs: zs, inMaxIter: 200, inColorMap: Parula256.colorsInSIMD4)
+        mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(inZs: zs, inMaxIter: 200, inColorMap: Parula256().colorMapInSIMD4)
         mandelbrotSet?.calculate()
         
         let timeToCalculate = Date()

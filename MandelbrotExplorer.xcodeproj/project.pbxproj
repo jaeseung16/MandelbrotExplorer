@@ -15,6 +15,9 @@
 		9027F820253E597C00F4EBB3 /* Parula256.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9027F816253E56CE00F4EBB3 /* Parula256.swift */; };
 		902B7FA924982AD20082B8F6 /* MandelbrotViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B7FA824982AD20082B8F6 /* MandelbrotViewDelegate.swift */; };
 		9031FD492481D011006CCB38 /* MandelbrotDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9031FD482481D011006CCB38 /* MandelbrotDisplay.swift */; };
+		903E91D6254E174B00659377 /* ColorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903E91D5254E174B00659377 /* ColorMap.swift */; };
+		903E91D7254E174B00659377 /* ColorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903E91D5254E174B00659377 /* ColorMap.swift */; };
+		903E91E2254E218700659377 /* MandelbrotExplorerColorMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903E91E1254E218700659377 /* MandelbrotExplorerColorMapTests.swift */; };
 		90481D8724AFA7E300DDACF9 /* MandelbrotSetFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90481D8624AFA7E300DDACF9 /* MandelbrotSetFactory.swift */; };
 		90481D8D24AFBA8E00DDACF9 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 90481D8C24AFBA8E00DDACF9 /* README.md */; };
 		905C80D3252D2C94003B5954 /* MandelbrotViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B7FA824982AD20082B8F6 /* MandelbrotViewDelegate.swift */; };
@@ -28,6 +31,22 @@
 		906DAE5B247C4C1200A1A47F /* ZoomedMandelbrotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5A247C4C1200A1A47F /* ZoomedMandelbrotView.swift */; };
 		906DAE5D247C4C3400A1A47F /* ComplexRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5C247C4C3400A1A47F /* ComplexRect.swift */; };
 		906DAE5F247C4C6000A1A47F /* MyComplex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5E247C4C6000A1A47F /* MyComplex.swift */; };
+		9080799B254CDAEA006B461A /* Jet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9080799A254CDAEA006B461A /* Jet.swift */; };
+		9080799C254CDAEA006B461A /* Jet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9080799A254CDAEA006B461A /* Jet.swift */; };
+		908079A6254CDC80006B461A /* HSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079A5254CDC80006B461A /* HSV.swift */; };
+		908079A7254CDC80006B461A /* HSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079A5254CDC80006B461A /* HSV.swift */; };
+		908079AD254CDC8A006B461A /* Hot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079AC254CDC8A006B461A /* Hot.swift */; };
+		908079AE254CDC8A006B461A /* Hot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079AC254CDC8A006B461A /* Hot.swift */; };
+		908079B4254CDC96006B461A /* Cool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079B3254CDC96006B461A /* Cool.swift */; };
+		908079B5254CDC96006B461A /* Cool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079B3254CDC96006B461A /* Cool.swift */; };
+		908079BB254CDCA1006B461A /* Spring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079BA254CDCA1006B461A /* Spring.swift */; };
+		908079BC254CDCA1006B461A /* Spring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079BA254CDCA1006B461A /* Spring.swift */; };
+		908079C2254CDCAD006B461A /* Summer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079C1254CDCAD006B461A /* Summer.swift */; };
+		908079C3254CDCAD006B461A /* Summer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079C1254CDCAD006B461A /* Summer.swift */; };
+		908079C9254CDCBF006B461A /* Autumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079C8254CDCBF006B461A /* Autumn.swift */; };
+		908079CA254CDCBF006B461A /* Autumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079C8254CDCBF006B461A /* Autumn.swift */; };
+		908079D0254CDCC8006B461A /* Winter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079CF254CDCC8006B461A /* Winter.swift */; };
+		908079D1254CDCC8006B461A /* Winter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079CF254CDCC8006B461A /* Winter.swift */; };
 		90898F3D252BDB660084ACB4 /* MandelbrotUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90898F3C252BDB660084ACB4 /* MandelbrotUIView.swift */; };
 		90898F42252BDC050084ACB4 /* ComplexRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5C247C4C3400A1A47F /* ComplexRect.swift */; };
 		90898F48252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90898F47252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift */; };
@@ -85,6 +104,8 @@
 		9027F816253E56CE00F4EBB3 /* Parula256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parula256.swift; sourceTree = "<group>"; };
 		902B7FA824982AD20082B8F6 /* MandelbrotViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotViewDelegate.swift; sourceTree = "<group>"; };
 		9031FD482481D011006CCB38 /* MandelbrotDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotDisplay.swift; sourceTree = "<group>"; };
+		903E91D5254E174B00659377 /* ColorMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMap.swift; sourceTree = "<group>"; };
+		903E91E1254E218700659377 /* MandelbrotExplorerColorMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerColorMapTests.swift; sourceTree = "<group>"; };
 		90481D8624AFA7E300DDACF9 /* MandelbrotSetFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotSetFactory.swift; sourceTree = "<group>"; };
 		90481D8C24AFBA8E00DDACF9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		905DA900247C16A300B9DA71 /* MandelbrotExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandelbrotExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +125,14 @@
 		906DAE5A247C4C1200A1A47F /* ZoomedMandelbrotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomedMandelbrotView.swift; sourceTree = "<group>"; };
 		906DAE5C247C4C3400A1A47F /* ComplexRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexRect.swift; sourceTree = "<group>"; };
 		906DAE5E247C4C6000A1A47F /* MyComplex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyComplex.swift; sourceTree = "<group>"; };
+		9080799A254CDAEA006B461A /* Jet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jet.swift; sourceTree = "<group>"; };
+		908079A5254CDC80006B461A /* HSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSV.swift; sourceTree = "<group>"; };
+		908079AC254CDC8A006B461A /* Hot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hot.swift; sourceTree = "<group>"; };
+		908079B3254CDC96006B461A /* Cool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cool.swift; sourceTree = "<group>"; };
+		908079BA254CDCA1006B461A /* Spring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spring.swift; sourceTree = "<group>"; };
+		908079C1254CDCAD006B461A /* Summer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Summer.swift; sourceTree = "<group>"; };
+		908079C8254CDCBF006B461A /* Autumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autumn.swift; sourceTree = "<group>"; };
+		908079CF254CDCC8006B461A /* Winter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Winter.swift; sourceTree = "<group>"; };
 		90898F3C252BDB660084ACB4 /* MandelbrotUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotUIView.swift; sourceTree = "<group>"; };
 		90898F47252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotDisplayIPad.swift; sourceTree = "<group>"; };
 		908C7BC4252A74D2003D803B /* MandelbrotExplorer iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MandelbrotExplorer iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,6 +194,15 @@
 			children = (
 				9027F816253E56CE00F4EBB3 /* Parula256.swift */,
 				90AF89FA254248DF008A5472 /* ColorConverter.swift */,
+				9080799A254CDAEA006B461A /* Jet.swift */,
+				908079A5254CDC80006B461A /* HSV.swift */,
+				908079AC254CDC8A006B461A /* Hot.swift */,
+				908079B3254CDC96006B461A /* Cool.swift */,
+				908079BA254CDCA1006B461A /* Spring.swift */,
+				908079C1254CDCAD006B461A /* Summer.swift */,
+				908079C8254CDCBF006B461A /* Autumn.swift */,
+				908079CF254CDCC8006B461A /* Winter.swift */,
+				903E91D5254E174B00659377 /* ColorMap.swift */,
 			);
 			path = ColorMaps;
 			sourceTree = "<group>";
@@ -256,6 +294,7 @@
 			children = (
 				905DA916247C16A500B9DA71 /* MandelbrotExplorerTests.swift */,
 				905DA918247C16A500B9DA71 /* Info.plist */,
+				903E91E1254E218700659377 /* MandelbrotExplorerColorMapTests.swift */,
 			);
 			path = MandelbrotExplorerTests;
 			sourceTree = "<group>";
@@ -480,24 +519,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				9031FD492481D011006CCB38 /* MandelbrotDisplay.swift in Sources */,
+				908079C9254CDCBF006B461A /* Autumn.swift in Sources */,
 				90481D8724AFA7E300DDACF9 /* MandelbrotSetFactory.swift in Sources */,
+				908079BB254CDCA1006B461A /* Spring.swift in Sources */,
 				905DA906247C16A300B9DA71 /* ViewController.swift in Sources */,
 				90E9D36124A90F5900FCB3A4 /* MandelbrotID.swift in Sources */,
+				903E91D6254E174B00659377 /* ColorMap.swift in Sources */,
 				9027F817253E56CE00F4EBB3 /* Parula256.swift in Sources */,
+				908079AD254CDC8A006B461A /* Hot.swift in Sources */,
 				90BDEABA249664BA00733DFC /* MandelbrotSetGPU.swift in Sources */,
 				905DA904247C16A300B9DA71 /* AppDelegate.swift in Sources */,
 				906DAE5B247C4C1200A1A47F /* ZoomedMandelbrotView.swift in Sources */,
 				905DA930247C16D800B9DA71 /* MandelbrotSet.swift in Sources */,
+				908079A6254CDC80006B461A /* HSV.swift in Sources */,
 				90BDEAB82496521700733DFC /* MandelbrotSetCPU.swift in Sources */,
 				90C0934C252FC82600FA9A7B /* MandelbrotImageGenerator.swift in Sources */,
 				901CD3F5248074D8005F1F9C /* PixelData.swift in Sources */,
 				906DAE5F247C4C6000A1A47F /* MyComplex.swift in Sources */,
 				906DAE5D247C4C3400A1A47F /* ComplexRect.swift in Sources */,
+				908079C2254CDCAD006B461A /* Summer.swift in Sources */,
+				908079D0254CDCC8006B461A /* Winter.swift in Sources */,
 				900FB59C2487065000695AD4 /* Shaders.metal in Sources */,
 				902B7FA924982AD20082B8F6 /* MandelbrotViewDelegate.swift in Sources */,
 				90AF89FB254248DF008A5472 /* ColorConverter.swift in Sources */,
 				900FB59A248705B500695AD4 /* Renderer.swift in Sources */,
 				90B944462485C1A7005BDC10 /* MandelbrotView.swift in Sources */,
+				9080799B254CDAEA006B461A /* Jet.swift in Sources */,
+				908079B4254CDC96006B461A /* Cool.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,6 +554,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				905DA917247C16A500B9DA71 /* MandelbrotExplorerTests.swift in Sources */,
+				903E91E2254E218700659377 /* MandelbrotExplorerColorMapTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,23 +575,32 @@
 				90898F48252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift in Sources */,
 				908C7BC7252A74D2003D803B /* AppDelegateIPad.swift in Sources */,
 				90898F4D252BDD380084ACB4 /* MandelbrotID.swift in Sources */,
+				908079AE254CDC8A006B461A /* Hot.swift in Sources */,
+				908079B5254CDC96006B461A /* Cool.swift in Sources */,
+				908079CA254CDCBF006B461A /* Autumn.swift in Sources */,
 				90CA90702548DC5F001EA6F5 /* DataController.swift in Sources */,
+				9080799C254CDAEA006B461A /* Jet.swift in Sources */,
 				90FB74C6252E8A63005B0F83 /* MandelbrotSetGPU.swift in Sources */,
 				90898F5D252BDEAF0084ACB4 /* MandelbrotSetCPU.swift in Sources */,
 				9019694725478F620067378A /* MandelbrotExplorerExamineViewController.swift in Sources */,
+				908079C3254CDCAD006B461A /* Summer.swift in Sources */,
 				905C80D3252D2C94003B5954 /* MandelbrotViewDelegate.swift in Sources */,
 				90C68D96252E8DF1005EF916 /* Shaders.metal in Sources */,
 				90C0934D252FC82600FA9A7B /* MandelbrotImageGenerator.swift in Sources */,
 				90FB74CB252E8A66005B0F83 /* MandelbrotSetFactory.swift in Sources */,
 				908C7BD1252A74D2003D803B /* MandelbrotExplorer_iPad.xcdatamodeld in Sources */,
+				908079BC254CDCA1006B461A /* Spring.swift in Sources */,
 				90898F42252BDC050084ACB4 /* ComplexRect.swift in Sources */,
 				908C7BC9252A74D2003D803B /* SceneDelegate.swift in Sources */,
 				9027F820253E597C00F4EBB3 /* Parula256.swift in Sources */,
 				90898F52252BDD6A0084ACB4 /* MyComplex.swift in Sources */,
 				90AF89FC254248DF008A5472 /* ColorConverter.swift in Sources */,
 				9097CC39252A83BA00AE9805 /* MandelbrotExplorerRootViewControllerTableViewController.swift in Sources */,
+				908079A7254CDC80006B461A /* HSV.swift in Sources */,
 				90CA906A2548DBED001EA6F5 /* MandelbrotEntity+Extension.swift in Sources */,
+				908079D1254CDCC8006B461A /* Winter.swift in Sources */,
 				90898F62252BDF2E0084ACB4 /* MandelbrotSet.swift in Sources */,
+				903E91D7254E174B00659377 /* ColorMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,7 +767,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MandelbrotExplorer/MandelbrotExplorer.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = RWVTTVMWBE;
@@ -731,7 +789,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MandelbrotExplorer/MandelbrotExplorer.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = RWVTTVMWBE;
@@ -753,6 +811,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = RWVTTVMWBE;
@@ -775,6 +834,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = RWVTTVMWBE;

@@ -9,7 +9,7 @@
 import Foundation
 import CoreGraphics
 
-struct Parula256 {
+struct Parula256: ColorMap {    
     static let colors = [CGColor(red: 0.2081, green: 0.1663, blue: 0.5292, alpha: 1.0),
                   CGColor(red: 0.2091, green: 0.1721, blue: 0.5411, alpha: 1.0),
                   CGColor(red: 0.2101, green: 0.1779, blue: 0.5530, alpha: 1.0),
@@ -267,7 +267,7 @@ struct Parula256 {
                   CGColor(red: 0.9736, green: 0.9752, blue: 0.0597, alpha: 1.0),
                   CGColor(red: 0.9763, green: 0.9831, blue: 0.0538, alpha: 1.0)]
     
-    static var colorsInSIMD4: [SIMD4<Float>] {
+    var colorMapInSIMD4: [SIMD4<Float>] {
         get {
             return Parula256.colors.map { ColorConverter.toSIMD4(inColor: $0) }
         }
