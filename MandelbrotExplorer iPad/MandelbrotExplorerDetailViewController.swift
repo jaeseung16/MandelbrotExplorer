@@ -72,11 +72,9 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         let minImaginary = defaultMandelbrotEntity.minImaginary
         let maxImaginary = defaultMandelbrotEntity.maxImaginary
         
-        if defaultMandelbrotEntity.colorMap == 0 {
-            defaultMandelbrotDisplay?.color = SIMD4<Float>(x: defaultMandelbrotEntity.red, y: defaultMandelbrotEntity.green, z: defaultMandelbrotEntity.blue, w: 1.0)
-        } else {
-            defaultMandelbrotDisplay?.colorMap = nil
-        }
+        let defaultMandelbrotExplorerColorMap = MandelbrotExplorerColorMap.init(rawValue: defaultMandelbrotEntity.colorMap!)
+        
+        defaultMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(defaultMandelbrotExplorerColorMap!, length: 256).colorMapInSIMD4
         
         let mandelbrotRect = ComplexRect(Complex<Double>(minReal, minImaginary), Complex<Double>(maxReal, maxImaginary))
         defaultMandelbrotDisplay?.mandelbrotRect = mandelbrotRect
@@ -160,12 +158,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         mandelbrotEntity.maxReal = mandelbrotRect.maxReal
         mandelbrotEntity.minImaginary = mandelbrotRect.minImaginary
         mandelbrotEntity.maxImaginary = mandelbrotRect.maxImaginary
-        
-        if let color = zoomedMandelbrotDisplay!.color {
-            mandelbrotEntity.red = color.x
-            mandelbrotEntity.green = color.y
-            mandelbrotEntity.blue = color.z
-        }
+        mandelbrotEntity.colorMap = colorMap.rawValue
         
         mandelbrotEntity.image = zoomedMandelbrotUIView.mandelbrotImage?.pngData()
         

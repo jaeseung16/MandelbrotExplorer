@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="1.0">
     <entity name="MandelbrotEntity" representedClassName=".MandelbrotEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="blue" optional="YES" attributeType="Float" usesScalarValueType="YES"/>
-        <attribute name="colorMap" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="colorMap" optional="YES" attributeType="String"/>
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="green" optional="YES" attributeType="Float" usesScalarValueType="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="maxImaginary" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="maxReal" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="minImaginary" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="minReal" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="red" optional="YES" attributeType="Float" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="MandelbrotEntity" positionX="-63" positionY="-18" width="128" height="193"/>
+        <element name="MandelbrotEntity" positionX="-63" positionY="-18" width="128" height="148"/>
     </elements>
 </model>
