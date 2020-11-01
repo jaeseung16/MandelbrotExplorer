@@ -82,7 +82,7 @@ class MandelbrotView: NSView {
         super.draw(dirtyRect)
 
         // Drawing code here.
-        mandelbrotImage?.draw(at: .zero, from: bounds, operation: .sourceOver, fraction: 1.0)
+        mandelbrotImage?.draw(at: .zero, from: .zero, operation: .sourceOver, fraction: 1.0)
        
         guard let rect = selectRect else {
             return

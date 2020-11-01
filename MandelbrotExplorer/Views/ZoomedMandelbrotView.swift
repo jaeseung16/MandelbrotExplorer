@@ -95,7 +95,7 @@ class ZoomedMandelbrotView: NSView {
         super.draw(dirtyRect)
 
         // Drawing code here.
-        mandelbrotImage?.draw(at: .zero, from: bounds, operation: .sourceOver, fraction: 1.0)
+        mandelbrotImage?.draw(at: .zero, from: .zero, operation: .sourceOver, fraction: 1.0)
         
         let bpath = NSBezierPath(rect: selectRect)
         bpath.lineWidth = 2.0
