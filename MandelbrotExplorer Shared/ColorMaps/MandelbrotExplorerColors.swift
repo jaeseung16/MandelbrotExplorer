@@ -16,6 +16,7 @@ enum MandelbrotExplorerColors {
     case magenta
     case orange
     case purple
+    case red
     case white
     case yellow
     
@@ -36,6 +37,8 @@ enum MandelbrotExplorerColors {
             color = SIMD4<T>(x: 1.0, y: 0.5, z: 0.0, w: 1.0)
         case .purple:
             color = SIMD4<T>(x: 0.5, y: 0.0, z: 0.5, w: 1.0)
+        case .red:
+            color = SIMD4<T>(x: 1.0, y: 0.0, z: 0.0, w: 1.0)
         case .white:
             color = SIMD4<T>(x: 1.0, y: 1.0, z: 1.0, w: 1.0)
         case .yellow:

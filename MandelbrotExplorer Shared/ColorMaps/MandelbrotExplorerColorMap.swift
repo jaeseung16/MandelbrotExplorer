@@ -25,6 +25,7 @@ enum MandelbrotExplorerColorMap: String, CaseIterable {
     case magenta
     case orange
     case purple
+    case red
     case white
     case yellow
 }

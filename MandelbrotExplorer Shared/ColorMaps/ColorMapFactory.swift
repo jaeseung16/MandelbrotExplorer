@@ -45,6 +45,8 @@ class ColorMapFactory {
             colorMap = ColorMapFromSingleColor(.orange, length: length)
         case .purple:
             colorMap = ColorMapFromSingleColor(.purple, length: length)
+        case .red:
+            colorMap = ColorMapFromSingleColor(.red, length: length)
         case .white:
             colorMap = ColorMapFromSingleColor(.white, length: length)
         case .yellow:
