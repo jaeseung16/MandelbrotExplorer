@@ -29,7 +29,7 @@
             <objects>
                 <viewController id="cFm-AQ-jEn" customClass="MandelbrotExplorerDetailViewController" customModule="MandelbrotExplorer_iPad" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="muF-uC-znk">
-                        <rect key="frame" x="0.0" y="0.0" width="1045" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1045.5" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kn4-rL-WTs">
@@ -244,7 +244,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="tnJ-ID-ne6"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Sf-1n-h7b">
@@ -252,7 +252,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="31N-NJ-lH7"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1V5-8v-7JN">
@@ -260,7 +260,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="ZWH-dc-L98"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qWJ-hz-ukh">
@@ -268,9 +268,15 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="hR8-Ha-aGe"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FJz-3l-Wdb">
+                                <rect key="frame" x="785.5" y="843" width="37.5" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bpx-LZ-j6q"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
@@ -283,6 +289,8 @@
                             <constraint firstItem="1V5-8v-7JN" firstAttribute="centerX" secondItem="YZK-jS-pgC" secondAttribute="centerX" id="Oet-Qd-EcK"/>
                             <constraint firstItem="8Sf-1n-h7b" firstAttribute="centerX" secondItem="Bpx-LZ-j6q" secondAttribute="centerX" id="Rld-qW-K0Q"/>
                             <constraint firstItem="WsA-eD-PSC" firstAttribute="centerY" secondItem="YZK-jS-pgC" secondAttribute="centerY" id="XSR-wc-eqY"/>
+                            <constraint firstItem="FJz-3l-Wdb" firstAttribute="trailing" secondItem="YZK-jS-pgC" secondAttribute="trailing" id="kbb-9H-l3K"/>
+                            <constraint firstItem="FJz-3l-Wdb" firstAttribute="centerY" secondItem="8Sf-1n-h7b" secondAttribute="centerY" id="sXE-tQ-gqZ"/>
                             <constraint firstItem="qWJ-hz-ukh" firstAttribute="centerY" secondItem="YZK-jS-pgC" secondAttribute="centerY" id="wih-dl-6Th"/>
                             <constraint firstItem="YZK-jS-pgC" firstAttribute="leading" secondItem="qWJ-hz-ukh" secondAttribute="trailing" constant="8" symbolic="YES" id="yoz-MM-ucm"/>
                         </constraints>
@@ -295,6 +303,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="createdLabel" destination="FJz-3l-Wdb" id="e69-lc-s2d"/>
                         <outlet property="exploreBarButton" destination="cSt-hJ-bc6" id="JMe-sf-nFI"/>
                         <outlet property="imaginaryMaxTextField" destination="1V5-8v-7JN" id="4Os-Jk-agd"/>
                         <outlet property="imaginaryMinTextField" destination="8Sf-1n-h7b" id="AIb-jW-aQg"/>
@@ -341,6 +350,9 @@
     <resources>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

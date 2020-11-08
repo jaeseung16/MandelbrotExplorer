@@ -19,6 +19,7 @@ class MandelbrotExplorerExamineViewController: UIViewController {
     @IBOutlet weak var imaginaryMaxTextField: UITextField!
     @IBOutlet weak var imaginaryMinTextField: UITextField!
     
+    @IBOutlet weak var createdLabel: UILabel!
     
     var mandelbrotDisplay: MandelbrotDisplayIPad?
     
@@ -36,6 +37,8 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        createdLabel.isHidden = true
+        
         exploreBarButton.isEnabled = mandelbrotEntity != nil
         
         realMinTextField.transform = CGAffineTransform(rotationAngle: CGFloat(-1.0 * Double.pi / 2.0))
@@ -53,6 +56,17 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         initializeDefaultMandelbrotView()
         
         initializeTextFields()
+        
+        if let entity = mandelbrotEntity {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .short
+            dateFormatter.timeStyle = .none
+            
+            createdLabel.text = "created on \(dateFormatter.string(from: entity.created!))"
+            createdLabel.isHidden = false
+        } else {
+            createdLabel.isHidden = true
+        }
     }
     
     func initializeDefaultMandelbrotDisplay() {

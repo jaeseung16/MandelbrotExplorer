@@ -479,6 +479,7 @@
 			mainGroup = 905DA8F7247C16A300B9DA71;
 			packageReferences = (
 				90898F67252BE55C0084ACB4 /* XCRemoteSwiftPackageReference "swift-numerics" */,
+				909217AF255845100058596D /* XCRemoteSwiftPackageReference "Swifter" */,
 			);
 			productRefGroup = 905DA901247C16A300B9DA71 /* Products */;
 			projectDirPath = "";
@@ -1018,6 +1019,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.0.5;
+			};
+		};
+		909217AF255845100058596D /* XCRemoteSwiftPackageReference "Swifter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mattdonnelly/Swifter";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
