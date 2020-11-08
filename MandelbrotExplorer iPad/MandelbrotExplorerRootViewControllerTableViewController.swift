@@ -78,7 +78,6 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let mandelbrotEntity = fetchedResultsController.object(at: indexPath)
         print("\(mandelbrotEntity)")
         
@@ -98,6 +97,16 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
         return detailViewController
     }
     
+    func delete(mandelbrotEntity: MandelbrotEntity) {
+        dataController.viewContext.delete(mandelbrotEntity)
+        
+        do {
+            try dataController.viewContext.save()
+            NSLog("Saved in SolutionTableViewController.delete(mandelbrotEntity:)")
+        } catch {
+            NSLog("Error while saving in MandelbrotExplorerRootViewControllerTableViewController.delete(mandelbrotEntity:)")
+        }
+    }
         
     /*
     // Override to support conditional editing of the table view.
@@ -107,18 +116,13 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
     }
     */
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            delete(mandelbrotEntity: fetchedResultsController.object(at: indexPath))
+        }
     }
-    */
-
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
