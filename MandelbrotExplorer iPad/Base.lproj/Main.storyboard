@@ -29,7 +29,7 @@
             <objects>
                 <viewController id="cFm-AQ-jEn" customClass="MandelbrotExplorerDetailViewController" customModule="MandelbrotExplorer_iPad" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="muF-uC-znk">
-                        <rect key="frame" x="0.0" y="0.0" width="1045.5" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1045" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kn4-rL-WTs">
@@ -132,6 +132,32 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="UZF-ur-npO">
+                                <rect key="frame" x="738" y="401" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Scale" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3G-c5-7cH">
+                                <rect key="frame" x="684" y="405" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Hd-6g-oXY">
+                                <rect key="frame" x="751" y="443" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Update Scale"/>
+                                <connections>
+                                    <action selector="updateScale:" destination="cFm-AQ-jEn" eventType="touchUpInside" id="ega-dC-ljd"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8m-aP-3ik">
+                                <rect key="frame" x="862" y="405" width="100" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XUf-xq-E5R"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
@@ -174,6 +200,8 @@
                         <outlet property="mandelbrotUIView" destination="mj7-hv-MSt" id="qdT-AO-pdg"/>
                         <outlet property="realMaxTextField" destination="Yre-6O-K2j" id="7xu-MO-2mV"/>
                         <outlet property="realMinTextField" destination="4CZ-7q-V1Q" id="jqQ-Ub-dpm"/>
+                        <outlet property="scaleLabel" destination="a8m-aP-3ik" id="2Gj-lH-I59"/>
+                        <outlet property="scaleSlider" destination="UZF-ur-npO" id="lf1-cZ-g2G"/>
                         <outlet property="zoomedMandelbrotUIView" destination="Sbp-qQ-lxb" id="8dl-xT-VqP"/>
                     </connections>
                 </viewController>
@@ -296,11 +324,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jei-Wg-K46">
-                        <barButtonItem key="rightBarButtonItem" title="Explore" id="cSt-hJ-bc6">
-                            <connections>
-                                <segue destination="cFm-AQ-jEn" kind="show" id="Gtj-jM-a6j"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="action" id="bxE-qz-uD6">
+                                <connections>
+                                    <action selector="share:" destination="P0I-UX-LMi" id="Qp2-QM-BFN"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Explore" id="cSt-hJ-bc6">
+                                <connections>
+                                    <segue destination="cFm-AQ-jEn" kind="show" id="Gtj-jM-a6j"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="createdLabel" destination="FJz-3l-Wdb" id="e69-lc-s2d"/>

@@ -122,5 +122,26 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         }
     }
     
+    @IBAction func share(_ sender: UIBarButtonItem) {
+        let shareText = "Hello, world!"
+        
+        print("\(shareText)")
 
+        let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.barButtonItem = sender
+        /*
+        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList,
+                                                        UIActivity.ActivityType.airDrop,
+                                                        UIActivity.ActivityType.assignToContact,
+                                                        UIActivity.ActivityType.copyToPasteboard,
+                                                        UIActivity.ActivityType.mail,
+                                                        UIActivity.ActivityType.message,
+                                                        UIActivity.ActivityType.openInIBooks,
+                                                        UIActivity.ActivityType.print,
+                                                        UIActivity.ActivityType.saveToCameraRoll]
+        */
+        
+        present(activityViewController, animated: true, completion: {})
+    }
+    
 }

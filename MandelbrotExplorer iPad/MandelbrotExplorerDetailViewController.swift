@@ -22,6 +22,9 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     @IBOutlet weak var imaginaryMinTextField: UITextField!
     @IBOutlet weak var imaginaryMaxTextField: UITextField!
     
+    @IBOutlet weak var scaleLabel: UILabel!
+    @IBOutlet weak var scaleSlider: UISlider!
+    
     var defaultMandelbrotDisplay: MandelbrotDisplayIPad?
     var zoomedMandelbrotDisplay: MandelbrotDisplayIPad?
     
@@ -36,6 +39,16 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     
     var dataController: DataController!
     var defaultMandelbrotEntity: MandelbrotEntity!
+    
+    var _rectSideLength: CGFloat = 32
+    var rectSideLength: CGFloat {
+        get {
+            return _rectSideLength
+        }
+        set {
+            _rectSideLength = newValue
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +77,10 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         
         initializeZoomedMandelbrotView()
         
+        scaleSlider.value = (Float(64.0) - Float(rectSideLength)) / Float(48.0)
+        // rectSideLength = -48.0 * scaleSlider.value + 64.0
+        scaleLabel.text = "\(Float(sideLength) / Float(rectSideLength))"
+        
         updateTextFields()
     }
 
@@ -90,7 +107,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         mandelbrotUIView.delegate = self
         mandelbrotUIView.id = MandelbrotID.first
         mandelbrotUIView.mandelbrotImage = defaultMandelbrotDisplay?.mandelbrotImage
-        mandelbrotUIView.selectRect = toViewRect(displayRect: CGRect(x: 70, y: 176, width: 32, height: 32))
+        mandelbrotUIView.selectRect = toViewRect(displayRect: CGRect(x: 70, y: 176, width: rectSideLength, height: rectSideLength))
         mandelbrotUIView.mandelbrotRect = defaultMandelbrotRect
         mandelbrotUIView.rectScale = 1.0
     }
@@ -195,6 +212,13 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         update(mandelbrotUIView: zoomedMandelbrotUIView, with: zoomedMandelbrotDisplay!)
     }
     
+    @IBAction func updateScale(_ sender: UIButton) {
+        rectSideLength = CGFloat(64.0 - 48.0 * scaleSlider.value)
+        scaleLabel.text = String(format: "%.3f", Float(sideLength) / Float(rectSideLength))
+        
+        let oldSelectRect = mandelbrotUIView.selectRect
+        mandelbrotUIView.selectRect = toViewRect(displayRect: CGRect(origin: oldSelectRect.origin, size: CGSize(width: rectSideLength, height: rectSideLength)))
+    }
 }
 
 extension MandelbrotExplorerDetailViewController: MandelbrotViewDelegate {
