@@ -74,13 +74,13 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Znl-se-aal">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Real" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Abm-GV-ZYd">
                                                 <rect key="frame" x="0.0" y="29.5" width="180" height="29.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Usa-5C-DRe">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Imaginary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="snI-8O-ifk">
                                                 <rect key="frame" x="0.0" y="59" width="180" height="29.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -91,7 +91,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="QQU-bt-an4">
                                         <rect key="frame" x="180" y="0.0" width="180" height="88.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Real" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Abm-GV-ZYd">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Znl-se-aal">
                                                 <rect key="frame" x="0.0" y="0.0" width="180" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -112,7 +112,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qnw-37-F76">
                                         <rect key="frame" x="360" y="0.0" width="180" height="88.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Imaginary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="snI-8O-ifk">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Usa-5C-DRe">
                                                 <rect key="frame" x="0.0" y="0.0" width="180" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -235,12 +235,52 @@
                                     <constraint firstAttribute="width" secondItem="YZK-jS-pgC" secondAttribute="height" id="VwU-o7-8Kc"/>
                                 </constraints>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WsA-eD-PSC">
+                                <rect key="frame" x="831" y="510" width="100" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="tnJ-ID-ne6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Sf-1n-h7b">
+                                <rect key="frame" x="473" y="835" width="100" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="31N-NJ-lH7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1V5-8v-7JN">
+                                <rect key="frame" x="473" y="185" width="100" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="ZWH-dc-L98"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qWJ-hz-ukh">
+                                <rect key="frame" x="115" y="510" width="100" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="hR8-Ha-aGe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bpx-LZ-j6q"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="YZK-jS-pgC" firstAttribute="centerX" secondItem="Bpx-LZ-j6q" secondAttribute="centerX" id="QVL-bO-aGa"/>
-                            <constraint firstItem="YZK-jS-pgC" firstAttribute="centerY" secondItem="Bpx-LZ-j6q" secondAttribute="centerY" id="VW0-be-40b"/>
+                            <constraint firstItem="YZK-jS-pgC" firstAttribute="centerX" secondItem="Bpx-LZ-j6q" secondAttribute="centerX" id="63X-gG-ESx"/>
+                            <constraint firstItem="YZK-jS-pgC" firstAttribute="centerY" secondItem="Bpx-LZ-j6q" secondAttribute="centerY" id="7QH-MP-qtF"/>
+                            <constraint firstItem="8Sf-1n-h7b" firstAttribute="top" secondItem="YZK-jS-pgC" secondAttribute="bottom" constant="8" symbolic="YES" id="C1v-hk-kVw"/>
+                            <constraint firstItem="YZK-jS-pgC" firstAttribute="top" secondItem="1V5-8v-7JN" secondAttribute="bottom" constant="8" symbolic="YES" id="FPZ-4t-hxF"/>
+                            <constraint firstItem="WsA-eD-PSC" firstAttribute="leading" secondItem="YZK-jS-pgC" secondAttribute="trailing" constant="8" symbolic="YES" id="L4P-BW-ePg"/>
+                            <constraint firstItem="1V5-8v-7JN" firstAttribute="centerX" secondItem="YZK-jS-pgC" secondAttribute="centerX" id="Oet-Qd-EcK"/>
+                            <constraint firstItem="8Sf-1n-h7b" firstAttribute="centerX" secondItem="Bpx-LZ-j6q" secondAttribute="centerX" id="Rld-qW-K0Q"/>
+                            <constraint firstItem="WsA-eD-PSC" firstAttribute="centerY" secondItem="YZK-jS-pgC" secondAttribute="centerY" id="XSR-wc-eqY"/>
+                            <constraint firstItem="qWJ-hz-ukh" firstAttribute="centerY" secondItem="YZK-jS-pgC" secondAttribute="centerY" id="wih-dl-6Th"/>
+                            <constraint firstItem="YZK-jS-pgC" firstAttribute="leading" secondItem="qWJ-hz-ukh" secondAttribute="trailing" constant="8" symbolic="YES" id="yoz-MM-ucm"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jei-Wg-K46">
@@ -251,12 +291,17 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="exploreBarButton" destination="cSt-hJ-bc6" id="JMe-sf-nFI"/>
+                        <outlet property="imaginaryMaxTextField" destination="1V5-8v-7JN" id="4Os-Jk-agd"/>
+                        <outlet property="imaginaryMinTextField" destination="8Sf-1n-h7b" id="AIb-jW-aQg"/>
                         <outlet property="mandelbrotIUIView" destination="YZK-jS-pgC" id="m3m-je-Nzk"/>
+                        <outlet property="realMaxTextField" destination="WsA-eD-PSC" id="NgG-Hd-yKA"/>
+                        <outlet property="realMinTextField" destination="qWJ-hz-ukh" id="icT-zU-4Du"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zDx-Gm-FPP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-354.4921875" y="48.4375"/>
+            <point key="canvasLocation" x="-354.90483162518296" y="48.046875"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qq8-TQ-Yqo">

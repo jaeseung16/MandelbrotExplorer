@@ -12,6 +12,13 @@ import ComplexModule
 class MandelbrotExplorerExamineViewController: UIViewController {
 
     @IBOutlet weak var mandelbrotIUIView: MandelbrotUIView!
+    @IBOutlet weak var exploreBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var realMinTextField: UITextField!
+    @IBOutlet weak var realMaxTextField: UITextField!
+    @IBOutlet weak var imaginaryMaxTextField: UITextField!
+    @IBOutlet weak var imaginaryMinTextField: UITextField!
+    
     
     var mandelbrotDisplay: MandelbrotDisplayIPad?
     
@@ -29,6 +36,13 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        exploreBarButton.isEnabled = mandelbrotEntity != nil
+        
+        realMinTextField.transform = CGAffineTransform(rotationAngle: CGFloat(-1.0 * Double.pi / 2.0))
+            .concatenating(CGAffineTransform(translationX: CGFloat(30.0), y: CGFloat(0.0)))
+        realMaxTextField.transform = CGAffineTransform(rotationAngle: CGFloat(-1.0 * Double.pi / 2.0))
+            .concatenating(CGAffineTransform(translationX: CGFloat(-30.0), y: CGFloat(0.0)))
+            
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,6 +52,7 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         
         initializeDefaultMandelbrotView()
         
+        initializeTextFields()
     }
     
     func initializeDefaultMandelbrotDisplay() {
@@ -71,6 +86,14 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         mandelbrotIUIView.rectScale = 1.0
     }
 
+    func initializeTextFields() {
+        if let mandelbrotDisplay = mandelbrotDisplay {
+            realMinTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.minReal)
+            realMaxTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.maxReal)
+            imaginaryMinTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.minImaginary)
+            imaginaryMaxTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.maxImaginary)
+        }
+    }
     
     // MARK: - Navigation
 
