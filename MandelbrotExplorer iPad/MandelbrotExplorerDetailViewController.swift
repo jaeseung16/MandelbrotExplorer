@@ -64,6 +64,10 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         }
         
         colorMapPickerView.selectRow(row, inComponent: 0, animated: false)
+        
+        scaleSlider.value = (Float(64.0) - Float(rectSideLength)) / Float(48.0)
+        // rectSideLength = -48.0 * scaleSlider.value + 64.0
+        scaleLabel.text = String(format: "%.3f", Float(sideLength) / Float(rectSideLength))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -76,10 +80,6 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         initializeZoomedMandelbrotDisplay()
         
         initializeZoomedMandelbrotView()
-        
-        scaleSlider.value = (Float(64.0) - Float(rectSideLength)) / Float(48.0)
-        // rectSideLength = -48.0 * scaleSlider.value + 64.0
-        scaleLabel.text = "\(Float(sideLength) / Float(rectSideLength))"
         
         updateTextFields()
     }
@@ -205,7 +205,11 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     }
     
     @IBAction func reset(_ sender: UIBarButtonItem) {
-        mandelbrotUIView.selectRect = toViewRect(displayRect: CGRect(x: 70, y: 176, width: 32, height: 32))
+        rectSideLength = 32.0
+        scaleSlider.value = (Float(64.0) - Float(rectSideLength)) / Float(48.0)
+        scaleLabel.text = String(format: "%.3f", Float(sideLength) / Float(rectSideLength))
+        
+        mandelbrotUIView.selectRect = toViewRect(displayRect: CGRect(x: 70, y: 176, width: rectSideLength, height: rectSideLength))
         
         defaultMandelbrotDisplay?.updateChild(rect: toDisplayRect(viewRect: mandelbrotUIView.selectRect))
         
@@ -216,8 +220,12 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         rectSideLength = CGFloat(64.0 - 48.0 * scaleSlider.value)
         scaleLabel.text = String(format: "%.3f", Float(sideLength) / Float(rectSideLength))
         
-        let oldSelectRect = mandelbrotUIView.selectRect
+        let oldSelectRect = toDisplayRect(viewRect: mandelbrotUIView.selectRect)
         mandelbrotUIView.selectRect = toViewRect(displayRect: CGRect(origin: oldSelectRect.origin, size: CGSize(width: rectSideLength, height: rectSideLength)))
+        
+        defaultMandelbrotDisplay?.updateChild(rect: toDisplayRect(viewRect: mandelbrotUIView.selectRect))
+        
+        update(mandelbrotUIView: zoomedMandelbrotUIView, with: zoomedMandelbrotDisplay!)
     }
 }
 
