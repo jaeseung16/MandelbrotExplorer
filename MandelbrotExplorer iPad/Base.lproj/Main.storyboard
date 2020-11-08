@@ -29,7 +29,7 @@
             <objects>
                 <viewController id="cFm-AQ-jEn" customClass="MandelbrotExplorerDetailViewController" customModule="MandelbrotExplorer_iPad" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="muF-uC-znk">
-                        <rect key="frame" x="0.0" y="0.0" width="1045.5" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1045" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kn4-rL-WTs">
@@ -169,7 +169,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="colorMapPickerView" destination="Kn4-rL-WTs" id="Am2-pb-OxW"/>
+                        <outlet property="imaginaryMaxTextField" destination="cSD-Oc-ug3" id="OuD-4L-mNP"/>
+                        <outlet property="imaginaryMinTextField" destination="FDv-1l-R4A" id="l5e-Sd-Msz"/>
                         <outlet property="mandelbrotUIView" destination="mj7-hv-MSt" id="qdT-AO-pdg"/>
+                        <outlet property="realMaxTextField" destination="Yre-6O-K2j" id="7xu-MO-2mV"/>
+                        <outlet property="realMinTextField" destination="4CZ-7q-V1Q" id="jqQ-Ub-dpm"/>
                         <outlet property="zoomedMandelbrotUIView" destination="Sbp-qQ-lxb" id="8dl-xT-VqP"/>
                     </connections>
                 </viewController>

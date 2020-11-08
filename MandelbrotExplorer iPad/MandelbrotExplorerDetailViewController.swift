@@ -14,11 +14,13 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     @IBOutlet weak var mandelbrotUIView: MandelbrotUIView!
     @IBOutlet weak var zoomedMandelbrotUIView: MandelbrotUIView!
     
-    @IBOutlet weak var redSlider: UISlider!
-    @IBOutlet weak var greenSlider: UISlider!
-    @IBOutlet weak var blueSlider: UISlider!
-    
     @IBOutlet weak var colorMapPickerView: UIPickerView!
+    
+    
+    @IBOutlet weak var realMinTextField: UITextField!
+    @IBOutlet weak var realMaxTextField: UITextField!
+    @IBOutlet weak var imaginaryMinTextField: UITextField!
+    @IBOutlet weak var imaginaryMaxTextField: UITextField!
     
     var defaultMandelbrotDisplay: MandelbrotDisplayIPad?
     var zoomedMandelbrotDisplay: MandelbrotDisplayIPad?
@@ -61,6 +63,8 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         initializeZoomedMandelbrotDisplay()
         
         initializeZoomedMandelbrotView()
+        
+        updateTextFields()
     }
 
     func initializeDefaultMandelbrotDisplay() {
@@ -112,6 +116,8 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         mandelbrotUIView.mandelbrotImage = mandelbrotDisplayIPad.mandelbrotImage
         mandelbrotUIView.mandelbrotRect = mandelbrotDisplayIPad.mandelbrotRect
         mandelbrotUIView.rectScale = (defaultMandelbrotRect.maxReal - defaultMandelbrotRect.minReal) / (mandelbrotUIView.mandelbrotRect.maxReal - mandelbrotUIView.mandelbrotRect.minReal)
+        
+        updateTextFields()
     }
     
     func toViewRect(displayRect: CGRect) -> CGRect {
@@ -140,6 +146,15 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         print("displayRect = \(CGRect(x: scale * viewRect.origin.x, y: scale * viewRect.origin.y, width: scale * viewRect.width, height: scale * viewRect.height))")
         
         return CGRect(x: scale * viewRect.origin.x, y: scale * viewRect.origin.y, width: scale * viewRect.width, height: scale * viewRect.height)
+    }
+    
+    func updateTextFields() {
+        if let mandelbrotDisplay = zoomedMandelbrotDisplay {
+            realMinTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.minReal)
+            realMaxTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.maxReal)
+            imaginaryMinTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.minImaginary)
+            imaginaryMaxTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.maxImaginary)
+        }
     }
     
     @IBAction func refreshColor(_ sender: UIButton) {
