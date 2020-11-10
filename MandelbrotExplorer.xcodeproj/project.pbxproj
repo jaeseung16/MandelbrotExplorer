@@ -924,14 +924,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RWVTTVMWBE;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = U8VSJXRJTQ;
 				INFOPLIST_FILE = "MandelbrotExplorer iPad/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.resonance.MandelbrotExplorer-iPad";
+				PRODUCT_BUNDLE_IDENTIFIER = com.resonance.jaeseunglee;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -946,14 +947,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RWVTTVMWBE;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = U8VSJXRJTQ;
 				INFOPLIST_FILE = "MandelbrotExplorer iPad/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.resonance.MandelbrotExplorer-iPad";
+				PRODUCT_BUNDLE_IDENTIFIER = com.resonance.jaeseunglee;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
