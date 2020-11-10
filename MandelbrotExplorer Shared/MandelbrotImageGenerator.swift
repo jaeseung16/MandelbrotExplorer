@@ -51,7 +51,7 @@ class MandelbrotImageGenerator {
     func generateCGImage(values: [Int], lengthOfRow: Int) -> Void {
         var imgBytes = [SIMD4<Float>](repeating: SIMD4<Float>(x: 0.0, y: 0.0, z: 0.0, w: 1.0), count: values.count)
         
-        print("cgColors = \(cgColors)")
+        //print("cgColors = \(cgColors)")
         
         for x in 0..<lengthOfRow {
             for y in 0..<lengthOfRow {

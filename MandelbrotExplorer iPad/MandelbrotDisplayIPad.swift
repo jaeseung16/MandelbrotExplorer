@@ -120,16 +120,17 @@ class MandelbrotDisplayIPad {
         //print("color = \(color)")
         //print("colorMap = \(colorMap)")
         
-        let mandelbrotImageGenerator: MandelbrotImageGenerator
-        if (colorMap != nil) {
-            mandelbrotImageGenerator = MandelbrotImageGenerator(cgColors: colorMap!)
+        if mandelbrotSet is MandelbrotSetGPU {
+            self.mandelbrotImage = UIImage(cgImage: mandelbrotSet.cgImage)
         } else {
-            mandelbrotImageGenerator = MandelbrotImageGenerator(cgColor: ColorConverter.toCGColor(inSIMD4: color!))
+            let mandelbrotImageGenerator: MandelbrotImageGenerator
+            mandelbrotImageGenerator = MandelbrotImageGenerator(cgColors: colorMap!)
+            mandelbrotImageGenerator.generateCGImage(values: mandelbrotSet.values, lengthOfRow: Int(sqrt(Double(mandelbrotSet.values.count))))
+            
+            self.mandelbrotImage = UIImage(cgImage: mandelbrotImageGenerator.cgImage)
         }
         
-        mandelbrotImageGenerator.generateCGImage(values: mandelbrotSet.values, lengthOfRow: Int(sqrt(Double(mandelbrotSet.values.count))))
         
-        self.mandelbrotImage = UIImage(cgImage: mandelbrotImageGenerator.cgImage)
     }
     
 }

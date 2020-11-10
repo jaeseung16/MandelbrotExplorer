@@ -137,11 +137,17 @@ class MandelbrotSetGPU: MandelbrotSet {
         computeCommandEncoder.setTexture(outputTexture, index: 1)
         computeCommandEncoder.setTexture(colorValueTexture, index: 2)
         
-        //print("computePipelineState.maxTotalThreadsPerThreadgroup = \(computePipelineState.maxTotalThreadsPerThreadgroup)")
-        //print("computePipelineState.threadExecutionWidth = \(computePipelineState.threadExecutionWidth)")
+        print("computePipelineState.maxTotalThreadsPerThreadgroup = \(computePipelineState.maxTotalThreadsPerThreadgroup)")
+        print("computePipelineState.threadExecutionWidth = \(computePipelineState.threadExecutionWidth)")
         
-        let numThreadgroups = MTLSize(width: (maxcount + threadWidth) / threadWidth, height: (maxcount + threadWidth) / threadWidth, depth: 1)
-        let threadsPerGroup = MTLSize(width: threadWidth, height: threadWidth, depth: 1)
+        let threadHeight = computePipelineState.maxTotalThreadsPerThreadgroup / threadWidth
+        
+        let numThreadgroups = MTLSize(width: (maxcount + threadWidth) / threadWidth, height: (maxcount + threadHeight) / threadHeight, depth: 1)
+        let threadsPerGroup = MTLSize(width: threadWidth, height: threadHeight, depth: 1)
+        
+        print("numThreadgroups = \(numThreadgroups)")
+        print("threadsPerGroup = \(threadsPerGroup)")
+        
         computeCommandEncoder.dispatchThreadgroups(numThreadgroups, threadsPerThreadgroup: threadsPerGroup)
         
         computeCommandEncoder.endEncoding()
@@ -174,7 +180,7 @@ class MandelbrotSetGPU: MandelbrotSet {
             colors = colorMap!
         }
        
-        print("\(colors[255])")
+        //print("\(colors[255])")
         
         colorValueTexture.replace(region: colorValueTextureRegion, mipmapLevel: 0, withBytes: colors, bytesPerRow: colorValueTextureDescriptor.width * MemoryLayout<SIMD4<Float>>.stride)
     }
