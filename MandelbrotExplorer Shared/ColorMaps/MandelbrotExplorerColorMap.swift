@@ -9,7 +9,6 @@
 import Foundation
 
 enum MandelbrotExplorerColorMap: String, CaseIterable {
-    case parula256
     case jet
     case hsv
     case hot

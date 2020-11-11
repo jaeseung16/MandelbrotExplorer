@@ -13,8 +13,6 @@ class ColorMapFactory {
         var colorMap: ColorMap
         
         switch (name) {
-        case .parula256:
-            colorMap = Parula256()
         case .jet:
             colorMap = Jet(length)
         case .hsv:
