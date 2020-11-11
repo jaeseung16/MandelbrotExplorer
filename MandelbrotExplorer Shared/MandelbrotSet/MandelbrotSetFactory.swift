@@ -20,10 +20,10 @@ class MandelbrotSetFactory {
             let device = MTLCreateSystemDefaultDevice()
             if (device == nil) {
                 print("Using CPU")
-                mandelbrotSet = MandelbrotSetCPU(inZs: inZs, inMaxIter: 200, inColorMap: inColorMap)
+                mandelbrotSet = MandelbrotSetCPU(inZs: inZs, inMaxIter: inMaxIter, inColorMap: inColorMap)
             } else {
                 print("Using GPU")
-                mandelbrotSet = MandelbrotSetGPU(inZs: inZs, inMaxIter: 200, inColorMap: inColorMap)
+                mandelbrotSet = MandelbrotSetGPU(inZs: inZs, inMaxIter: inMaxIter, inColorMap: inColorMap)
             }
         //#endif
 

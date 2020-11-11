@@ -33,6 +33,8 @@ class MandelbrotExplorerExamineViewController: UIViewController {
     var dataController: DataController?
     var mandelbrotEntity: MandelbrotEntity?
     
+    var maxIter = MaxIter.twoHundred.rawValue
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,7 +47,10 @@ class MandelbrotExplorerExamineViewController: UIViewController {
             .concatenating(CGAffineTransform(translationX: CGFloat(30.0), y: CGFloat(0.0)))
         realMaxTextField.transform = CGAffineTransform(rotationAngle: CGFloat(-1.0 * Double.pi / 2.0))
             .concatenating(CGAffineTransform(translationX: CGFloat(-30.0), y: CGFloat(0.0)))
-            
+        
+        if (mandelbrotEntity != nil) {
+            maxIter = Int(mandelbrotEntity!.maxIter)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -70,11 +75,14 @@ class MandelbrotExplorerExamineViewController: UIViewController {
     }
     
     func initializeDefaultMandelbrotDisplay() {
-        mandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength)
+        print("maxIter = \(maxIter)")
+        mandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength, maxIter: maxIter)
         mandelbrotDisplay?.id = MandelbrotID.first
+        mandelbrotDisplay?.maxIter = maxIter
         
         if (mandelbrotEntity == nil) {
-            mandelbrotDisplay?.color = SIMD4<Float>(x: 0.0, y: 1.0, z: 1.0, w: 1.0)
+            let mandelbrotExplorerColorMap = MandelbrotExplorerColorMap.green
+            mandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(mandelbrotExplorerColorMap, length: maxIter).colorMapInSIMD4
             mandelbrotDisplay?.mandelbrotRect = defaultMandelbrotRect
         } else {
             let minReal = mandelbrotEntity!.minReal
@@ -82,8 +90,8 @@ class MandelbrotExplorerExamineViewController: UIViewController {
             let minImaginary = mandelbrotEntity!.minImaginary
             let maxImaginary = mandelbrotEntity!.maxImaginary
             
-            let mandelbrotExplorerColorMap = MandelbrotExplorerColorMap.init(rawValue: mandelbrotEntity!.colorMap!)
-            mandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(mandelbrotExplorerColorMap!, length: 256).colorMapInSIMD4
+            let mandelbrotExplorerColorMap = MandelbrotExplorerColorMap(rawValue: mandelbrotEntity!.colorMap!)
+            mandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(mandelbrotExplorerColorMap!, length: maxIter).colorMapInSIMD4
             
             let mandelbrotRect = ComplexRect(Complex<Double>(minReal, minImaginary), Complex<Double>(maxReal, maxImaginary))
             
@@ -123,11 +131,16 @@ class MandelbrotExplorerExamineViewController: UIViewController {
     }
     
     @IBAction func share(_ sender: UIBarButtonItem) {
-        let shareText = "Hello, world!"
-        
-        print("\(shareText)")
+        guard let entity = mandelbrotEntity, let image = mandelbrotIUIView.mandelbrotImage else {
+            print("mandelbrotEntity = \(String(describing: mandelbrotEntity))")
+            print("mandelbrotIUIView.mandelbrotImage = \(String(describing: mandelbrotIUIView.mandelbrotImage))")
+            return
+        }
+        let shareText = "Mandelbrot Set\n\(entity.detailedDescription)"
 
-        let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
+        let activityItems: [Any] = [shareText, image]
+        
+        let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         activityViewController.popoverPresentationController?.barButtonItem = sender
         /*
         activityViewController.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList,

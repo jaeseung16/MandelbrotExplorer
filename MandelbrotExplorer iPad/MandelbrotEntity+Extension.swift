@@ -23,4 +23,13 @@ extension MandelbrotEntity {
         
         return ("Real: \t\t(\(minReal), \(maxReal))\nImaginary: \t(\(minImaginary), \(maxImaginary))")
     }
+    
+    public var detailedDescription: String {
+        let minReal = String(format: "%.6f", self.minReal)
+        let maxReal = String(format: "%.6f", self.maxReal)
+        let minImaginary = String(format: "%.6f", self.minImaginary)
+        let maxImaginary = String(format: "%.6f", self.maxImaginary)
+        
+        return "Real: \t\t(\(minReal), \(maxReal))\nImaginary: \t(\(minImaginary), \(maxImaginary))\nMax Iter = \(maxIter)"
+    }
 }

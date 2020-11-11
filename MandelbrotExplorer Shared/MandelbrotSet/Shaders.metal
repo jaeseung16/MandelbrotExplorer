@@ -116,6 +116,7 @@ kernel void sigmoid(const device float *inVector [[ buffer(0) ]],
 kernel void mandelbrot(texture2d<float, access::read> inTexture [[ texture(0) ]],
                        texture2d<float, access::write> outTexture [[ texture(1) ]],
                        texture1d<float, access::read> valueTexture [[ texture(2) ]],
+                       texture1d<float, access::read> maxIterTexture [[ texture(3) ]],
                        uint2 id [[ thread_position_in_grid ]]) {
     // Check if the pixel is within the bounds of the output texture
     if((id.x >= outTexture.get_width()) || (id.y >= outTexture.get_height()))
@@ -124,13 +125,15 @@ kernel void mandelbrot(texture2d<float, access::read> inTexture [[ texture(0) ]]
         return;
     }
     
+    int maxIter = int(maxIterTexture.read(uint(0)).x);
+    
     float z_real = 0.0;
     float z_imag = 0.0;
     
     float4 z0 = inTexture.read(id);
     
     int iter = 0;
-    for (iter = 0; iter<200 && ((z_real * z_real + z_imag * z_imag) < 4); iter++)
+    for (iter = 0; iter<maxIter && ((z_real * z_real + z_imag * z_imag) < 4); iter++)
     {
         float new_real = z_real * z_real - z_imag * z_imag + z0.x;
         float new_imag = 2 * z_real * z_imag + z0.y;
@@ -139,7 +142,7 @@ kernel void mandelbrot(texture2d<float, access::read> inTexture [[ texture(0) ]]
         z_imag = new_imag;
     }
    
-    float index = (iter == 200) ? 0 : (float(iter) / 200.0);
-    float4 value = valueTexture.read(uint(index * 256.0));
+    uint index = (iter == maxIter) ? 0 : iter;
+    float4 value = valueTexture.read(index);
     outTexture.write(value, id);
 }

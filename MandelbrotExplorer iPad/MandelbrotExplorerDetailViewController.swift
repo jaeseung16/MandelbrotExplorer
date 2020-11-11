@@ -25,6 +25,8 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     @IBOutlet weak var scaleLabel: UILabel!
     @IBOutlet weak var scaleSlider: UISlider!
     
+    var maxIter = MaxIter.twoHundred.rawValue
+    
     var defaultMandelbrotDisplay: MandelbrotDisplayIPad?
     var zoomedMandelbrotDisplay: MandelbrotDisplayIPad?
     
@@ -54,6 +56,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         colorMapPickerView.delegate = self
+        colorMapPickerView.dataSource = self
         
         var row = 0
         for colorMap in MandelbrotExplorerColorMap.allCases {
@@ -64,6 +67,8 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         }
         
         colorMapPickerView.selectRow(row, inComponent: 0, animated: false)
+        
+        colorMapPickerView.selectRow(2, inComponent: 1, animated: false)
         
         scaleSlider.value = (Float(64.0) - Float(rectSideLength)) / Float(48.0)
         // rectSideLength = -48.0 * scaleSlider.value + 64.0
@@ -85,7 +90,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     }
 
     func initializeDefaultMandelbrotDisplay() {
-        defaultMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength)
+        defaultMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength, maxIter: maxIter)
         defaultMandelbrotDisplay?.id = MandelbrotID.first
         
         let minReal = defaultMandelbrotEntity.minReal
@@ -93,9 +98,11 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         let minImaginary = defaultMandelbrotEntity.minImaginary
         let maxImaginary = defaultMandelbrotEntity.maxImaginary
         
-        let defaultMandelbrotExplorerColorMap = MandelbrotExplorerColorMap.init(rawValue: defaultMandelbrotEntity.colorMap!)
+        let defaultMandelbrotExplorerColorMap = MandelbrotExplorerColorMap(rawValue: defaultMandelbrotEntity.colorMap!)
         
-        defaultMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(defaultMandelbrotExplorerColorMap!, length: 256).colorMapInSIMD4
+        maxIter = Int(defaultMandelbrotEntity.maxIter)
+        
+        defaultMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(defaultMandelbrotExplorerColorMap!, length: maxIter).colorMapInSIMD4
         
         let mandelbrotRect = ComplexRect(Complex<Double>(minReal, minImaginary), Complex<Double>(maxReal, maxImaginary))
         defaultMandelbrotDisplay?.mandelbrotRect = mandelbrotRect
@@ -113,8 +120,8 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     }
     
     func initializeZoomedMandelbrotDisplay() -> Void {
-        zoomedMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength)
-        zoomedMandelbrotDisplay?.color = SIMD4<Float>(x: 0.0, y: 1.0, z: 0.0, w: 1.0)
+        zoomedMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength, maxIter: maxIter)
+        zoomedMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(colorMap, length: maxIter).colorMapInSIMD4
         zoomedMandelbrotDisplay?.id = MandelbrotID.second
         
         defaultMandelbrotDisplay?.child = zoomedMandelbrotDisplay
@@ -174,14 +181,20 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         }
     }
     
-    @IBAction func refreshColor(_ sender: UIButton) {
-        zoomedMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(colorMap, length: 256).colorMapInSIMD4
-        zoomedMandelbrotDisplay?.color = nil
+    private func refresh() {
+        zoomedMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(colorMap, length: maxIter).colorMapInSIMD4
+        zoomedMandelbrotDisplay?.maxIter = maxIter
         zoomedMandelbrotDisplay?.generateMandelbrotSet()
         zoomedMandelbrotUIView.mandelbrotImage = zoomedMandelbrotDisplay?.mandelbrotImage
     }
     
+    @IBAction func refresh(_ sender: UIButton) {
+        refresh()
+    }
+    
     @IBAction func save(_ sender: UIBarButtonItem) {
+        refresh()
+        
         let mandelbrotEntity = MandelbrotEntity(context: dataController.viewContext)
         
         let mandelbrotRect = zoomedMandelbrotDisplay!.mandelbrotRect
@@ -191,6 +204,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         mandelbrotEntity.minImaginary = mandelbrotRect.minImaginary
         mandelbrotEntity.maxImaginary = mandelbrotRect.maxImaginary
         mandelbrotEntity.colorMap = colorMap.rawValue
+        mandelbrotEntity.maxIter = Int16(zoomedMandelbrotDisplay!.maxIter)
         
         mandelbrotEntity.image = zoomedMandelbrotUIView.mandelbrotImage?.pngData()
         
@@ -240,21 +254,53 @@ extension MandelbrotExplorerDetailViewController: MandelbrotViewDelegate {
 
 extension MandelbrotExplorerDetailViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        return 2
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return MandelbrotExplorerColorMap.allCases.count
+        var numberOfRows: Int
+        
+        switch component {
+        case 0:
+            numberOfRows = MandelbrotExplorerColorMap.allCases.count
+        case 1:
+            numberOfRows = MaxIter.allCases.count
+        default:
+            numberOfRows = 0
+        }
+        return numberOfRows
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        let colorMap = UILabel()
-        colorMap.textAlignment = .center
-        colorMap.text = MandelbrotExplorerColorMap.allCases[row].rawValue
-        return colorMap
+        if view == nil {
+            switch component {
+            case 0:
+                let colorMap = UILabel()
+                colorMap.textAlignment = .center
+                colorMap.text = MandelbrotExplorerColorMap.allCases[row].rawValue
+                return colorMap
+            case 1:
+                let colorMap = UILabel()
+                colorMap.textAlignment = .center
+                colorMap.text = String(MaxIter.allCases[row].rawValue)
+                return colorMap
+            default:
+                return UIView()
+            }
+        } else {
+            return view!
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        colorMap = MandelbrotExplorerColorMap.allCases[row]
+        switch component {
+        case 0:
+            colorMap = MandelbrotExplorerColorMap.allCases[row]
+        case 1:
+            maxIter = MaxIter.allCases[row].rawValue
+        default:
+            colorMap = MandelbrotExplorerColorMap.allCases[0]
+            maxIter = MaxIter.twoHundred.rawValue
+        }
     }
 }

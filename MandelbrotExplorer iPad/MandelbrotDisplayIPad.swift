@@ -14,6 +14,7 @@ class MandelbrotDisplayIPad {
     var child: MandelbrotDisplayIPad?
     
     var sideLength: Int
+    var maxIter: Int
     
     var zs: [Complex<Double>]
     
@@ -25,8 +26,9 @@ class MandelbrotDisplayIPad {
     var color: SIMD4<Float>?
     var colorMap: [SIMD4<Float>]?
     
-    init(sideLength: Int) {
+    init(sideLength: Int, maxIter: Int) {
         self.sideLength = sideLength + 1
+        self.maxIter = maxIter
         let numberOfPixels = self.sideLength * self.sideLength
         
         self.zs = [Complex<Double>](repeating: Complex<Double>.zero, count: numberOfPixels)
@@ -51,15 +53,15 @@ class MandelbrotDisplayIPad {
         
         if (colorMap == nil) {
             colorMap = [SIMD4<Float>]()
-            for k in 0..<256 {
-                let factor = Float(k) / 255
+            for k in 0..<maxIter {
+                let factor = Float(k) / Float(maxIter)
                 var colorToAdd = SIMD4<Float>(factor * color!)
                 colorToAdd.w = 1.0
                 colorMap!.append(colorToAdd)
             }
         }
         
-        mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(inZs: zs, inMaxIter: 200, inColorMap: colorMap!)
+        mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(inZs: zs, inMaxIter: maxIter, inColorMap: colorMap!)
         mandelbrotSet?.calculate()
         
         let timeToCalculate = Date()
