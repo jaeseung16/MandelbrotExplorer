@@ -107,7 +107,7 @@ class MandelbrotSetGPU: MandelbrotSet {
 
         outputTexture = device.makeTexture(descriptor: textureDescriptor)!
         
-        colorValueTextureDescriptor = MandelbrotSetGPU.createTextureDescriptor(width: inMaxIter, height: 1)
+        colorValueTextureDescriptor = MandelbrotSetGPU.createTextureDescriptor(width: inColorMap.count, height: 1)
         colorValueTextureDescriptor.textureType = .type1D
         colorValueTextureRegion = MTLRegion(origin: MTLOriginMake(0, 0, 0), size: MTLSizeMake(colorValueTextureDescriptor.width, colorValueTextureDescriptor.height, 1))
         colorValueTexture = device.makeTexture(descriptor: colorValueTextureDescriptor)!

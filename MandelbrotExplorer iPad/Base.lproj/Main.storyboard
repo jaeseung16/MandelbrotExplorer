@@ -29,7 +29,7 @@
             <objects>
                 <viewController id="cFm-AQ-jEn" customClass="MandelbrotExplorerDetailViewController" customModule="MandelbrotExplorer_iPad" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="muF-uC-znk">
-                        <rect key="frame" x="0.0" y="0.0" width="1045" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1045.5" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qyl-8Y-nQ9">
@@ -286,7 +286,7 @@
             <objects>
                 <viewController storyboardIdentifier="MandelbrotExamineViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="P0I-UX-LMi" customClass="MandelbrotExplorerExamineViewController" customModule="MandelbrotExplorer_iPad" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="027-K7-nW3">
-                        <rect key="frame" x="0.0" y="0.0" width="1045.5" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1045" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="YZK-jS-pgC" customClass="MandelbrotUIView" customModule="MandelbrotExplorer_iPad" customModuleProvider="target">
@@ -335,13 +335,21 @@
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q9s-W3-jgO">
+                                <rect key="frame" x="785.5" y="869" width="37.5" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bpx-LZ-j6q"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="q9s-W3-jgO" firstAttribute="trailing" secondItem="FJz-3l-Wdb" secondAttribute="trailing" id="4cY-PZ-8Cq"/>
                             <constraint firstItem="YZK-jS-pgC" firstAttribute="centerX" secondItem="Bpx-LZ-j6q" secondAttribute="centerX" id="63X-gG-ESx"/>
                             <constraint firstItem="YZK-jS-pgC" firstAttribute="centerY" secondItem="Bpx-LZ-j6q" secondAttribute="centerY" id="7QH-MP-qtF"/>
                             <constraint firstItem="8Sf-1n-h7b" firstAttribute="top" secondItem="YZK-jS-pgC" secondAttribute="bottom" constant="8" symbolic="YES" id="C1v-hk-kVw"/>
+                            <constraint firstItem="q9s-W3-jgO" firstAttribute="top" secondItem="FJz-3l-Wdb" secondAttribute="bottom" constant="8" symbolic="YES" id="Etf-iR-ROz"/>
                             <constraint firstItem="YZK-jS-pgC" firstAttribute="top" secondItem="1V5-8v-7JN" secondAttribute="bottom" constant="8" symbolic="YES" id="FPZ-4t-hxF"/>
                             <constraint firstItem="WsA-eD-PSC" firstAttribute="leading" secondItem="YZK-jS-pgC" secondAttribute="trailing" constant="8" symbolic="YES" id="L4P-BW-ePg"/>
                             <constraint firstItem="1V5-8v-7JN" firstAttribute="centerX" secondItem="YZK-jS-pgC" secondAttribute="centerX" id="Oet-Qd-EcK"/>
@@ -368,11 +376,12 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <outlet property="createdLabel" destination="FJz-3l-Wdb" id="e69-lc-s2d"/>
+                        <outlet property="createdLabel" destination="q9s-W3-jgO" id="ObW-6r-XaJ"/>
                         <outlet property="exploreBarButton" destination="cSt-hJ-bc6" id="JMe-sf-nFI"/>
                         <outlet property="imaginaryMaxTextField" destination="1V5-8v-7JN" id="4Os-Jk-agd"/>
                         <outlet property="imaginaryMinTextField" destination="8Sf-1n-h7b" id="AIb-jW-aQg"/>
                         <outlet property="mandelbrotIUIView" destination="YZK-jS-pgC" id="m3m-je-Nzk"/>
+                        <outlet property="maxIterLabel" destination="FJz-3l-Wdb" id="tAh-rP-QRG"/>
                         <outlet property="realMaxTextField" destination="WsA-eD-PSC" id="NgG-Hd-yKA"/>
                         <outlet property="realMinTextField" destination="qWJ-hz-ukh" id="icT-zU-4Du"/>
                     </connections>

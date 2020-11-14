@@ -30,6 +30,6 @@ extension MandelbrotEntity {
         let minImaginary = String(format: "%.6f", self.minImaginary)
         let maxImaginary = String(format: "%.6f", self.maxImaginary)
         
-        return "Real: \t\t(\(minReal), \(maxReal))\nImaginary: \t(\(minImaginary), \(maxImaginary))\nMax Iter = \(maxIter)"
+        return "Real: (\(minReal), \(maxReal))\nImaginary: (\(minImaginary), \(maxImaginary))\nMax Iter: \(maxIter)"
     }
 }

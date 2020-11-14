@@ -14,4 +14,10 @@ enum MaxIter: Int, CaseIterable {
     case twoHundred = 200
     case fiveHundred = 500
     case oneThousand = 1000
+    case twoThousand = 2000
+    case fiveThousand = 5000
+    case max = 8192
+    case twentyThousand = 20000
+    case oneHundredThousand = 100000
+    case oneMillion = 1000000
 }

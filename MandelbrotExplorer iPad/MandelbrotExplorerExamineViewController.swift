@@ -19,6 +19,7 @@ class MandelbrotExplorerExamineViewController: UIViewController {
     @IBOutlet weak var imaginaryMaxTextField: UITextField!
     @IBOutlet weak var imaginaryMinTextField: UITextField!
     
+    @IBOutlet weak var maxIterLabel: UILabel!
     @IBOutlet weak var createdLabel: UILabel!
     
     var mandelbrotDisplay: MandelbrotDisplayIPad?
@@ -39,6 +40,7 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        maxIterLabel.isHidden = true
         createdLabel.isHidden = true
         
         exploreBarButton.isEnabled = mandelbrotEntity != nil
@@ -67,9 +69,13 @@ class MandelbrotExplorerExamineViewController: UIViewController {
             dateFormatter.dateStyle = .short
             dateFormatter.timeStyle = .none
             
+            maxIterLabel.text = "max iteration: \(entity.maxIter)"
+            maxIterLabel.isHidden = false
+            
             createdLabel.text = "created on \(dateFormatter.string(from: entity.created!))"
             createdLabel.isHidden = false
         } else {
+            maxIterLabel.isHidden = true
             createdLabel.isHidden = true
         }
     }
@@ -91,7 +97,7 @@ class MandelbrotExplorerExamineViewController: UIViewController {
             let maxImaginary = mandelbrotEntity!.maxImaginary
             
             let mandelbrotExplorerColorMap = MandelbrotExplorerColorMap(rawValue: mandelbrotEntity!.colorMap!)
-            mandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(mandelbrotExplorerColorMap!, length: maxIter).colorMapInSIMD4
+            mandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(mandelbrotExplorerColorMap!, length: maxIter > 8192 ? 8192 : maxIter).colorMapInSIMD4
             
             let mandelbrotRect = ComplexRect(Complex<Double>(minReal, minImaginary), Complex<Double>(maxReal, maxImaginary))
             

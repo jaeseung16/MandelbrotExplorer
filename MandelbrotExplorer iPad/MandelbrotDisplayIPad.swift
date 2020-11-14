@@ -39,7 +39,7 @@ class MandelbrotDisplayIPad {
     }
     
     func generateMandelbrotSet() -> Void {
-        print("MandelbrotDisplay.generateMandelbrotSet() called for \(mandelbrotRect) with sideLength = \(sideLength)")
+        print("MandelbrotDisplay.generateMandelbrotSet() called for \(mandelbrotRect) with sideLength = \(sideLength) and maxIter = \(maxIter)")
         let startTime = Date()
         
         let displaySize = CGSize(width: sideLength - 1, height: sideLength - 1)
@@ -52,6 +52,7 @@ class MandelbrotDisplayIPad {
         let timeToPrepare = Date()
         
         if (colorMap == nil) {
+            print("colorMap is nil")
             colorMap = [SIMD4<Float>]()
             for k in 0..<maxIter {
                 let factor = Float(k) / Float(maxIter)

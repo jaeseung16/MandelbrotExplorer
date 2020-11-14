@@ -90,6 +90,8 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     }
 
     func initializeDefaultMandelbrotDisplay() {
+        print("** MandelbrotExplorerDetailViewController **")
+        maxIter = Int(defaultMandelbrotEntity.maxIter)
         defaultMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength, maxIter: maxIter)
         defaultMandelbrotDisplay?.id = MandelbrotID.first
         
@@ -99,10 +101,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         let maxImaginary = defaultMandelbrotEntity.maxImaginary
         
         let defaultMandelbrotExplorerColorMap = MandelbrotExplorerColorMap(rawValue: defaultMandelbrotEntity.colorMap!)
-        
-        maxIter = Int(defaultMandelbrotEntity.maxIter)
-        
-        defaultMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(defaultMandelbrotExplorerColorMap!, length: maxIter).colorMapInSIMD4
+        defaultMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(defaultMandelbrotExplorerColorMap!, length: maxIter > 8192 ? 8192: maxIter).colorMapInSIMD4
         
         let mandelbrotRect = ComplexRect(Complex<Double>(minReal, minImaginary), Complex<Double>(maxReal, maxImaginary))
         defaultMandelbrotDisplay?.mandelbrotRect = mandelbrotRect
@@ -121,7 +120,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     
     func initializeZoomedMandelbrotDisplay() -> Void {
         zoomedMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength, maxIter: maxIter)
-        zoomedMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(colorMap, length: maxIter).colorMapInSIMD4
+        zoomedMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(colorMap, length: maxIter > 8192 ? 8192: maxIter).colorMapInSIMD4
         zoomedMandelbrotDisplay?.id = MandelbrotID.second
         
         defaultMandelbrotDisplay?.child = zoomedMandelbrotDisplay
@@ -182,7 +181,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     }
     
     private func refresh() {
-        zoomedMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(colorMap, length: maxIter).colorMapInSIMD4
+        zoomedMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(colorMap, length: maxIter > 8192 ? 8192: maxIter).colorMapInSIMD4
         zoomedMandelbrotDisplay?.maxIter = maxIter
         zoomedMandelbrotDisplay?.generateMandelbrotSet()
         zoomedMandelbrotUIView.mandelbrotImage = zoomedMandelbrotDisplay?.mandelbrotImage
@@ -204,7 +203,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         mandelbrotEntity.minImaginary = mandelbrotRect.minImaginary
         mandelbrotEntity.maxImaginary = mandelbrotRect.maxImaginary
         mandelbrotEntity.colorMap = colorMap.rawValue
-        mandelbrotEntity.maxIter = Int16(zoomedMandelbrotDisplay!.maxIter)
+        mandelbrotEntity.maxIter = Int32(zoomedMandelbrotDisplay!.maxIter)
         
         mandelbrotEntity.image = zoomedMandelbrotUIView.mandelbrotImage?.pngData()
         
@@ -280,10 +279,10 @@ extension MandelbrotExplorerDetailViewController: UIPickerViewDataSource, UIPick
                 colorMap.text = MandelbrotExplorerColorMap.allCases[row].rawValue
                 return colorMap
             case 1:
-                let colorMap = UILabel()
-                colorMap.textAlignment = .center
-                colorMap.text = String(MaxIter.allCases[row].rawValue)
-                return colorMap
+                let maxIter = UILabel()
+                maxIter.textAlignment = .center
+                maxIter.text = String(MaxIter.allCases[row].rawValue)
+                return maxIter
             default:
                 return UIView()
             }
