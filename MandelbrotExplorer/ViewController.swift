@@ -18,7 +18,7 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var mandelbrotMTKView: MTKView!
     
-    let sideLength = 383
+    let sideLength = 1023 //383
     let rectScale: CGFloat = 1.0
     let blockiness: CGFloat = 1.0
     let defaultMandelbrotRect = ComplexRect(Complex<Double>(-2.1, -1.5), Complex<Double>(0.9, 1.5))
@@ -143,6 +143,27 @@ class ViewController: NSViewController {
         let i = minImaginary + ( y / Double(displaySize.height) ) * (maxImaginary - minImaginary)
         return Complex<Double>(r, i)
     }
+    
+    @IBAction func savePDF(_ sender: NSButton) {
+        guard let cgImage = defaultMandelbrotDisplay?.mandelbrotSet?.cgImage else {
+            print("There is no image to generate a pdf file.")
+            return
+        }
+        /*        let url = URL(fileURLWithPath: "mandelbrot1024.pdf")
+        let dc = CGDataConsumer(url: url as CFURL)
+        let dest = CGImageDestinationCreateWithDataConsumer(dc!, kUTTypePDF, 1, nil)
+        
+        CGImageDestinationAddImage(dest!, cgImage, nil)
+        CGImageDestinationFinalize(dest!)
+        */
+        
+        let url = URL(fileURLWithPath: "mandelbrot1024.png")
+        let dc = CGDataConsumer(url: url as CFURL)
+        let dest = CGImageDestinationCreateWithDataConsumer(dc!, kUTTypePNG, 1, nil)
+        CGImageDestinationAddImage(dest!, cgImage, nil)
+        CGImageDestinationFinalize(dest!)
+    }
+    
 }
 
 extension ViewController: MandelbrotViewDelegate {
