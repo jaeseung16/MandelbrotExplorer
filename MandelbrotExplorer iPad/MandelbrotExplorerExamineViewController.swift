@@ -142,9 +142,39 @@ class MandelbrotExplorerExamineViewController: UIViewController {
             print("mandelbrotIUIView.mandelbrotImage = \(String(describing: mandelbrotIUIView.mandelbrotImage))")
             return
         }
-        let shareText = "Mandelbrot Set\n\(entity.detailedDescription)"
-
-        let activityItems: [Any] = [shareText, image]
+        
+        guard let mandelbrotShareUIView = Bundle.main.loadNibNamed("MandelbrotShareUIView", owner: self, options: nil)![0] as? MandelbrotShareUIView else {
+            print("Cannot initialize MandelbrotShare")
+            return
+        }
+        
+        mandelbrotShareUIView.realMinTextField.transform = CGAffineTransform(rotationAngle: CGFloat(-1.0 * Double.pi / 2.0))
+            .concatenating(CGAffineTransform(translationX: CGFloat(-30.0), y: CGFloat(0.0)))
+        mandelbrotShareUIView.realMaxTextField.transform = CGAffineTransform(rotationAngle: CGFloat(-1.0 * Double.pi / 2.0))
+            .concatenating(CGAffineTransform(translationX: CGFloat(30.0), y: CGFloat(0.0)))
+       
+        mandelbrotShareUIView.mandelbrotIUIView.mandelbrotImage = image
+        
+        if let entity = mandelbrotEntity, let mandelbrotDisplay = mandelbrotDisplay {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .short
+            dateFormatter.timeStyle = .none
+            
+            mandelbrotShareUIView.maxIterLabel.text = "max iteration: \(entity.maxIter)"
+            mandelbrotShareUIView.createdLabel.text = "created on \(dateFormatter.string(from: entity.created!))"
+            
+            mandelbrotShareUIView.realMinTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.minReal)
+            mandelbrotShareUIView.realMaxTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.maxReal)
+            mandelbrotShareUIView.imaginaryMinTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.minImaginary)
+            mandelbrotShareUIView.imaginaryMaxTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.maxImaginary)
+        }
+        
+        let renderer = UIGraphicsImageRenderer(size: mandelbrotShareUIView.bounds.size)
+        let renderedImage = renderer.image { ctx in
+            mandelbrotShareUIView.drawHierarchy(in: mandelbrotShareUIView.bounds, afterScreenUpdates: true)
+        }
+        
+        let activityItems: [Any] = [renderedImage]
         
         let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         activityViewController.popoverPresentationController?.barButtonItem = sender
