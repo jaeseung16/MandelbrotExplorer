@@ -83,11 +83,6 @@ class MandelbrotUIView: UIView {
             return
         }
         
-        print("touchesBegan: \(touch)")
-        print("gestureRecognizers: \(touch.gestureRecognizers)")
-        
-        let gestureRecognizers = touch.gestureRecognizers
-        
         guard let rect = _selectRect else {
             return
         }
@@ -184,7 +179,7 @@ class MandelbrotUIView: UIView {
             selectRectColor = UIColor.yellow
         case .changed:
             var size = sender.scale * selectRect.width
-            if (size >= 0.05 * bounds.width && size <= 0.5 * bounds.width) {
+            if (size >= 0.025 * bounds.width && size <= 0.5 * bounds.width) {
                 if (selectRect.minX + size >= bounds.width) {
                     size = bounds.width - selectRect.minX
                 }
