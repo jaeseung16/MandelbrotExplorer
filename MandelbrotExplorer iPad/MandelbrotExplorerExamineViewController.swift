@@ -21,6 +21,7 @@ class MandelbrotExplorerExamineViewController: UIViewController {
     
     @IBOutlet weak var maxIterLabel: UILabel!
     @IBOutlet weak var createdLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     
     var mandelbrotDisplay: MandelbrotDisplayIPad?
     
@@ -42,6 +43,7 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         // Do any additional setup after loading the view.
         maxIterLabel.isHidden = true
         createdLabel.isHidden = true
+        statusLabel.isHidden = true
         
         exploreBarButton.isEnabled = mandelbrotEntity != nil
         
@@ -50,8 +52,17 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         realMaxTextField.transform = CGAffineTransform(rotationAngle: CGFloat(-1.0 * Double.pi / 2.0))
             .concatenating(CGAffineTransform(translationX: CGFloat(-30.0), y: CGFloat(0.0)))
         
-        if (mandelbrotEntity != nil) {
-            maxIter = Int(mandelbrotEntity!.maxIter)
+        if let entity = mandelbrotEntity {
+            maxIter = Int(entity.maxIter)
+            
+            let diffReal = Float(entity.maxReal - entity.minReal)
+            let diffImaginary = Float(entity.maxImaginary - entity.minImaginary)
+            let allowedDiff = Float.ulpOfOne * Float(sideLength) / 2.0
+            
+            if (diffReal < allowedDiff || diffImaginary < allowedDiff) {
+                exploreBarButton.isEnabled = false
+                statusLabel.isHidden = false
+            }
         }
     }
     
