@@ -39,31 +39,6 @@ class MandelbrotUIView: UIView {
     var mandelbrotRect: ComplexRect {
         set {
             _mandelbrotRect = newValue
-            
-            /*
-            if topleftTextField == nil {
-                topleftTextField = UITextField(frame: NSRect(x: bounds.minX + 5.0, y: bounds.maxY - 20.0, width: 120.0, height: 20.0))
-                topleftTextField?.cell?.title = "\(newValue.topLeft)"
-                topleftTextField?.textColor = .white
-                topleftTextField?.isSelectable = false
-                topleftTextField?.alignment = .center
-                addSubview(topleftTextField!)
-            }
-            
-            
-            topleftTextField?.cell?.title = "\(newValue.topLeft)"
-            
-            if bottomrightTextField == nil {
-                bottomrightTextField = NSTextField(frame: NSRect(x: bounds.maxX - 125.0, y: bounds.minY + 10.0, width: 120.0, height: 20.0))
-                bottomrightTextField?.cell?.title = "\(newValue.bottomRight)"
-                bottomrightTextField?.textColor = .white
-                bottomrightTextField?.isSelectable = false
-                bottomrightTextField?.alignment = .center
-                addSubview(bottomrightTextField!)
-            }
-            
-            bottomrightTextField?.cell?.title = "\(newValue.bottomRight)"
-            */
         }
         get {
             return _mandelbrotRect!
@@ -77,18 +52,6 @@ class MandelbrotUIView: UIView {
         }
         set {
             _rectScale = CGFloat(newValue)
-            /*
-            if scaleTextField == nil {
-                scaleTextField = NSTextField(frame: NSRect(x: bounds.maxX - 55.0, y: bounds.maxY - 20.0, width: 50.0, height: 20.0))
-                scaleTextField?.cell?.title = "⨉\(rectScale)"
-                scaleTextField?.textColor = .white
-                scaleTextField?.isSelectable = false
-                scaleTextField?.alignment = .center
-                addSubview(scaleTextField!)
-            }
-            
-            scaleTextField?.cell?.title = "x\(rectScale)"
-             */
         }
     }
     
@@ -121,6 +84,9 @@ class MandelbrotUIView: UIView {
         }
         
         print("touchesBegan: \(touch)")
+        print("gestureRecognizers: \(touch.gestureRecognizers)")
+        
+        let gestureRecognizers = touch.gestureRecognizers
         
         guard let rect = _selectRect else {
             return
@@ -128,9 +94,9 @@ class MandelbrotUIView: UIView {
         
         let touchLocation = touch.location(in: self)
         
-        print("rect: \(rect)")
-        print("touchLocation: \(touchLocation)")
-        print("rect.contains(touchLocation)? \((rect.contains(touchLocation)))")
+        //print("rect: \(rect)")
+        //print("touchLocation: \(touchLocation)")
+        //print("rect.contains(touchLocation)? \((rect.contains(touchLocation)))")
         
         if (rect.contains(touchLocation)) {
             selectRectColor = UIColor.yellow
@@ -149,8 +115,6 @@ class MandelbrotUIView: UIView {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touchesMoved")
-        
         guard let touch = touches.first else {
             return
         }
@@ -165,7 +129,22 @@ class MandelbrotUIView: UIView {
         if (rect.contains(previousLocation) && bounds.contains(touchLocation)) {
             if (UIColor.yellow == selectRectColor) {
                 let delta = CGPoint(x: touchLocation.x - previousLocation.x, y: touchLocation.y - previousLocation.y)
-                _selectRect?.origin = CGPoint(x: rect.origin.x + delta.x, y: rect.origin.y + delta.y)
+                
+                var minX = rect.minX + delta.x
+                var minY = rect.minY + delta.y
+                
+                let maxX = rect.maxX + delta.x
+                let maxY = rect.maxY + delta.y
+                
+                if (minX < 0 || maxX > bounds.width) {
+                    minX = rect.minX
+                }
+                
+                if (minY < 0 || maxY > bounds.height) {
+                    minY = rect.minY
+                }
+                
+                _selectRect?.origin = CGPoint(x: minX, y: minY)
                 self.setNeedsDisplay()
             }            
         }
@@ -197,4 +176,37 @@ class MandelbrotUIView: UIView {
             }
         }
     }
+    
+    @IBAction func updateSelectRect(_ sender: UIPinchGestureRecognizer) {
+        print("sender: \(sender)")
+        switch (sender.state) {
+        case .began:
+            selectRectColor = UIColor.yellow
+        case .changed:
+            var size = sender.scale * selectRect.width
+            if (size >= 0.05 * bounds.width && size <= 0.5 * bounds.width) {
+                if (selectRect.minX + size >= bounds.width) {
+                    size = bounds.width - selectRect.minX
+                }
+                if (selectRect.minY + size >= bounds.height) {
+                    size = bounds.height - selectRect.minY
+                }
+                selectRect.size = CGSize(width: size, height: size)
+            }
+            sender.scale = 1.0
+        case .ended:
+            selectRectColor = UIColor.white
+            delegate?.update(rect: selectRect, in: self.id!)
+        case .cancelled:
+            return
+        case .possible:
+            return
+        case .failed:
+            return
+        @unknown default:
+            return
+        }
+        self.setNeedsDisplay()
+    }
+    
 }
