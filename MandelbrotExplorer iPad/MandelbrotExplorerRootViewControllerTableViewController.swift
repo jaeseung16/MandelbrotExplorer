@@ -86,7 +86,6 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
         let detailViewController = setupDetailViewController(for: mandelbrotEntity)
         detailViewNavigationController?.popToRootViewController(animated: false)
         detailViewNavigationController?.pushViewController(detailViewController, animated: true)
-        //tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func setupDetailViewController(for mandelbrotEntity: MandelbrotEntity) -> MandelbrotExplorerExamineViewController {

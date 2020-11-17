@@ -28,9 +28,7 @@
 		903E91E2254E218700659377 /* MandelbrotExplorerColorMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903E91E1254E218700659377 /* MandelbrotExplorerColorMapTests.swift */; };
 		9042D2F3255CA3BD0002CEE0 /* MaxIter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042D2F2255CA3BD0002CEE0 /* MaxIter.swift */; };
 		9042D2F4255CA3BD0002CEE0 /* MaxIter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042D2F2255CA3BD0002CEE0 /* MaxIter.swift */; };
-		9042D2FE255CAF010002CEE0 /* MandelbrotShareUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042D2FD255CAF010002CEE0 /* MandelbrotShareUIView.swift */; };
 		9042D2FF255CAF010002CEE0 /* MandelbrotShareUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042D2FD255CAF010002CEE0 /* MandelbrotShareUIView.swift */; };
-		9042D30C255CBC260002CEE0 /* MandelbrotShareUIView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9042D30B255CBC260002CEE0 /* MandelbrotShareUIView.xib */; };
 		9042D30D255CBC260002CEE0 /* MandelbrotShareUIView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9042D30B255CBC260002CEE0 /* MandelbrotShareUIView.xib */; };
 		90481D8724AFA7E300DDACF9 /* MandelbrotSetFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90481D8624AFA7E300DDACF9 /* MandelbrotSetFactory.swift */; };
 		90481D8D24AFBA8E00DDACF9 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 90481D8C24AFBA8E00DDACF9 /* README.md */; };
@@ -513,7 +511,6 @@
 				90481D8D24AFBA8E00DDACF9 /* README.md in Resources */,
 				905DA908247C16A500B9DA71 /* Assets.xcassets in Resources */,
 				905DA90B247C16A500B9DA71 /* Main.storyboard in Resources */,
-				9042D30C255CBC260002CEE0 /* MandelbrotShareUIView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,7 +546,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9042D2FE255CAF010002CEE0 /* MandelbrotShareUIView.swift in Sources */,
 				9031FD492481D011006CCB38 /* MandelbrotDisplay.swift in Sources */,
 				908079C9254CDCBF006B461A /* Autumn.swift in Sources */,
 				90481D8724AFA7E300DDACF9 /* MandelbrotSetFactory.swift in Sources */,
@@ -942,7 +938,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = U8VSJXRJTQ;
 				INFOPLIST_FILE = "MandelbrotExplorer iPad/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -965,7 +961,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = U8VSJXRJTQ;
 				INFOPLIST_FILE = "MandelbrotExplorer iPad/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;

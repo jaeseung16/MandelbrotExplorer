@@ -45,6 +45,11 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         createdLabel.isHidden = true
         statusLabel.isHidden = true
         
+        realMinTextField.isHidden = true
+        realMaxTextField.isHidden = true
+        imaginaryMaxTextField.isHidden = true
+        imaginaryMinTextField.isHidden = true
+        
         exploreBarButton.isEnabled = mandelbrotEntity != nil
         
         realMinTextField.transform = CGAffineTransform(rotationAngle: CGFloat(-1.0 * Double.pi / 2.0))
@@ -85,6 +90,11 @@ class MandelbrotExplorerExamineViewController: UIViewController {
             
             createdLabel.text = "created on \(dateFormatter.string(from: entity.created!))"
             createdLabel.isHidden = false
+            
+            realMinTextField.isHidden = false
+            realMaxTextField.isHidden = false
+            imaginaryMaxTextField.isHidden = false
+            imaginaryMinTextField.isHidden = false
         } else {
             maxIterLabel.isHidden = true
             createdLabel.isHidden = true
@@ -98,7 +108,7 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         mandelbrotDisplay?.maxIter = maxIter
         
         if (mandelbrotEntity == nil) {
-            let mandelbrotExplorerColorMap = MandelbrotExplorerColorMap.green
+            let mandelbrotExplorerColorMap = MandelbrotExplorerColorMap.jet
             mandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(mandelbrotExplorerColorMap, length: maxIter).colorMapInSIMD4
             mandelbrotDisplay?.mandelbrotRect = defaultMandelbrotRect
         } else {
