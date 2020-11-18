@@ -129,7 +129,9 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     
     func initializeZoomedMandelbrotDisplay() -> Void {
         zoomedMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength, maxIter: maxIter)
-        zoomedMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(colorMap, length: maxIter > MaxIter.maxColorStep.rawValue ? MaxIter.maxColorStep.rawValue: maxIter).colorMapInSIMD4
+        zoomedMandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(colorMap,
+                                                                        length: MaxIter(rawValue: maxIter)!.normalize())
+            .colorMapInSIMD4
         zoomedMandelbrotDisplay?.id = MandelbrotID.second
         
         defaultMandelbrotDisplay?.child = zoomedMandelbrotDisplay
