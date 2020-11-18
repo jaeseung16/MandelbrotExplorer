@@ -109,7 +109,9 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         
         if (mandelbrotEntity == nil) {
             let mandelbrotExplorerColorMap = MandelbrotExplorerColorMap.jet
-            mandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(mandelbrotExplorerColorMap, length: maxIter).colorMapInSIMD4
+            mandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(mandelbrotExplorerColorMap,
+                                                                      length: MaxIter(rawValue: maxIter)!.normalize())
+                .colorMapInSIMD4
             mandelbrotDisplay?.mandelbrotRect = defaultMandelbrotRect
         } else {
             let minReal = mandelbrotEntity!.minReal
@@ -118,7 +120,9 @@ class MandelbrotExplorerExamineViewController: UIViewController {
             let maxImaginary = mandelbrotEntity!.maxImaginary
             
             let mandelbrotExplorerColorMap = MandelbrotExplorerColorMap(rawValue: mandelbrotEntity!.colorMap!)
-            mandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(mandelbrotExplorerColorMap!, length: maxIter > 8192 ? 8192 : maxIter).colorMapInSIMD4
+            mandelbrotDisplay?.colorMap = ColorMapFactory.getColorMap(mandelbrotExplorerColorMap!,
+                                                                      length: MaxIter(rawValue: maxIter)!.normalize())
+                .colorMapInSIMD4
             
             let mandelbrotRect = ComplexRect(Complex<Double>(minReal, minImaginary), Complex<Double>(maxReal, maxImaginary))
             

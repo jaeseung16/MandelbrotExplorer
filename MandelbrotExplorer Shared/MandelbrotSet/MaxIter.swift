@@ -16,8 +16,12 @@ enum MaxIter: Int, CaseIterable {
     case oneThousand = 1000
     case twoThousand = 2000
     case fiveThousand = 5000
-    case max = 8192
+    case maxColorStep = 8192
     case twentyThousand = 20000
     case oneHundredThousand = 100000
     case oneMillion = 1000000
+    
+    func normalize() -> Int {
+        return self.rawValue > MaxIter.maxColorStep.rawValue ? MaxIter.maxColorStep.rawValue : self.rawValue
+    }
 }
