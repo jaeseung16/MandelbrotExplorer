@@ -9,7 +9,6 @@
 import UIKit
 
 class MandelbrotShareUIView: UIView {
-
     @IBOutlet weak var mandelbrotIUIView: MandelbrotUIView!
     
     @IBOutlet weak var realMinTextField: UITextField!
@@ -19,13 +18,5 @@ class MandelbrotShareUIView: UIView {
     
     @IBOutlet weak var maxIterLabel: UILabel!
     @IBOutlet weak var createdLabel: UILabel!
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
 }
