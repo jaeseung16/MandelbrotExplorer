@@ -44,7 +44,6 @@
 		905DA930247C16D800B9DA71 /* MandelbrotSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905DA92F247C16D800B9DA71 /* MandelbrotSet.swift */; };
 		906DAE5B247C4C1200A1A47F /* ZoomedMandelbrotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5A247C4C1200A1A47F /* ZoomedMandelbrotView.swift */; };
 		906DAE5D247C4C3400A1A47F /* ComplexRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5C247C4C3400A1A47F /* ComplexRect.swift */; };
-		906DAE5F247C4C6000A1A47F /* MyComplex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5E247C4C6000A1A47F /* MyComplex.swift */; };
 		9080799B254CDAEA006B461A /* Jet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9080799A254CDAEA006B461A /* Jet.swift */; };
 		9080799C254CDAEA006B461A /* Jet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9080799A254CDAEA006B461A /* Jet.swift */; };
 		908079A6254CDC80006B461A /* HSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079A5254CDC80006B461A /* HSV.swift */; };
@@ -65,7 +64,6 @@
 		90898F42252BDC050084ACB4 /* ComplexRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5C247C4C3400A1A47F /* ComplexRect.swift */; };
 		90898F48252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90898F47252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift */; };
 		90898F4D252BDD380084ACB4 /* MandelbrotID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E9D36024A90F5900FCB3A4 /* MandelbrotID.swift */; };
-		90898F52252BDD6A0084ACB4 /* MyComplex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5E247C4C6000A1A47F /* MyComplex.swift */; };
 		90898F5D252BDEAF0084ACB4 /* MandelbrotSetCPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BDEAB72496521700733DFC /* MandelbrotSetCPU.swift */; };
 		90898F62252BDF2E0084ACB4 /* MandelbrotSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905DA92F247C16D800B9DA71 /* MandelbrotSet.swift */; };
 		90898F69252BE55C0084ACB4 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = 90898F68252BE55C0084ACB4 /* ComplexModule */; };
@@ -146,7 +144,6 @@
 		905DA92F247C16D800B9DA71 /* MandelbrotSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotSet.swift; sourceTree = "<group>"; };
 		906DAE5A247C4C1200A1A47F /* ZoomedMandelbrotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomedMandelbrotView.swift; sourceTree = "<group>"; };
 		906DAE5C247C4C3400A1A47F /* ComplexRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexRect.swift; sourceTree = "<group>"; };
-		906DAE5E247C4C6000A1A47F /* MyComplex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyComplex.swift; sourceTree = "<group>"; };
 		9080799A254CDAEA006B461A /* Jet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jet.swift; sourceTree = "<group>"; };
 		908079A5254CDC80006B461A /* HSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSV.swift; sourceTree = "<group>"; };
 		908079AC254CDC8A006B461A /* Hot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hot.swift; sourceTree = "<group>"; };
@@ -247,7 +244,6 @@
 			children = (
 				905DA92F247C16D800B9DA71 /* MandelbrotSet.swift */,
 				906DAE5C247C4C3400A1A47F /* ComplexRect.swift */,
-				906DAE5E247C4C6000A1A47F /* MyComplex.swift */,
 				90481D8624AFA7E300DDACF9 /* MandelbrotSetFactory.swift */,
 				90BDEAB72496521700733DFC /* MandelbrotSetCPU.swift */,
 				90BDEAB9249664BA00733DFC /* MandelbrotSetGPU.swift */,
@@ -570,7 +566,6 @@
 				90BDEAB82496521700733DFC /* MandelbrotSetCPU.swift in Sources */,
 				90C0934C252FC82600FA9A7B /* MandelbrotImageGenerator.swift in Sources */,
 				901CD3F5248074D8005F1F9C /* PixelData.swift in Sources */,
-				906DAE5F247C4C6000A1A47F /* MyComplex.swift in Sources */,
 				90045E15256496A100E99A02 /* MandelbrotConstants.swift in Sources */,
 				906DAE5D247C4C3400A1A47F /* ComplexRect.swift in Sources */,
 				908079C2254CDCAD006B461A /* Summer.swift in Sources */,
@@ -637,7 +632,6 @@
 				90898F42252BDC050084ACB4 /* ComplexRect.swift in Sources */,
 				908C7BC9252A74D2003D803B /* SceneDelegate.swift in Sources */,
 				9027F820253E597C00F4EBB3 /* Parula256.swift in Sources */,
-				90898F52252BDD6A0084ACB4 /* MyComplex.swift in Sources */,
 				903DD7B9254F324A00288FA5 /* MandelbrotExplorerColorMap.swift in Sources */,
 				90AF89FC254248DF008A5472 /* ColorConverter.swift in Sources */,
 				9097CC39252A83BA00AE9805 /* MandelbrotExplorerRootViewControllerTableViewController.swift in Sources */,
