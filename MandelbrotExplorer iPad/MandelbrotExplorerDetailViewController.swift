@@ -39,6 +39,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     var dataController: DataController!
     var defaultMandelbrotEntity: MandelbrotEntity!
     
+    let defaultSideLength: CGFloat = 32
     var _rectSideLength: CGFloat = 32
     var rectSideLength: CGFloat {
         get {
@@ -67,8 +68,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         
         colorMapPickerView.selectRow(2, inComponent: 1, animated: false)
         
-        //scaleSlider.value = (Float(sideLength) / Float(rectSideLength) - 2.0 ) / Float(38.0)
-        // rectSideLength = -48.0 * scaleSlider.value + 64.0
+        rectSideLength = defaultSideLength
         scaleLabel.text = String(format: "%.3f", Float(sideLength) / Float(rectSideLength))
     }
     
@@ -215,7 +215,8 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     }
     
     @IBAction func reset(_ sender: UIBarButtonItem) {
-        rectSideLength = 32.0
+        rectSideLength = defaultSideLength
+        
         scaleLabel.text = String(format: "%.3f", Float(sideLength) / Float(rectSideLength))
         
         mandelbrotUIView.selectRect = toViewRect(displayRect: CGRect(x: 70, y: 176, width: rectSideLength, height: rectSideLength))
