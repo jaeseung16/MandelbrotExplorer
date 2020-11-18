@@ -13,20 +13,12 @@ import ComplexModule
 class MandelbrotSetFactory {
     static func createMandelbrotSet(inZs: [Complex<Double>], inMaxIter: Int, inColorMap: [SIMD4<Float>]) -> MandelbrotSet {
         let mandelbrotSet: MandelbrotSet
-        
-        //#if targetEnvironment(simulator)
-        //mandelbrotSet = MandelbrotSetCPU(inZs: inZs, inMaxIter: 200, inColorMap: inColorMap)
-        //#else
-            let device = MTLCreateSystemDefaultDevice()
-            if (device == nil) {
-                print("Using CPU")
-                mandelbrotSet = MandelbrotSetCPU(inZs: inZs, inMaxIter: inMaxIter, inColorMap: inColorMap)
-            } else {
-                print("Using GPU")
-                mandelbrotSet = MandelbrotSetGPU(inZs: inZs, inMaxIter: inMaxIter, inColorMap: inColorMap)
-            }
-        //#endif
-
+        let device = MTLCreateSystemDefaultDevice()
+        if device == nil {
+            mandelbrotSet = MandelbrotSetCPU(inZs: inZs, inMaxIter: inMaxIter, inColorMap: inColorMap)
+        } else {
+            mandelbrotSet = MandelbrotSetGPU(inZs: inZs, inMaxIter: inMaxIter, inColorMap: inColorMap)
+        }
         return mandelbrotSet
     }
 }
