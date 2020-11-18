@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		90045E15256496A100E99A02 /* MandelbrotConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90045E14256496A100E99A02 /* MandelbrotConstants.swift */; };
+		90045E16256496A100E99A02 /* MandelbrotConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90045E14256496A100E99A02 /* MandelbrotConstants.swift */; };
 		900FB59A248705B500695AD4 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900FB599248705B500695AD4 /* Renderer.swift */; };
 		900FB59C2487065000695AD4 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 900FB59B2487065000695AD4 /* Shaders.metal */; };
 		9019694725478F620067378A /* MandelbrotExplorerExamineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9019694625478F620067378A /* MandelbrotExplorerExamineViewController.swift */; };
@@ -109,6 +111,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		90045E14256496A100E99A02 /* MandelbrotConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotConstants.swift; sourceTree = "<group>"; };
 		900FB599248705B500695AD4 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		900FB59B2487065000695AD4 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		9019694625478F620067378A /* MandelbrotExplorerExamineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerExamineViewController.swift; sourceTree = "<group>"; };
@@ -250,6 +253,7 @@
 				90BDEAB9249664BA00733DFC /* MandelbrotSetGPU.swift */,
 				900FB59B2487065000695AD4 /* Shaders.metal */,
 				9042D2F2255CA3BD0002CEE0 /* MaxIter.swift */,
+				90045E14256496A100E99A02 /* MandelbrotConstants.swift */,
 			);
 			path = MandelbrotSet;
 			sourceTree = "<group>";
@@ -567,6 +571,7 @@
 				90C0934C252FC82600FA9A7B /* MandelbrotImageGenerator.swift in Sources */,
 				901CD3F5248074D8005F1F9C /* PixelData.swift in Sources */,
 				906DAE5F247C4C6000A1A47F /* MyComplex.swift in Sources */,
+				90045E15256496A100E99A02 /* MandelbrotConstants.swift in Sources */,
 				906DAE5D247C4C3400A1A47F /* ComplexRect.swift in Sources */,
 				908079C2254CDCAD006B461A /* Summer.swift in Sources */,
 				9042D2F3255CA3BD0002CEE0 /* MaxIter.swift in Sources */,
@@ -612,6 +617,7 @@
 				90898F4D252BDD380084ACB4 /* MandelbrotID.swift in Sources */,
 				903DD7B2254F322D00288FA5 /* ColorMapFactory.swift in Sources */,
 				903DD7C7254F360800288FA5 /* MandelbrotExplorerColors.swift in Sources */,
+				90045E16256496A100E99A02 /* MandelbrotConstants.swift in Sources */,
 				908079AE254CDC8A006B461A /* Hot.swift in Sources */,
 				908079B5254CDC96006B461A /* Cool.swift in Sources */,
 				908079CA254CDCBF006B461A /* Autumn.swift in Sources */,

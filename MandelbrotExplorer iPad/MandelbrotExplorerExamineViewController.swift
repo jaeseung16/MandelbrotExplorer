@@ -25,7 +25,7 @@ class MandelbrotExplorerExamineViewController: UIViewController {
     
     var mandelbrotDisplay: MandelbrotDisplayIPad?
     
-    let sideLength = 383
+    let sideLength = MandelbrotConstant.sideLength
     let rectScale: CGFloat = 1.0
     let blockiness: CGFloat = 1.0
     let defaultMandelbrotRect = ComplexRect(Complex<Double>(-2.1, -1.5), Complex<Double>(0.9, 1.5))

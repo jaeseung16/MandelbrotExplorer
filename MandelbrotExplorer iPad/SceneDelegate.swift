@@ -117,7 +117,7 @@ extension SceneDelegate {
         mandelbrotEntity.colorMap = MandelbrotExplorerColorMap.jet.rawValue
         mandelbrotEntity.maxIter = Int32(MaxIter.twoHundred.rawValue)
         
-        let mandelbrotDisplay = MandelbrotDisplayIPad(sideLength: 383, maxIter: MaxIter.twoHundred.rawValue)
+        let mandelbrotDisplay = MandelbrotDisplayIPad(sideLength: MandelbrotConstant.sideLength, maxIter: MaxIter.twoHundred.rawValue)
         
         let minReal = mandelbrotEntity.minReal
         let maxReal = mandelbrotEntity.maxReal
