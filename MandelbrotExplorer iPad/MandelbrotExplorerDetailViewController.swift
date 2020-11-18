@@ -89,6 +89,16 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     func initializeDefaultMandelbrotDisplay() {
         print("** MandelbrotExplorerDetailViewController **")
         maxIter = Int(defaultMandelbrotEntity.maxIter)
+        
+        var count = 0
+        while (count < MaxIter.allCases.count) {
+            if MaxIter.allCases[count].rawValue == maxIter {
+                colorMapPickerView.selectRow(count, inComponent: 1, animated: false)
+                break
+            }
+            count += 1
+        }
+        
         defaultMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength, maxIter: maxIter)
         defaultMandelbrotDisplay?.id = MandelbrotID.first
         
