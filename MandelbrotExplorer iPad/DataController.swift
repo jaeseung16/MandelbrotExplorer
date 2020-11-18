@@ -29,14 +29,15 @@ class DataController {
         viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
     }
     
-    func load(completion: (() -> Void)? = nil) {
+    func load(completion: ((Error?) -> Void)? = nil) {
         persistentContainer.loadPersistentStores { (storeDescription, error) in
             guard error == nil else {
-                fatalError(error!.localizedDescription)
+                completion?(error)
+                return
             }
             self.autoSaveViewContext(interval: 30)
             self.configureContexts()
-            completion?()
+            completion?(nil)
         }
     }
 }
@@ -44,7 +45,12 @@ class DataController {
 extension DataController  {
     func dropAllData() throws {
         // delete all the objects in the db. This won't delete the files, it will just leave empty tables.
-        load()
+        load() { error in
+            if error != nil {
+                NSLog("Failed to load: \(error!.localizedDescription)")
+            }
+        }
+        
         let persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
         let persistentStore = persistentStoreCoordinator.persistentStores[0]
         let urlForPersistentStore = persistentStoreCoordinator.url(for: persistentStore)

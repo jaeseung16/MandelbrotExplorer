@@ -81,7 +81,12 @@ extension SceneDelegate {
             UserDefaults.standard.set(true, forKey: "HasLaunchedBefore")
             UserDefaults.standard.synchronize()
         } else {
-            dataController.load()
+            dataController.load() { error in
+                if let error = error as NSError? {
+                    NSLog("Failed to save: \(error), \(error.userInfo)")
+                    self.showAlert(message: "Cannot load data. It seems that there is a problem with data storage. You may need to delete the app and install again.")
+                }
+            }
         }
     }
     
@@ -124,5 +129,11 @@ extension SceneDelegate {
         } catch {
             NSLog("Error while saving by AppDelegate")
         }
+    }
+    
+    private func showAlert(message: String) -> Void {
+        let alert = UIAlertController(title: "Fatal Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Seen", style: .default, handler: nil))
+        self.window?.rootViewController?.present(alert, animated: true)
     }
 }
