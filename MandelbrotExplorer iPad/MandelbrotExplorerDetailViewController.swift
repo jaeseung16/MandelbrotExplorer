@@ -15,15 +15,12 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     @IBOutlet weak var zoomedMandelbrotUIView: MandelbrotUIView!
     
     @IBOutlet weak var colorMapPickerView: UIPickerView!
-    
-    
     @IBOutlet weak var realMinTextField: UITextField!
     @IBOutlet weak var realMaxTextField: UITextField!
     @IBOutlet weak var imaginaryMinTextField: UITextField!
     @IBOutlet weak var imaginaryMaxTextField: UITextField!
     
     @IBOutlet weak var scaleLabel: UILabel!
-    @IBOutlet weak var scaleSlider: UISlider!
     
     var maxIter = MaxIter.twoHundred.rawValue
     
@@ -70,7 +67,7 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         
         colorMapPickerView.selectRow(2, inComponent: 1, animated: false)
         
-        scaleSlider.value = (Float(sideLength) / Float(rectSideLength) - 2.0 ) / Float(38.0)
+        //scaleSlider.value = (Float(sideLength) / Float(rectSideLength) - 2.0 ) / Float(38.0)
         // rectSideLength = -48.0 * scaleSlider.value + 64.0
         scaleLabel.text = String(format: "%.3f", Float(sideLength) / Float(rectSideLength))
     }
@@ -219,7 +216,6 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     
     @IBAction func reset(_ sender: UIBarButtonItem) {
         rectSideLength = 32.0
-        scaleSlider.value = (Float(sideLength) / Float(rectSideLength) - 2.0 ) / Float(38.0)
         scaleLabel.text = String(format: "%.3f", Float(sideLength) / Float(rectSideLength))
         
         mandelbrotUIView.selectRect = toViewRect(displayRect: CGRect(x: 70, y: 176, width: rectSideLength, height: rectSideLength))
@@ -229,17 +225,6 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         update(mandelbrotUIView: zoomedMandelbrotUIView, with: zoomedMandelbrotDisplay!)
     }
     
-    @IBAction func updateScale(_ sender: UIButton) {
-        rectSideLength = CGFloat(Float(sideLength) / (2.0 + 38.0 * scaleSlider.value))
-        scaleLabel.text = String(format: "%.3f", Float(sideLength) / Float(rectSideLength))
-        
-        let oldSelectRect = toDisplayRect(viewRect: mandelbrotUIView.selectRect)
-        mandelbrotUIView.selectRect = toViewRect(displayRect: CGRect(origin: oldSelectRect.origin, size: CGSize(width: rectSideLength, height: rectSideLength)))
-        
-        defaultMandelbrotDisplay?.updateChild(rect: toDisplayRect(viewRect: mandelbrotUIView.selectRect))
-        
-        update(mandelbrotUIView: zoomedMandelbrotUIView, with: zoomedMandelbrotDisplay!)
-    }
 }
 
 extension MandelbrotExplorerDetailViewController: MandelbrotViewDelegate {
@@ -250,7 +235,6 @@ extension MandelbrotExplorerDetailViewController: MandelbrotViewDelegate {
             
             rectSideLength = displayRect.width
             scaleLabel.text = String(format: "%.3f", Float(sideLength) / Float(rectSideLength))
-            scaleSlider.value = (Float(sideLength) / Float(rectSideLength) - 2.0 ) / Float(38.0)
             
             update(mandelbrotUIView: zoomedMandelbrotUIView, with: zoomedMandelbrotDisplay!)
         }

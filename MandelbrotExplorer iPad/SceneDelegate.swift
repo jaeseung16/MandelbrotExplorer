@@ -66,29 +66,12 @@ extension SceneDelegate {
     func configure(_ splitViewController: UISplitViewController) {
         let viewControllers = splitViewController.viewControllers
         
-        print("viewControllers=\(viewControllers)")
-        
-        guard let navigationViewController = viewControllers.first as? UINavigationController else {
+        guard let navigationViewController = viewControllers.first as? UINavigationController,
+              let topViewController = navigationViewController.topViewController as? MandelbrotExplorerRootViewControllerTableViewController else {
             return
         }
-        
-        print("navigationViewController=\(navigationViewController)")
-        
-        guard let topViewController = navigationViewController.topViewController as? MandelbrotExplorerRootViewControllerTableViewController else {
-            return
-        }
-        
-        print("topViewController=\(topViewController)")
         
         topViewController.dataController = dataController
-        
-        //guard let topViewController = navigationViewController.topViewController as? iPadMasterTableViewController else {
-        //    return
-        //}
-        
-        //print("topViewController=\(topViewController)")
-        
-        //topViewController.dataController = dataController
     }
     
     func checkIfFirstLaunch() {
