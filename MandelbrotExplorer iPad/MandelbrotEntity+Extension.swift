@@ -16,19 +16,21 @@ extension MandelbrotEntity {
     }
     
     public override var description: String {
-        let minReal = String(format: "%.2f", self.minReal)
-        let maxReal = String(format: "%.2f", self.maxReal)
-        let minImaginary = String(format: "%.2f", self.minImaginary)
-        let maxImaginary = String(format: "%.2f", self.maxImaginary)
+        let format = "%.2f"
+        let minReal = String(format: format, self.minReal)
+        let maxReal = String(format: format, self.maxReal)
+        let minImaginary = String(format: format, self.minImaginary)
+        let maxImaginary = String(format: format, self.maxImaginary)
         
         return ("Real: \t\t(\(minReal), \(maxReal))\nImaginary: \t(\(minImaginary), \(maxImaginary))")
     }
     
     public var detailedDescription: String {
-        let minReal = String(format: "%.6f", self.minReal)
-        let maxReal = String(format: "%.6f", self.maxReal)
-        let minImaginary = String(format: "%.6f", self.minImaginary)
-        let maxImaginary = String(format: "%.6f", self.maxImaginary)
+        let format = "%.6f"
+        let minReal = String(format: format, self.minReal)
+        let maxReal = String(format: format, self.maxReal)
+        let minImaginary = String(format: format, self.minImaginary)
+        let maxImaginary = String(format: format, self.maxImaginary)
         
         return "Real: (\(minReal), \(maxReal))\nImaginary: (\(minImaginary), \(maxImaginary))\nMax Iter: \(maxIter)"
     }
