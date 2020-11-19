@@ -10,20 +10,12 @@ import UIKit
 import CoreData
 
 class MandelbrotExplorerRootViewControllerTableViewController: UITableViewController {
-    let menuItems = ["Default"]
-    
     var dataController: DataController!
     var fetchedResultsController: NSFetchedResultsController<MandelbrotEntity>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
         setUpFetchedResultsController()
     }
     
@@ -36,7 +28,8 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
         do {
             try fetchedResultsController.performFetch()
         } catch {
-            fatalError("Compounds cannot be fetched: \(error.localizedDescription)")
+            NSLog("Compounds cannot be fetched: \(error)")
+            self.showAlert(message: "Compounds cannot be fetched.")
         }
     }
     
@@ -46,9 +39,14 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
         fetchRequest.sortDescriptors = [sortDescriptor]
         return fetchRequest
     }
+    
+    private func showAlert(message: String) -> Void {
+        let alert = UIAlertController(title: "Fatal Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Seen", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return fetchedResultsController.sections?.count ?? 0
@@ -59,15 +57,10 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let mandelbrotEntity = fetchedResultsController.object(at: indexPath)
-        print("\(mandelbrotEntity)")
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "RootViewControllerTableViewCell", for: indexPath)
-
-        print("cell = \(cell)")
-        // Configure the cell...
         cell.textLabel!.text = "\(mandelbrotEntity.description)"
         
         if let imageData = mandelbrotEntity.image {
@@ -79,8 +72,6 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let mandelbrotEntity = fetchedResultsController.object(at: indexPath)
-        print("\(mandelbrotEntity)")
-        
         let detailViewNavigationController = splitViewController?.viewControllers.last as? UINavigationController
         
         let detailViewController = setupDetailViewController(for: mandelbrotEntity)
@@ -92,7 +83,6 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
         let detailViewController = storyboard?.instantiateViewController(withIdentifier: "MandelbrotExamineViewController") as! MandelbrotExplorerExamineViewController
         detailViewController.dataController = dataController
         detailViewController.mandelbrotEntity = mandelbrotEntity
-        
         return detailViewController
     }
     
@@ -106,47 +96,12 @@ class MandelbrotExplorerRootViewControllerTableViewController: UITableViewContro
             NSLog("Error while saving in MandelbrotExplorerRootViewControllerTableViewController.delete(mandelbrotEntity:)")
         }
     }
-        
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             delete(mandelbrotEntity: fetchedResultsController.object(at: indexPath))
         }
     }
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 // MARK: - NSFetchedResultsControllerDelegate
@@ -157,7 +112,6 @@ extension MandelbrotExplorerRootViewControllerTableViewController: NSFetchedResu
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         let set = IndexSet(integer: sectionIndex)
-        
         switch (type) {
         case .insert:
             tableView.insertSections(set, with: .fade)
@@ -180,7 +134,8 @@ extension MandelbrotExplorerRootViewControllerTableViewController: NSFetchedResu
             tableView.deleteRows(at: [indexPath!], with: .fade)
             tableView.insertRows(at: [newIndexPath!], with: .fade)
         @unknown default:
-            fatalError("Unkown change type: \(type)")
+            NSLog("Unkown change type: \(type)")
+            self.showAlert(message: "Unkown change type: \(type)")
         }
     }
     
