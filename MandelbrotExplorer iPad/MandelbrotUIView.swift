@@ -9,6 +9,22 @@
 import UIKit
 
 class MandelbrotUIView: UIView {
+    var id: MandelbrotID?
+    var delegate: MandelbrotViewDelegate?
+    var selectRectColor = UIColor.white
+    
+    var mandelbrotImage: UIImage? {
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
+    
+    var sideLength: Int {
+        get {
+            return Int(self.frame.width)
+        }
+    }
+    
     var _selectRect: CGRect?
     var selectRect: CGRect {
         set {
@@ -20,22 +36,7 @@ class MandelbrotUIView: UIView {
         }
     }
     
-    var selectRectColor = UIColor.white
-    
-    var id: MandelbrotID?
-    var delegate: MandelbrotViewDelegate?
-
-    var mandelbrotImage: UIImage? {
-        didSet {
-            self.setNeedsDisplay()
-        }
-    }
-    //var topleftTextField: UITextField?
-    //var bottomrightTextField: UITextField?
-    //var scaleTextField: UITextField?
-    
     var _mandelbrotRect: ComplexRect?
-    
     var mandelbrotRect: ComplexRect {
         set {
             _mandelbrotRect = newValue
@@ -55,23 +56,15 @@ class MandelbrotUIView: UIView {
         }
     }
     
-    var sideLength: Int {
-        get {
-            return Int(self.frame.width)
-        }
-    }
-    
     override func draw(_ dirtyRect: CGRect) {
         super.draw(dirtyRect)
 
-        // Drawing code here.
         mandelbrotImage?.draw(in: dirtyRect)
        
         guard let rect = _selectRect else {
             return
         }
         
-        print("rect = \(rect)")
         let bpath = UIBezierPath(rect: rect)
         bpath.lineWidth = 2.0
         selectRectColor.set()
@@ -79,42 +72,19 @@ class MandelbrotUIView: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
-        }
-        
-        guard let rect = _selectRect else {
+        guard let touch = touches.first, let rect = _selectRect else {
             return
         }
         
         let touchLocation = touch.location(in: self)
-        
-        //print("rect: \(rect)")
-        //print("touchLocation: \(touchLocation)")
-        //print("rect.contains(touchLocation)? \((rect.contains(touchLocation)))")
-        
         if (rect.contains(touchLocation)) {
             selectRectColor = UIColor.yellow
             self.setNeedsDisplay()
         }
-        
-        /*
-        guard let rect = selectRect, let rectInWindow = self.superview?.convert(rect, to: nil) else {
-            return
-        }
-        
-        if (rectInWindow.contains(event.locationInWindow)) {
-            selectRectColor = UIColor.yellow
-            self.setNeedsDisplay()
-        }*/
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
-        }
-        
-        guard let rect = _selectRect else {
+        guard let touch = touches.first, let rect = _selectRect else {
             return
         }
         
@@ -127,14 +97,12 @@ class MandelbrotUIView: UIView {
                 
                 var minX = rect.minX + delta.x
                 var minY = rect.minY + delta.y
-                
                 let maxX = rect.maxX + delta.x
                 let maxY = rect.maxY + delta.y
                 
                 if (minX < 0 || maxX > bounds.width) {
                     minX = rect.minX
                 }
-                
                 if (minY < 0 || maxY > bounds.height) {
                     minY = rect.minY
                 }
@@ -146,20 +114,12 @@ class MandelbrotUIView: UIView {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touchesEnded");
-
-        guard let touch = touches.first else {
-            return
-        }
-        
-        guard let rect = _selectRect else {
+        guard let touch = touches.first, let rect = _selectRect else {
             return
         }
         
         let touchLocation = touch.location(in: self)
         let previousLocation = touch.previousLocation(in: self)
-        
-        print("touch.location(in: self)): \(touch.location(in: self)))")
         
         if (rect.contains(previousLocation) && bounds.contains(touchLocation)) {
             if (UIColor.yellow == selectRectColor) {
@@ -173,7 +133,6 @@ class MandelbrotUIView: UIView {
     }
     
     @IBAction func updateSelectRect(_ sender: UIPinchGestureRecognizer) {
-        print("sender: \(sender)")
         switch (sender.state) {
         case .began:
             selectRectColor = UIColor.yellow
@@ -203,5 +162,4 @@ class MandelbrotUIView: UIView {
         }
         self.setNeedsDisplay()
     }
-    
 }
