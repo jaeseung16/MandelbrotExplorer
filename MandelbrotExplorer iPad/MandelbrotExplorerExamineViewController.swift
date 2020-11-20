@@ -10,7 +10,6 @@ import UIKit
 import ComplexModule
 
 class MandelbrotExplorerExamineViewController: UIViewController {
-
     @IBOutlet weak var mandelbrotIUIView: MandelbrotUIView!
     @IBOutlet weak var exploreBarButton: UIBarButtonItem!
     
@@ -40,44 +39,30 @@ class MandelbrotExplorerExamineViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        maxIterLabel.isHidden = true
-        createdLabel.isHidden = true
-        statusLabel.isHidden = true
-        
-        realMinTextField.isHidden = true
-        realMaxTextField.isHidden = true
-        imaginaryMaxTextField.isHidden = true
-        imaginaryMinTextField.isHidden = true
-        
-        exploreBarButton.isEnabled = mandelbrotEntity != nil
-        
-        realMinTextField.transform = CGAffineTransform(rotationAngle: CGFloat(-1.0 * Double.pi / 2.0))
-            .concatenating(CGAffineTransform(translationX: CGFloat(30.0), y: CGFloat(0.0)))
-        realMaxTextField.transform = CGAffineTransform(rotationAngle: CGFloat(-1.0 * Double.pi / 2.0))
-            .concatenating(CGAffineTransform(translationX: CGFloat(-30.0), y: CGFloat(0.0)))
-        
-        if let entity = mandelbrotEntity {
-            maxIter = Int(entity.maxIter)
-            
-            let diffReal = Float(entity.maxReal - entity.minReal)
-            let diffImaginary = Float(entity.maxImaginary - entity.minImaginary)
-            let allowedDiff = Float.ulpOfOne * Float(sideLength) / 2.0
-            
-            if (diffReal < allowedDiff || diffImaginary < allowedDiff) {
-                exploreBarButton.isEnabled = false
-                statusLabel.isHidden = false
-            }
+        if let entity = mandelbrotEntity, isTooSmallToExplore(entity) {
+            statusLabel.isHidden = false
+            exploreBarButton.isEnabled = false
+        } else {
+            statusLabel.isHidden = true
+            exploreBarButton.isEnabled = mandelbrotEntity != nil
         }
+        
+        let rotationAngle = CGFloat(-1.0 * Double.pi / 2.0)
+        rotateAndAdjustPostion(realMinTextField, rotationAngle: rotationAngle, translationX: CGFloat(30.0))
+        rotateAndAdjustPostion(realMaxTextField, rotationAngle: rotationAngle, translationX: CGFloat(-30.0))
+        
+    }
+    
+    private func rotateAndAdjustPostion(_ textField: UITextField, rotationAngle: CGFloat, translationX: CGFloat) -> Void {
+        textField.transform = CGAffineTransform(rotationAngle: rotationAngle)
+            .concatenating(CGAffineTransform(translationX: translationX, y: CGFloat(0.0)))
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         initializeDefaultMandelbrotDisplay()
-        
         initializeDefaultMandelbrotView()
-        
         initializeTextFields()
         
         if let entity = mandelbrotEntity {
@@ -86,23 +71,38 @@ class MandelbrotExplorerExamineViewController: UIViewController {
             dateFormatter.timeStyle = .none
             
             maxIterLabel.text = "max iteration: \(entity.maxIter)"
-            maxIterLabel.isHidden = false
-            
             createdLabel.text = "created on \(dateFormatter.string(from: entity.created!))"
-            createdLabel.isHidden = false
-            
-            realMinTextField.isHidden = false
-            realMaxTextField.isHidden = false
-            imaginaryMaxTextField.isHidden = false
-            imaginaryMinTextField.isHidden = false
+            hideLabels(false)
+            hideTextField(false)
         } else {
-            maxIterLabel.isHidden = true
-            createdLabel.isHidden = true
+            hideLabels(true)
+            hideTextField(true)
         }
     }
     
+    private func hideLabels(_ isHidden: Bool) {
+        maxIterLabel.isHidden = isHidden
+        createdLabel.isHidden = isHidden
+    }
+    
+    private func hideTextField(_ isHidden: Bool) {
+        realMinTextField.isHidden = isHidden
+        realMaxTextField.isHidden = isHidden
+        imaginaryMaxTextField.isHidden = isHidden
+        imaginaryMinTextField.isHidden = isHidden
+    }
+    
+    private func isTooSmallToExplore(_ entity: MandelbrotEntity) -> Bool {
+        maxIter = Int(entity.maxIter)
+        
+        let diffReal = Float(entity.maxReal - entity.minReal)
+        let diffImaginary = Float(entity.maxImaginary - entity.minImaginary)
+        let allowedDiff = Float.ulpOfOne * Float(sideLength) / 2.0
+        
+        return diffReal < allowedDiff || diffImaginary < allowedDiff
+    }
+    
     func initializeDefaultMandelbrotDisplay() {
-        print("maxIter = \(maxIter)")
         mandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength, maxIter: maxIter)
         mandelbrotDisplay?.id = MandelbrotID.first
         mandelbrotDisplay?.maxIter = maxIter
@@ -141,10 +141,11 @@ class MandelbrotExplorerExamineViewController: UIViewController {
 
     func initializeTextFields() {
         if let mandelbrotDisplay = mandelbrotDisplay {
-            realMinTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.minReal)
-            realMaxTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.maxReal)
-            imaginaryMinTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.minImaginary)
-            imaginaryMaxTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.maxImaginary)
+            let format = "%.6f"
+            realMinTextField.text = String(format: format, mandelbrotDisplay.mandelbrotRect.minReal)
+            realMaxTextField.text = String(format: format, mandelbrotDisplay.mandelbrotRect.maxReal)
+            imaginaryMinTextField.text = String(format: format, mandelbrotDisplay.mandelbrotRect.minImaginary)
+            imaginaryMaxTextField.text = String(format: format, mandelbrotDisplay.mandelbrotRect.maxImaginary)
         }
     }
     
@@ -152,9 +153,6 @@ class MandelbrotExplorerExamineViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-        
         if let mandelbrotExplorerDetailViewController = segue.destination as? MandelbrotExplorerDetailViewController {
             mandelbrotExplorerDetailViewController.dataController = dataController
             mandelbrotExplorerDetailViewController.defaultMandelbrotEntity = mandelbrotEntity
@@ -163,36 +161,17 @@ class MandelbrotExplorerExamineViewController: UIViewController {
     
     @IBAction func share(_ sender: UIBarButtonItem) {
         guard let entity = mandelbrotEntity, let image = mandelbrotIUIView.mandelbrotImage else {
-            print("mandelbrotEntity = \(String(describing: mandelbrotEntity))")
-            print("mandelbrotIUIView.mandelbrotImage = \(String(describing: mandelbrotIUIView.mandelbrotImage))")
+            NSLog("mandelbrotEntity = \(String(describing: mandelbrotEntity))")
+            NSLog("mandelbrotIUIView.mandelbrotImage = \(String(describing: mandelbrotIUIView.mandelbrotImage))")
             return
         }
         
         guard let mandelbrotShareUIView = Bundle.main.loadNibNamed("MandelbrotShareUIView", owner: self, options: nil)![0] as? MandelbrotShareUIView else {
-            print("Cannot initialize MandelbrotShare")
+            NSLog("Cannot initialize MandelbrotShare")
             return
         }
         
-        mandelbrotShareUIView.realMinTextField.transform = CGAffineTransform(rotationAngle: CGFloat(-1.0 * Double.pi / 2.0))
-            .concatenating(CGAffineTransform(translationX: CGFloat(-30.0), y: CGFloat(0.0)))
-        mandelbrotShareUIView.realMaxTextField.transform = CGAffineTransform(rotationAngle: CGFloat(-1.0 * Double.pi / 2.0))
-            .concatenating(CGAffineTransform(translationX: CGFloat(30.0), y: CGFloat(0.0)))
-       
-        mandelbrotShareUIView.mandelbrotIUIView.mandelbrotImage = image
-        
-        if let entity = mandelbrotEntity, let mandelbrotDisplay = mandelbrotDisplay {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .short
-            dateFormatter.timeStyle = .none
-            
-            mandelbrotShareUIView.maxIterLabel.text = "max iteration: \(entity.maxIter)"
-            mandelbrotShareUIView.createdLabel.text = "created on \(dateFormatter.string(from: entity.created!))"
-            
-            mandelbrotShareUIView.realMinTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.minReal)
-            mandelbrotShareUIView.realMaxTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.maxReal)
-            mandelbrotShareUIView.imaginaryMinTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.minImaginary)
-            mandelbrotShareUIView.imaginaryMaxTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.maxImaginary)
-        }
+        setup(mandelbrotShareUIView, entity: entity, image: image)
         
         let renderer = UIGraphicsImageRenderer(size: mandelbrotShareUIView.bounds.size)
         let renderedImage = renderer.image { ctx in
@@ -201,21 +180,41 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         
         let activityItems: [Any] = [renderedImage]
         
+        present(sender, activityItems)
+    }
+    
+    private func setup(_ mandelbrotShareUIView: MandelbrotShareUIView, entity: MandelbrotEntity, image: UIImage) {
+        let rotationAngle = CGFloat(-1.0 * Double.pi / 2.0)
+        rotateAndAdjustPostion(mandelbrotShareUIView.realMinTextField, rotationAngle: rotationAngle, translationX: CGFloat(-30.0))
+        rotateAndAdjustPostion(mandelbrotShareUIView.realMaxTextField, rotationAngle: rotationAngle, translationX: CGFloat(30.0))
+        
+        mandelbrotShareUIView.mandelbrotIUIView.mandelbrotImage = image
+        
+        if let mandelbrotDisplay = mandelbrotDisplay {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .short
+            dateFormatter.timeStyle = .none
+            
+            mandelbrotShareUIView.maxIterLabel.text = "max iteration: \(entity.maxIter)"
+            mandelbrotShareUIView.createdLabel.text = "created on \(dateFormatter.string(from: entity.created!))"
+            
+            let format = "%.6f"
+            mandelbrotShareUIView.realMinTextField.text = String(format: format, mandelbrotDisplay.mandelbrotRect.minReal)
+            mandelbrotShareUIView.realMaxTextField.text = String(format: format, mandelbrotDisplay.mandelbrotRect.maxReal)
+            mandelbrotShareUIView.imaginaryMinTextField.text = String(format: format, mandelbrotDisplay.mandelbrotRect.minImaginary)
+            mandelbrotShareUIView.imaginaryMaxTextField.text = String(format: format, mandelbrotDisplay.mandelbrotRect.maxImaginary)
+        }
+    }
+    
+    private func present(_ sender: UIBarButtonItem, _ activityItems: [Any]) -> Void {
         let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         activityViewController.popoverPresentationController?.barButtonItem = sender
-        /*
         activityViewController.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList,
-                                                        UIActivity.ActivityType.airDrop,
                                                         UIActivity.ActivityType.assignToContact,
-                                                        UIActivity.ActivityType.copyToPasteboard,
-                                                        UIActivity.ActivityType.mail,
-                                                        UIActivity.ActivityType.message,
                                                         UIActivity.ActivityType.openInIBooks,
-                                                        UIActivity.ActivityType.print,
                                                         UIActivity.ActivityType.saveToCameraRoll]
-        */
         
-        present(activityViewController, animated: true, completion: {})
+        present(activityViewController, animated: true)
     }
     
 }
