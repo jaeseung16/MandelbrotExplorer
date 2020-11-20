@@ -16,17 +16,20 @@ class MandelbrotSetGPU: MandelbrotSet {
     
     static let kernelName = "mandelbrot"
     
+    let maxcount: Int
+    let bytesPerRow: Int
+    let threadWidth = 32
+    
     let commandQueue: MTLCommandQueue
     let computePipelineState: MTLComputePipelineState
+    
     let textureDescriptor: MTLTextureDescriptor
     let colorValueTextureDescriptor: MTLTextureDescriptor
     let maxIterTextureDescriptor: MTLTextureDescriptor
-    let maxcount: Int
-    let bytesPerRow: Int
+    
     let region: MTLRegion
     let colorValueTextureRegion: MTLRegion
     let maxIterTextureRegion: MTLRegion
-    let threadWidth = 32
     
     var inputTexture: MTLTexture
     var outputTexture: MTLTexture
@@ -104,27 +107,28 @@ class MandelbrotSetGPU: MandelbrotSet {
         inputTexture = device.makeTexture(descriptor: textureDescriptor)!
         
         textureDescriptor.usage = MTLTextureUsage(rawValue: MTLTextureUsage.shaderWrite.rawValue | MTLTextureUsage.shaderRead.rawValue)
-
         outputTexture = device.makeTexture(descriptor: textureDescriptor)!
         
+        // Initialize colorValueTexture
         colorValueTextureDescriptor = MandelbrotSetGPU.createTextureDescriptor(width: inColorMap.count, height: 1)
         colorValueTextureDescriptor.textureType = .type1D
         colorValueTextureRegion = MTLRegion(origin: MTLOriginMake(0, 0, 0), size: MTLSizeMake(colorValueTextureDescriptor.width, colorValueTextureDescriptor.height, 1))
         colorValueTexture = device.makeTexture(descriptor: colorValueTextureDescriptor)!
         
+        // Initialize maxIterTexture
         maxIterTextureDescriptor = MandelbrotSetGPU.createTextureDescriptor(width: 1, height: 1)
         maxIterTextureDescriptor.textureType = .type1D
         maxIterTextureRegion = MTLRegion(origin: MTLOriginMake(0, 0, 0), size: MTLSizeMake(maxIterTextureDescriptor.width, maxIterTextureDescriptor.height, 1))
         maxIterTexture = device.makeTexture(descriptor: maxIterTextureDescriptor)!
     }
     
-    func calculate() -> Void{
+    func calculate() -> Void {
         populateInputTexture()
         populateColorValueTexture()
         populateMaxIterTexture()
         
         guard let commandBuffer = commandQueue.makeCommandBuffer(),
-            let computeCommandEncoder = commandBuffer.makeComputeCommandEncoder() else {
+              let computeCommandEncoder = commandBuffer.makeComputeCommandEncoder() else {
                 return
         }
         
@@ -132,7 +136,7 @@ class MandelbrotSetGPU: MandelbrotSet {
         prepareBlitCommandEncoder(for: commandBuffer)
 
         commandBuffer.addCompletedHandler { (commandBuffer) in
-            print("gpuTime = \(commandBuffer.gpuEndTime - commandBuffer.gpuStartTime)")
+            NSLog("gpuTime = \(commandBuffer.gpuEndTime - commandBuffer.gpuStartTime)")
         }
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
@@ -147,16 +151,16 @@ class MandelbrotSetGPU: MandelbrotSet {
         computeCommandEncoder.setTexture(colorValueTexture, index: 2)
         computeCommandEncoder.setTexture(maxIterTexture, index: 3)
         
-        print("computePipelineState.maxTotalThreadsPerThreadgroup = \(computePipelineState.maxTotalThreadsPerThreadgroup)")
-        print("computePipelineState.threadExecutionWidth = \(computePipelineState.threadExecutionWidth)")
+        NSLog("computePipelineState.maxTotalThreadsPerThreadgroup = \(computePipelineState.maxTotalThreadsPerThreadgroup)")
+        NSLog("computePipelineState.threadExecutionWidth = \(computePipelineState.threadExecutionWidth)")
         
         let threadHeight = computePipelineState.maxTotalThreadsPerThreadgroup / threadWidth
         
         let numThreadgroups = MTLSize(width: (maxcount + threadWidth) / threadWidth, height: (maxcount + threadHeight) / threadHeight, depth: 1)
         let threadsPerGroup = MTLSize(width: threadWidth, height: threadHeight, depth: 1)
         
-        print("numThreadgroups = \(numThreadgroups)")
-        print("threadsPerGroup = \(threadsPerGroup)")
+        NSLog("numThreadgroups = \(numThreadgroups)")
+        NSLog("threadsPerGroup = \(threadsPerGroup)")
         
         computeCommandEncoder.dispatchThreadgroups(numThreadgroups, threadsPerThreadgroup: threadsPerGroup)
         
@@ -190,18 +194,14 @@ class MandelbrotSetGPU: MandelbrotSet {
             colors = colorMap!
         }
        
-        //print("\(colors[255])")
-        
         colorValueTexture.replace(region: colorValueTextureRegion, mipmapLevel: 0, withBytes: colors, bytesPerRow: colorValueTextureDescriptor.width * MemoryLayout<SIMD4<Float>>.stride)
     }
     
     private func populateMaxIterTexture() -> Void {
-        var maxIter = [SIMD2<Float>]()
-        maxIter.append(SIMD2<Float>(repeating: Float(self.maxIter)))
+        var maxIter = [SIMD4<Float>]()
+        maxIter.append(SIMD4<Float>(repeating: Float(self.maxIter)))
         
-        print("maxIter = \(maxIter)")
-        maxIterTexture.replace(region: maxIterTextureRegion, mipmapLevel: 0, withBytes: maxIter, bytesPerRow: bytesPerRow)
-        print("maxIterTexture = \(maxIterTexture)")
+        maxIterTexture.replace(region: maxIterTextureRegion, mipmapLevel: 0, withBytes: maxIter, bytesPerRow: maxIterTextureDescriptor.width * MemoryLayout<SIMD4<Float>>.stride)
     }
     
     private func generateCGImage() -> Void {
