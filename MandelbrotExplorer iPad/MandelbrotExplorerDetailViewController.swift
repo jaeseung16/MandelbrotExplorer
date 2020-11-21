@@ -53,6 +53,14 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        maxIter = Int(defaultMandelbrotEntity.maxIter)
+        setupColorMapPickerView()
+        
+        rectSideLength = defaultSideLength
+        scaleLabel.text = String(format: "%.3f", Float(sideLength) / Float(rectSideLength))
+    }
+    
+    private func setupColorMapPickerView() {
         colorMapPickerView.delegate = self
         colorMapPickerView.dataSource = self
         
@@ -66,10 +74,15 @@ class MandelbrotExplorerDetailViewController: UIViewController {
         
         colorMapPickerView.selectRow(row, inComponent: 0, animated: false)
         
-        colorMapPickerView.selectRow(2, inComponent: 1, animated: false)
+        row = 0
+        while (row < MaxIter.allCases.count) {
+            if MaxIter.allCases[row].rawValue == maxIter {
+                break
+            }
+            row += 1
+        }
         
-        rectSideLength = defaultSideLength
-        scaleLabel.text = String(format: "%.3f", Float(sideLength) / Float(rectSideLength))
+        colorMapPickerView.selectRow(row, inComponent: 1, animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -87,18 +100,6 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     }
 
     func initializeDefaultMandelbrotDisplay() {
-        print("** MandelbrotExplorerDetailViewController **")
-        maxIter = Int(defaultMandelbrotEntity.maxIter)
-        
-        var count = 0
-        while (count < MaxIter.allCases.count) {
-            if MaxIter.allCases[count].rawValue == maxIter {
-                colorMapPickerView.selectRow(count, inComponent: 1, animated: false)
-                break
-            }
-            count += 1
-        }
-        
         defaultMandelbrotDisplay = MandelbrotDisplayIPad(sideLength: sideLength, maxIter: maxIter)
         defaultMandelbrotDisplay?.id = MandelbrotID.first
         
@@ -141,12 +142,11 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     func initializeZoomedMandelbrotView() -> Void {
         zoomedMandelbrotUIView.delegate = self
         zoomedMandelbrotUIView.id = MandelbrotID.second
-        //zoomedMandelbrotUIView.selectRect = CGRect(x: 70, y: 176, width: 32, height: 32)
         
         update(mandelbrotUIView: zoomedMandelbrotUIView, with: zoomedMandelbrotDisplay!)
     }
     
-    func update(mandelbrotUIView: MandelbrotUIView, with mandelbrotDisplayIPad: MandelbrotDisplayIPad) -> Void {
+    private func update(mandelbrotUIView: MandelbrotUIView, with mandelbrotDisplayIPad: MandelbrotDisplayIPad) -> Void {
         mandelbrotUIView.mandelbrotImage = mandelbrotDisplayIPad.mandelbrotImage
         mandelbrotUIView.mandelbrotRect = mandelbrotDisplayIPad.mandelbrotRect
         mandelbrotUIView.rectScale = (defaultMandelbrotRect.maxReal - defaultMandelbrotRect.minReal) / (mandelbrotUIView.mandelbrotRect.maxReal - mandelbrotUIView.mandelbrotRect.minReal)
@@ -157,37 +157,30 @@ class MandelbrotExplorerDetailViewController: UIViewController {
     func toViewRect(displayRect: CGRect) -> CGRect {
         let displaySideLength = defaultMandelbrotDisplay?.sideLength
         let viewSideLength = mandelbrotUIView.sideLength
-        
         let scale = CGFloat(viewSideLength) / CGFloat(displaySideLength!)
-        
-        print("displaySideLength = \(displaySideLength)")
-        print("viewSideLength = \(viewSideLength)")
-        print("displayRect = \(displayRect)")
-        print("viewRect = \(CGRect(x: scale * displayRect.origin.x, y: scale * displayRect.origin.y, width: scale * displayRect.width, height: scale * displayRect.height))")
-        
-        return CGRect(x: scale * displayRect.origin.x, y: scale * displayRect.origin.y, width: scale * displayRect.width, height: scale * displayRect.height)
+        return CGRect(x: scale * displayRect.origin.x,
+                      y: scale * displayRect.origin.y,
+                      width: scale * displayRect.width,
+                      height: scale * displayRect.height)
     }
     
     func toDisplayRect(viewRect: CGRect) -> CGRect {
         let displaySideLength = defaultMandelbrotDisplay?.sideLength
         let viewSideLength = mandelbrotUIView.sideLength
-        
         let scale = CGFloat(displaySideLength!) / CGFloat(viewSideLength)
-        
-        print("displaySideLength = \(displaySideLength)")
-        print("viewSideLength = \(viewSideLength)")
-        print("viewRect = \(viewRect)")
-        print("displayRect = \(CGRect(x: scale * viewRect.origin.x, y: scale * viewRect.origin.y, width: scale * viewRect.width, height: scale * viewRect.height))")
-        
-        return CGRect(x: scale * viewRect.origin.x, y: scale * viewRect.origin.y, width: scale * viewRect.width, height: scale * viewRect.height)
+        return CGRect(x: scale * viewRect.origin.x,
+                      y: scale * viewRect.origin.y,
+                      width: scale * viewRect.width,
+                      height: scale * viewRect.height)
     }
     
     func updateTextFields() {
         if let mandelbrotDisplay = zoomedMandelbrotDisplay {
-            realMinTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.minReal)
-            realMaxTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.maxReal)
-            imaginaryMinTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.minImaginary)
-            imaginaryMaxTextField.text = String(format: "%.6f", mandelbrotDisplay.mandelbrotRect.maxImaginary)
+            let format = "%.6f"
+            realMinTextField.text = String(format: format, mandelbrotDisplay.mandelbrotRect.minReal)
+            realMaxTextField.text = String(format: format, mandelbrotDisplay.mandelbrotRect.maxReal)
+            imaginaryMinTextField.text = String(format: format, mandelbrotDisplay.mandelbrotRect.minImaginary)
+            imaginaryMaxTextField.text = String(format: format, mandelbrotDisplay.mandelbrotRect.maxImaginary)
         }
     }
     
