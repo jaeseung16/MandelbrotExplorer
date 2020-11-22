@@ -2,18 +2,28 @@
 
 ## Description
 
-Based on the experince with [jaeseung16/CppND-Capstone-MandelbrotExplorer](https://github.com/jaeseung16/CppND-Capstone-MandelbrotExplorer), I wanted to see how the implementation could be different between Swift/MetalKit and C++/OpenCV.
+The app provides with a set of options to navigate through the [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set) in iPad. Starting from the initial range, you can zoom into a selected range and choose the color scheme and the maximum iterations. If you like the finding, you can save it for the furtuer navigation and/or share it.
 
-## Project Structure
 
-- ViewController
-- MandelbrotView: Presents images and ranges
-- MandelbrotDisplay: Generates an image to present, with a given ranges of complex numbers
-- MnadelbrotSet: Evaluates the Mandelbrot formula for a list of complex numbers
+## How to Use
+
+- The app is designed to use in iPad with the landscape orientation.
+- After opening the app, choose an item under on the left pane.
+  - The Mandelbrot set within the saved region will show up with the information about the region and the maximum iteration.
+  - The bar items will be enabled.
+- Click **Explore** to open a scene to navigate down the chosen region.
+  - The Mandelbrot set within the saved region is presented in the bottom-right image.
+  - The bottom-right image also has a white box, which can be dragged and pinched. 
+  - While being dragged or pinched, the color of the box becomes yellow.
+  - When released, the color of the box becomes white and the top-left image will be updated.
+  - Try different color scheme and maximum iteration and click **Refresh** to update the top-left image.
+  - If you like the result, you may save it. Or you can go back to the original state by clicking **Reset**.
+  - **Cannot explore further** will appear if the range is too small to navigate. This is because the single precision is used to represent numbers in a GPU.
+
 
 ## Requirements
 
-- Xcode
+- The app is written and tested on `Xcode 12.2` and `Swift 5.3.1`.
 
 
 ## How to build
@@ -21,6 +31,10 @@ Based on the experince with [jaeseung16/CppND-Capstone-MandelbrotExplorer](https
 - Download or clone the repository: `git clone https://github.com/jaeseung16/CppND-Capstone-MandelbrotExplorer.git`
 - Build the project within Xcode
 
+
+## Motivation
+
+Based on the experince with [jaeseung16/CppND-Capstone-MandelbrotExplorer](https://github.com/jaeseung16/CppND-Capstone-MandelbrotExplorer), I wanted to see how the implementation could be different between Swift/MetalKit and C++/OpenCV.
 
 ### References
 
