@@ -12,6 +12,7 @@ import ComplexModule
 class MandelbrotExplorerExamineViewController: UIViewController {
     @IBOutlet weak var mandelbrotIUIView: MandelbrotUIView!
     @IBOutlet weak var exploreBarButton: UIBarButtonItem!
+    @IBOutlet weak var actionBarButton: UIBarButtonItem!
     
     @IBOutlet weak var realMinTextField: UITextField!
     @IBOutlet weak var realMaxTextField: UITextField!
@@ -42,9 +43,11 @@ class MandelbrotExplorerExamineViewController: UIViewController {
         if let entity = mandelbrotEntity, isTooSmallToExplore(entity) {
             statusLabel.isHidden = false
             exploreBarButton.isEnabled = false
+            actionBarButton.isEnabled = false
         } else {
             statusLabel.isHidden = true
             exploreBarButton.isEnabled = mandelbrotEntity != nil
+            actionBarButton.isEnabled = mandelbrotEntity != nil
         }
         
         let rotationAngle = CGFloat(-1.0 * Double.pi / 2.0)

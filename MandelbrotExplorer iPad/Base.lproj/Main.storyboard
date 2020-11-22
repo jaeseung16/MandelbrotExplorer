@@ -246,7 +246,7 @@
             </objects>
             <point key="canvasLocation" x="300" y="48.6328125"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Mandelbrot Navigator-->
         <scene sceneID="0sx-oa-oJD">
             <objects>
                 <tableViewController storyboardIdentifier="RootViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" clearsSelectionOnViewWillAppear="NO" id="R5M-6P-h46" customClass="MandelbrotExplorerRootViewControllerTableViewController" customModule="MandelbrotExplorer_iPad" customModuleProvider="target" sceneMemberID="viewController">
@@ -282,7 +282,7 @@
                             <outlet property="delegate" destination="R5M-6P-h46" id="7Yb-hy-6oi"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="ZpP-X4-fwU"/>
+                    <navigationItem key="navigationItem" title="Mandelbrot Navigator" id="ZpP-X4-fwU"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZrI-5y-TPa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -395,6 +395,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="actionBarButton" destination="bxE-qz-uD6" id="Zij-j3-8G1"/>
                         <outlet property="createdLabel" destination="q9s-W3-jgO" id="ObW-6r-XaJ"/>
                         <outlet property="exploreBarButton" destination="cSt-hJ-bc6" id="JMe-sf-nFI"/>
                         <outlet property="imaginaryMaxTextField" destination="1V5-8v-7JN" id="4Os-Jk-agd"/>
