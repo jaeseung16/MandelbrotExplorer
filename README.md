@@ -7,7 +7,7 @@ The app provides with a set of options to navigate through the [Mandelbrot set](
 
 ## How to Use
 
-- Tha app is desigined to use in iPad with the landscape orientation.
+- The app is designed to use in iPad with the landscape orientation.
 - After opening the app, choose an item under on the left pane.
   - The Mandelbrot set within the saved region will show up with the information about the region and the maximum iteration.
   - The bar items will be enabled.
