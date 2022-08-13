@@ -1,5 +1,8 @@
 # MandelbrotExplorer
 
+
+[![App Store Badge](https://linkmaker.itunes.apple.com/assets/shared/badges/en-us/appstore-lrg.svg)](https://apps.apple.com/us/app/mandelbrot-navigator/id1539536674)
+
 ## Description
 
 The app provides with a set of options to navigate through the [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set) in iPad. Starting from the initial range, you can zoom into a selected range and choose the color scheme and the maximum iterations. If you like the finding, you can save it for the furtuer navigation and/or share it.
