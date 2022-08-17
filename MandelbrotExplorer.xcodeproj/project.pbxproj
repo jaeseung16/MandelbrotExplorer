@@ -75,6 +75,10 @@
 		908C7BD1252A74D2003D803B /* MandelbrotExplorer_iPad.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 908C7BCF252A74D2003D803B /* MandelbrotExplorer_iPad.xcdatamodeld */; };
 		908C7BD3252A74D4003D803B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 908C7BD2252A74D4003D803B /* Assets.xcassets */; };
 		908C7BD6252A74D4003D803B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 908C7BD4252A74D4003D803B /* LaunchScreen.storyboard */; };
+		908D79A628A8580000445DFC /* MandelbrotExplorerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D79A528A8580000445DFC /* MandelbrotExplorerApp.swift */; };
+		908D79A828A85E9500445DFC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D79A728A85E9500445DFC /* ContentView.swift */; };
+		908D79AB28A85EEC00445DFC /* MandelbrotDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D79AA28A85EEC00445DFC /* MandelbrotDetailView.swift */; };
+		908D79AD28A860DA00445DFC /* MandelbrotListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D79AC28A860DA00445DFC /* MandelbrotListView.swift */; };
 		9097CC39252A83BA00AE9805 /* MandelbrotExplorerRootViewControllerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9097CC38252A83BA00AE9805 /* MandelbrotExplorerRootViewControllerTableViewController.swift */; };
 		90AF89FB254248DF008A5472 /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AF89FA254248DF008A5472 /* ColorConverter.swift */; };
 		90AF89FC254248DF008A5472 /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AF89FA254248DF008A5472 /* ColorConverter.swift */; };
@@ -163,6 +167,11 @@
 		908C7BD2252A74D4003D803B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		908C7BD5252A74D4003D803B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		908C7BD7252A74D4003D803B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		908D79A228A8565F00445DFC /* MandelbrotExplorer iPad.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MandelbrotExplorer iPad.entitlements"; sourceTree = "<group>"; };
+		908D79A528A8580000445DFC /* MandelbrotExplorerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerApp.swift; sourceTree = "<group>"; };
+		908D79A728A85E9500445DFC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		908D79AA28A85EEC00445DFC /* MandelbrotDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotDetailView.swift; sourceTree = "<group>"; };
+		908D79AC28A860DA00445DFC /* MandelbrotListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotListView.swift; sourceTree = "<group>"; };
 		9097CC38252A83BA00AE9805 /* MandelbrotExplorerRootViewControllerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerRootViewControllerTableViewController.swift; sourceTree = "<group>"; };
 		90AF89FA254248DF008A5472 /* ColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConverter.swift; sourceTree = "<group>"; };
 		90B944452485C1A7005BDC10 /* MandelbrotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotView.swift; sourceTree = "<group>"; };
@@ -353,6 +362,8 @@
 		908C7BC5252A74D2003D803B /* MandelbrotExplorer iPad */ = {
 			isa = PBXGroup;
 			children = (
+				908D79A928A85EB800445DFC /* SwiftUIView */,
+				908D79A228A8565F00445DFC /* MandelbrotExplorer iPad.entitlements */,
 				908C7BC6252A74D2003D803B /* AppDelegateIPad.swift */,
 				908C7BC8252A74D2003D803B /* SceneDelegate.swift */,
 				908C7BCA252A74D2003D803B /* MandelbrotExplorerDetailViewController.swift */,
@@ -369,8 +380,19 @@
 				90CA906F2548DC5F001EA6F5 /* DataController.swift */,
 				9042D2FD255CAF010002CEE0 /* MandelbrotShareUIView.swift */,
 				9042D30B255CBC260002CEE0 /* MandelbrotShareUIView.xib */,
+				908D79A528A8580000445DFC /* MandelbrotExplorerApp.swift */,
+				908D79A728A85E9500445DFC /* ContentView.swift */,
 			);
 			path = "MandelbrotExplorer iPad";
+			sourceTree = "<group>";
+		};
+		908D79A928A85EB800445DFC /* SwiftUIView */ = {
+			isa = PBXGroup;
+			children = (
+				908D79AA28A85EEC00445DFC /* MandelbrotDetailView.swift */,
+				908D79AC28A860DA00445DFC /* MandelbrotListView.swift */,
+			);
+			path = SwiftUIView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -619,6 +641,7 @@
 				90CA90702548DC5F001EA6F5 /* DataController.swift in Sources */,
 				9080799C254CDAEA006B461A /* Jet.swift in Sources */,
 				90FB74C6252E8A63005B0F83 /* MandelbrotSetGPU.swift in Sources */,
+				908D79AD28A860DA00445DFC /* MandelbrotListView.swift in Sources */,
 				90898F5D252BDEAF0084ACB4 /* MandelbrotSetCPU.swift in Sources */,
 				9019694725478F620067378A /* MandelbrotExplorerExamineViewController.swift in Sources */,
 				908079C3254CDCAD006B461A /* Summer.swift in Sources */,
@@ -626,6 +649,7 @@
 				90C68D96252E8DF1005EF916 /* Shaders.metal in Sources */,
 				90C0934D252FC82600FA9A7B /* MandelbrotImageGenerator.swift in Sources */,
 				903DD7C0254F32B300288FA5 /* ColorMapFromSingleColor.swift in Sources */,
+				908D79A828A85E9500445DFC /* ContentView.swift in Sources */,
 				90FB74CB252E8A66005B0F83 /* MandelbrotSetFactory.swift in Sources */,
 				908C7BD1252A74D2003D803B /* MandelbrotExplorer_iPad.xcdatamodeld in Sources */,
 				908079BC254CDCA1006B461A /* Spring.swift in Sources */,
@@ -633,9 +657,11 @@
 				908C7BC9252A74D2003D803B /* SceneDelegate.swift in Sources */,
 				9027F820253E597C00F4EBB3 /* Parula256.swift in Sources */,
 				903DD7B9254F324A00288FA5 /* MandelbrotExplorerColorMap.swift in Sources */,
+				908D79A628A8580000445DFC /* MandelbrotExplorerApp.swift in Sources */,
 				90AF89FC254248DF008A5472 /* ColorConverter.swift in Sources */,
 				9097CC39252A83BA00AE9805 /* MandelbrotExplorerRootViewControllerTableViewController.swift in Sources */,
 				908079A7254CDC80006B461A /* HSV.swift in Sources */,
+				908D79AB28A85EEC00445DFC /* MandelbrotDetailView.swift in Sources */,
 				90CA906A2548DBED001EA6F5 /* MandelbrotEntity+Extension.swift in Sources */,
 				908079D1254CDCC8006B461A /* Winter.swift in Sources */,
 				90898F62252BDF2E0084ACB4 /* MandelbrotSet.swift in Sources */,
@@ -737,7 +763,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -792,7 +819,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -937,11 +965,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = "MandelbrotExplorer iPad/MandelbrotExplorer iPad.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = U8VSJXRJTQ;
 				INFOPLIST_FILE = "MandelbrotExplorer iPad/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -949,6 +978,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.resonance.jaeseunglee;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -960,11 +990,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = "MandelbrotExplorer iPad/MandelbrotExplorer iPad.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = U8VSJXRJTQ;
 				INFOPLIST_FILE = "MandelbrotExplorer iPad/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -972,6 +1003,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.resonance.jaeseunglee;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
