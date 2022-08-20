@@ -8,6 +8,7 @@
 
 import SwiftUI
 import OSLog
+import CoreData
 
 @main
 struct MandelbrotExplorerApp: App {

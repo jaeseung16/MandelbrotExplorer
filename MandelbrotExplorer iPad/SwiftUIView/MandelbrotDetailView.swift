@@ -60,7 +60,12 @@ struct MandelbrotDetailView: View {
         .padding()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Text("Explore")
+                NavigationLink {
+                    MandelbrotExplorerView(defaultEntity: entity)
+                } label: {
+                    Text("Explore")
+                }
+
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Label("Share", systemImage: "square.and.arrow.up")
