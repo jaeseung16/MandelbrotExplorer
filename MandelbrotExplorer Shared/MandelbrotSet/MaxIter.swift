@@ -8,7 +8,9 @@
 
 import Foundation
 
-enum MaxIter: Int, CaseIterable {
+enum MaxIter: Int, CaseIterable, Identifiable {
+    var id: Self { self }
+    
     static let maxColorStep = 8192
     
     case fifty = 50

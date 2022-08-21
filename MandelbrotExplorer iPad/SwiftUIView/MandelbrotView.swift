@@ -12,8 +12,8 @@ struct MandelbrotView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     let uiImage: UIImage
-    
-    @State private var location: CGPoint = CGPoint(x: 100, y: 100)
+    @State var location: CGPoint
+    @State var length: CGFloat
     
     var body: some View {
         GeometryReader { geometry in
@@ -32,7 +32,6 @@ struct MandelbrotView: View {
         }
     }
     
-    @State var length = CGFloat(100.0)
     @GestureState var magnifyBy: CGFloat?
     private var magnificationGesure: some Gesture {
         MagnificationGesture(minimumScaleDelta: 0.001)

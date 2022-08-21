@@ -8,7 +8,9 @@
 
 import Foundation
 
-enum MandelbrotExplorerColorMap: String, CaseIterable {
+enum MandelbrotExplorerColorMap: String, CaseIterable, Identifiable {
+    var id: Self { self }
+    
     case jet
     case hsv
     case hot
