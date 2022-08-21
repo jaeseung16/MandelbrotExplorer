@@ -13,13 +13,33 @@ struct ZoomedMandelbrotView: View {
     @EnvironmentObject var viewModel: MandelbrotExplorerViewModel
     
     var body: some View {
-        Rectangle()
-            .strokeBorder(Color.green, lineWidth: 2.0)
-    }
-}
-
-struct ZoomedMandelbrotView_Previews: PreviewProvider {
-    static var previews: some View {
-        ZoomedMandelbrotView()
+        GeometryReader { geometry in
+            let length = geometry.size.width < geometry.size.height ? geometry.size.width : geometry.size.height
+            
+            if let image = viewModel.mandelbrotImage {
+                Image(uiImage: image)
+                    .frame(width: length, height: length)
+                    .onAppear {
+                        viewModel.generateMandelbrotSet(calculationSize: length)
+                    }
+                    .onChange(of: length) { _ in
+                        viewModel.generateMandelbrotSet(calculationSize: length)
+                    }
+            } else {
+                Rectangle()
+                    .strokeBorder(Color.green, lineWidth: 2.0)
+                    .frame(width: length, height: length)
+                    .onAppear {
+                        viewModel.generateMandelbrotSet(calculationSize: length)
+                    }
+                    .onChange(of: length) { _ in
+                        viewModel.generateMandelbrotSet(calculationSize: length)
+                    }
+            }
+                
+                
+            
+                
+        }
     }
 }

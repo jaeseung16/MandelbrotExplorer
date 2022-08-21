@@ -14,16 +14,13 @@ struct MandelbrotExplorerView: View {
     
     let defaultEntity: MandelbrotEntity
     
-    @State var colorMap: MandelbrotExplorerColorMap = .green
-    @State var maxIter: MaxIter = .twoHundred
-    
     var body: some View {
         GeometryReader { geometry in
+            let bodyLength = geometry.size.width < geometry.size.height ? 0.45 * geometry.size.width : 0.45 * geometry.size.height
+            
             VStack {
                 HStack {
                     if let data = defaultEntity.image, let uiImage = UIImage(data: data) {
-                        let bodyLength = geometry.size.width < geometry.size.height ? 0.45 * geometry.size.width : 0.45 * geometry.size.height
-                        
                         Spacer()
                         ZoomedMandelbrotView()
                             .frame(width: bodyLength, height: bodyLength)
@@ -37,7 +34,7 @@ struct MandelbrotExplorerView: View {
                 Spacer()
                 
                 Button {
-                    refresh()
+                    viewModel.generateMandelbrotSet(calculationSize: bodyLength)
                 } label: {
                     Label("Refresh", systemImage: "arrow.clockwise.circle")
                 }
@@ -47,14 +44,14 @@ struct MandelbrotExplorerView: View {
                 Spacer()
                 
                 HStack {
-                    Picker("Color Map", selection: $colorMap) {
+                    Picker("Color Map", selection: $viewModel.colorMap) {
                         ForEach(MandelbrotExplorerColorMap.allCases) { colorMap in
                             Text(colorMap.rawValue)
                         }
                     }
                     .pickerStyle(.wheel)
                     
-                    Picker("Maximum Iteration", selection: $maxIter) {
+                    Picker("Maximum Iteration", selection: $viewModel.maxIter) {
                         ForEach(MaxIter.allCases) { maxIter in
                             Text("\(maxIter.rawValue)")
                         }
@@ -76,10 +73,6 @@ struct MandelbrotExplorerView: View {
                 }
             }
         }
-    }
-    
-    private func refresh() -> Void {
-        
     }
     
     private func infoView() -> some View {
