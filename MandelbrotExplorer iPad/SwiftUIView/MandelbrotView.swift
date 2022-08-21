@@ -12,6 +12,7 @@ struct MandelbrotView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var viewModel: MandelbrotExplorerViewModel
     
+    let entity: MandelbrotEntity
     let uiImage: UIImage
     @State var location: CGPoint
     @State var length: CGFloat
@@ -49,7 +50,7 @@ struct MandelbrotView: View {
                     
                     location = newLocation
                     
-                    viewModel.updateRange(origin: location, length: length, scale: bodyLength / length)
+                    viewModel.updateRange(origin: location, length: length, originalLength: bodyLength, defaultMandelbrotEntity: entity)
                 }
                 .updating($startLocation) { value, startLocation, transaction in
                     startLocation = startLocation ?? location
@@ -85,7 +86,7 @@ struct MandelbrotView: View {
                     
                     print("length=\(length)")
                     
-                    viewModel.updateRange(origin: location, length: length, scale: bodyLength / length)
+                    viewModel.updateRange(origin: location, length: length, originalLength: bodyLength, defaultMandelbrotEntity: entity)
                 }
             
             ZStack {
@@ -100,6 +101,9 @@ struct MandelbrotView: View {
             .gesture(dragGesture)
             .simultaneousGesture(magnificationGesture)
             .frame(width: bodyLength, height: bodyLength)
+            .onAppear {
+                viewModel.updateRange(origin: location, length: length, originalLength: bodyLength, defaultMandelbrotEntity: entity)
+            }
            
         }
     }

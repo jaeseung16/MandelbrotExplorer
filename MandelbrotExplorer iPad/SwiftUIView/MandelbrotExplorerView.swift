@@ -28,7 +28,7 @@ struct MandelbrotExplorerView: View {
                         ZoomedMandelbrotView()
                             .frame(width: bodyLength, height: bodyLength)
                         Spacer()
-                        MandelbrotView(uiImage: uiImage, location: CGPoint(x: 0.5 * bodyLength, y: 0.5 * bodyLength), length: bodyLength / viewModel.scale)
+                        MandelbrotView(entity: defaultEntity, uiImage: uiImage, location: CGPoint(x: 0.5 * bodyLength, y: 0.5 * bodyLength), length: bodyLength / viewModel.scale)
                             .frame(width: bodyLength, height: bodyLength)
                         Spacer()
                     }

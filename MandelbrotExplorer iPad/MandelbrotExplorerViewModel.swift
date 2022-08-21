@@ -23,14 +23,17 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         super.init()
     }
     
-    func updateRange(origin: CGPoint, length: CGFloat, scale: CGFloat) -> Void {
-        let minX = origin.x - 0.5 * length
-        let maxX = origin.x + 0.5 * length
-        let minY = origin.y - 0.5 * length
-        let maxY = origin.y + 0.5 * length
-        mandelbrotRect = ComplexRect(Complex<Double>(minX, maxX), Complex<Double>(minY, maxY))
+    func updateRange(origin: CGPoint, length: CGFloat, originalLength: CGFloat, defaultMandelbrotEntity: MandelbrotEntity) -> Void {
+        self.scale = originalLength / length
         
-        self.scale = scale
+        let minX = defaultMandelbrotEntity.minReal + (origin.x - 0.5 * length) / originalLength * (defaultMandelbrotEntity.maxReal - defaultMandelbrotEntity.minReal)
+        let maxX = defaultMandelbrotEntity.minReal + (origin.x + 0.5 * length) / originalLength * (defaultMandelbrotEntity.maxReal - defaultMandelbrotEntity.minReal)
+        
+        let minY = defaultMandelbrotEntity.maxImaginary - (origin.y - 0.5 * length) / originalLength * (defaultMandelbrotEntity.maxImaginary - defaultMandelbrotEntity.minImaginary)
+        let maxY = defaultMandelbrotEntity.maxImaginary - (origin.y + 0.5 * length) / originalLength * (defaultMandelbrotEntity.maxImaginary - defaultMandelbrotEntity.minImaginary)
+        
+        mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
+        
     }
     
 }

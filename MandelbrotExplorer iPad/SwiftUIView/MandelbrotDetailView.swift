@@ -64,7 +64,7 @@ struct MandelbrotDetailView: View {
                 NavigationLink {
                     MandelbrotExplorerView(defaultEntity: entity)
                 } label: {
-                    Text("Explore")
+                    Label("Explore", systemImage: "magnifyingglass")
                 }
 
             }
