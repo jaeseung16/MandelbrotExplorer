@@ -11,6 +11,7 @@ import UIKit
 
 struct MandelbrotListView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var viewModel: MandelbrotExplorerViewModel
     
     @FetchRequest(entity: MandelbrotEntity.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \MandelbrotEntity.created, ascending: false)]) private var entities: FetchedResults<MandelbrotEntity>
     

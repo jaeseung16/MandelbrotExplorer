@@ -11,6 +11,7 @@ import UIKit
 
 struct MandelbrotDetailView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var viewModel: MandelbrotExplorerViewModel
     
     let entity: MandelbrotEntity
     

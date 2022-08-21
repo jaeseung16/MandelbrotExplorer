@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ZoomedMandelbrotView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var viewModel: MandelbrotExplorerViewModel
     
     var body: some View {
         Rectangle()

@@ -35,6 +35,7 @@ struct MandelbrotExplorerApp: App {
         WindowGroup {
             MandelbrotListView()
                 .environment(\.managedObjectContext, persistentContainer.viewContext)
+                .environmentObject(MandelbrotExplorerViewModel())
         }
     }
 }

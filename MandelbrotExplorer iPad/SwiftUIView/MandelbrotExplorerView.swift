@@ -10,6 +10,7 @@ import SwiftUI
 
 struct MandelbrotExplorerView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var viewModel: MandelbrotExplorerViewModel
     
     let defaultEntity: MandelbrotEntity
     
@@ -21,12 +22,14 @@ struct MandelbrotExplorerView: View {
             VStack {
                 HStack {
                     if let data = defaultEntity.image, let uiImage = UIImage(data: data) {
+                        let bodyLength = geometry.size.width < geometry.size.height ? 0.45 * geometry.size.width : 0.45 * geometry.size.height
+                        
                         Spacer()
                         ZoomedMandelbrotView()
-                            .frame(width: 0.45 * geometry.size.width, height: 0.45 * geometry.size.width)
+                            .frame(width: bodyLength, height: bodyLength)
                         Spacer()
-                        MandelbrotView(uiImage: uiImage, location: CGPoint(x: 0.25 * geometry.size.width, y: 0.25 * geometry.size.height), length: 0.05 * geometry.size.width)
-                            .frame(width: 0.45 * geometry.size.width, height: 0.45 * geometry.size.width)
+                        MandelbrotView(uiImage: uiImage, location: CGPoint(x: 0.5 * bodyLength, y: 0.5 * bodyLength), length: bodyLength / viewModel.scale)
+                            .frame(width: bodyLength, height: bodyLength)
                         Spacer()
                     }
                 }
@@ -95,9 +98,9 @@ struct MandelbrotExplorerView: View {
                 Spacer()
                 Text("Real")
                 Spacer()
-                Text("Min")
+                Text("\(viewModel.mandelbrotRect.minReal)")
                 Spacer()
-                Text("Max")
+                Text("\(viewModel.mandelbrotRect.maxReal)")
                 Spacer()
             }
             
@@ -105,15 +108,17 @@ struct MandelbrotExplorerView: View {
                 Spacer()
                 Text("Imaginary")
                 Spacer()
-                Text("Min")
+                Text("\(viewModel.mandelbrotRect.minImaginary)")
                 Spacer()
-                Text("Max")
+                Text("\(viewModel.mandelbrotRect.maxImaginary)")
                 Spacer()
             }
             
             HStack {
                 Spacer()
                 Text("Scale")
+                Spacer()
+                Text("\(viewModel.scale)")
                 Spacer()
             }
         }

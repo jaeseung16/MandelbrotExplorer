@@ -10,13 +10,84 @@ import SwiftUI
 
 struct MandelbrotView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var viewModel: MandelbrotExplorerViewModel
     
     let uiImage: UIImage
     @State var location: CGPoint
     @State var length: CGFloat
     
+    @GestureState private var startLocation: CGPoint? = nil
+    @GestureState var magnifyBy: CGFloat?
+   
     var body: some View {
         GeometryReader { geometry in
+            let bodyLength = geometry.size.width < geometry.size.height ? geometry.size.width : geometry.size.height
+            
+            let dragGesture = DragGesture()
+                .onChanged { value in
+                    var newLocation = startLocation ?? location
+                    newLocation.x += value.translation.width
+                    newLocation.y += value.translation.height
+                    
+                    if newLocation.x - 0.5 * length < 0.0 {
+                        newLocation.x = 0.5 * length
+                    }
+                    
+                    if newLocation.x + 0.5 * length > geometry.size.width {
+                        newLocation.x = geometry.size.width - 0.5 * length
+                    }
+                    
+                    if newLocation.y - 0.5 * length < 0.0 {
+                        newLocation.y = 0.5 * length
+                    }
+                    
+                    if newLocation.y + 0.5 * length > geometry.size.height {
+                        newLocation.y = geometry.size.height - 0.5 * length
+                    }
+                    
+                    print("newLocation=\(newLocation)")
+                    
+                    location = newLocation
+                    
+                    viewModel.updateRange(origin: location, length: length, scale: bodyLength / length)
+                }
+                .updating($startLocation) { value, startLocation, transaction in
+                    startLocation = startLocation ?? location
+                }
+            
+            let magnificationGesture = MagnificationGesture(minimumScaleDelta: 0.001)
+                .updating($magnifyBy) { currentState, gestureState, transaction in
+                    gestureState = gestureState ?? 1.0
+                }
+                .onChanged { value in
+                    let newLength = length + 5.0 * (value - 1.0)
+                    if newLength < 10.0 {
+                        length = 10.0
+                    } else {
+                        length = newLength
+                    }
+                    
+                    if location.x - 0.5 * length < 0.0 {
+                        length = 2.0 * location.x
+                    }
+                    
+                    if location.x + 0.5 * length > geometry.size.width {
+                        length = 2.0 * (geometry.size.width - location.x)
+                    }
+                    
+                    if location.y - 0.5 * length < 0.0 {
+                        length = 2.0 * location.y
+                    }
+                    
+                    if location.y + 0.5 * length > geometry.size.height {
+                        length = 2.0 * (geometry.size.height - location.y)
+                    }
+                    
+                    print("length=\(length)")
+                    
+                    viewModel.updateRange(origin: location, length: length, scale: bodyLength / length)
+                }
+            
             ZStack {
                 Image(uiImage: uiImage)
                     .resizable()
@@ -27,51 +98,18 @@ struct MandelbrotView: View {
                     
             }
             .gesture(dragGesture)
-            .simultaneousGesture(magnificationGesure)
+            .simultaneousGesture(magnificationGesture)
+            .frame(width: bodyLength, height: bodyLength)
            
         }
-    }
-    
-    @GestureState var magnifyBy: CGFloat?
-    private var magnificationGesure: some Gesture {
-        MagnificationGesture(minimumScaleDelta: 0.001)
-            .updating($magnifyBy) { currentState, gestureState, transaction in
-                print("currentState=\(currentState)")
-                gestureState = gestureState ?? 1.0
-            }
-            .onChanged { value in
-                print("value=\(value)")
-                let newLength = length + 5.0 * (value - 1.0)
-                if newLength < 10.0 {
-                    length = 10.0
-                } else if newLength > 200.0 {
-                    length = 200.0
-                } else {
-                    length = newLength
-                }
-                
-            }
-    }
-    
-    @GestureState private var startLocation: CGPoint? = nil
-    private var dragGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                var newLocation = startLocation ?? location
-                newLocation.x += value.translation.width
-                newLocation.y += value.translation.height
-                self.location = newLocation
-            }
-            .updating($startLocation) { value, startLocation, transaction in
-                startLocation = startLocation ?? location
-            }
     }
     
     private var rect: some View {
         return Rectangle()
             .strokeBorder(Color.white, lineWidth: 2.0)
             .frame(width: length, height: length)
-            
     }
+    
+    
 }
 
