@@ -25,6 +25,9 @@ struct MandelbrotView: View {
             let bodyLength = geometry.size.width < geometry.size.height ? geometry.size.width : geometry.size.height
             
             let dragGesture = DragGesture()
+                .updating($startLocation) { value, startLocation, transaction in
+                    startLocation = startLocation ?? location
+                }
                 .onChanged { value in
                     var newLocation = startLocation ?? location
                     newLocation.x += value.translation.width
@@ -45,17 +48,13 @@ struct MandelbrotView: View {
                     if newLocation.y + 0.5 * length > geometry.size.height {
                         newLocation.y = geometry.size.height - 0.5 * length
                     }
-                    
-                    print("newLocation=\(newLocation)")
-                    
+
                     location = newLocation
-                    
+                }
+                .onEnded { _ in
                     viewModel.updateRange(origin: location, length: length, originalLength: bodyLength, defaultMandelbrotEntity: entity)
                 }
-                .updating($startLocation) { value, startLocation, transaction in
-                    startLocation = startLocation ?? location
-                }
-            
+                
             let magnificationGesture = MagnificationGesture(minimumScaleDelta: 0.001)
                 .updating($magnifyBy) { currentState, gestureState, transaction in
                     gestureState = gestureState ?? 1.0
@@ -83,9 +82,8 @@ struct MandelbrotView: View {
                     if location.y + 0.5 * length > geometry.size.height {
                         length = 2.0 * (geometry.size.height - location.y)
                     }
-                    
-                    print("length=\(length)")
-                    
+                }
+                .onEnded { _ in
                     viewModel.updateRange(origin: location, length: length, originalLength: bodyLength, defaultMandelbrotEntity: entity)
                 }
             
@@ -102,6 +100,9 @@ struct MandelbrotView: View {
             .simultaneousGesture(magnificationGesture)
             .frame(width: bodyLength, height: bodyLength)
             .onAppear {
+                viewModel.updateRange(origin: location, length: length, originalLength: bodyLength, defaultMandelbrotEntity: entity)
+            }
+            .onChange(of: bodyLength) { newValue in
                 viewModel.updateRange(origin: location, length: length, originalLength: bodyLength, defaultMandelbrotEntity: entity)
             }
            
