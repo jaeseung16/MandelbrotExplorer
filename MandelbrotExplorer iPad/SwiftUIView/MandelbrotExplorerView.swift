@@ -31,37 +31,40 @@ struct MandelbrotExplorerView: View {
                     }
                 }
                 
-                Spacer()
-                
-                Button {
-                    viewModel.generateMandelbrotSet(calculationSize: bodyLength)
-                } label: {
-                    Label("Refresh", systemImage: "arrow.clockwise.circle")
-                }
-
                 infoView()
                 
-                Spacer()
-                
-                HStack {
-                    Picker("Color Map", selection: $viewModel.colorMap) {
-                        ForEach(MandelbrotExplorerColorMap.allCases) { colorMap in
-                            Text(colorMap.rawValue)
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("Color Map")
+                            .font(.callout)
+                        Picker("Color Map", selection: $viewModel.colorMap) {
+                            ForEach(MandelbrotExplorerColorMap.allCases) { colorMap in
+                                Text(colorMap.rawValue)
+                                    .font(.title3)
+                            }
+                        }
+                        .onChange(of: viewModel.colorMap) { _ in
+                            viewModel.generateMandelbrotSet(calculationSize: bodyLength)
                         }
                     }
-                    .pickerStyle(.wheel)
                     
-                    Picker("Maximum Iteration", selection: $viewModel.maxIter) {
-                        ForEach(MaxIter.allCases) { maxIter in
-                            Text("\(maxIter.rawValue)")
+                    HStack {
+                        Text("Maximum Iteration")
+                            .font(.callout)
+                        Picker("Maximum Iteration", selection: $viewModel.maxIter) {
+                            ForEach(MaxIter.allCases) { maxIter in
+                                Text("\(maxIter.rawValue)")
+                                    .font(.title3)
+                            }
+                        }
+                        .onChange(of: viewModel.maxIter) { _ in
+                            viewModel.generateMandelbrotSet(calculationSize: bodyLength)
                         }
                     }
-                    .pickerStyle(.wheel)
                     
                 }
-                
+
                 Spacer()
-                
             }
             .padding()
             .toolbar {

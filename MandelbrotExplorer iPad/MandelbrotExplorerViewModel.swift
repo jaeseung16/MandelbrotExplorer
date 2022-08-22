@@ -59,7 +59,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         
         let timeToPrepare = Date()
         
-        mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(inZs: zs, inMaxIter: maxIter.rawValue, inColorMap: ColorMapFactory.getColorMap(.jet, length: 256).colorMapInSIMD4)
+        mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(inZs: zs, inMaxIter: maxIter.rawValue, inColorMap: ColorMapFactory.getColorMap(colorMap, length: 256).colorMapInSIMD4)
         mandelbrotSet?.calculate()
         
         let timeToCalculate = Date()
