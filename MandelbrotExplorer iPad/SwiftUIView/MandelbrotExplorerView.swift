@@ -69,7 +69,11 @@ struct MandelbrotExplorerView: View {
             .padding()
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Text("Save")
+                    Button {
+                        viewModel.createMandelbrotEntity(viewContext: viewContext)
+                    } label: {
+                        Label("Save", systemImage: "square.and.arrow.down")
+                    }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Label("Reset", systemImage: "square.and.arrow.up")

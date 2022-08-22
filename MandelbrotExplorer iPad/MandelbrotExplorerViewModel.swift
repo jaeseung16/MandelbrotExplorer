@@ -23,7 +23,6 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     @Published var maxIter: MaxIter = .twoHundred
     @Published var colorMap: MandelbrotExplorerColorMap = .green
     
-    
     override init() {
         super.init()
     }
@@ -101,6 +100,27 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
             mandelbrotImageGenerator.generateCGImage(values: mandelbrotSet.values, lengthOfRow: Int(sqrt(Double(mandelbrotSet.values.count))))
             
             self.mandelbrotImage = UIImage(cgImage: mandelbrotImageGenerator.cgImage)
+        }
+    }
+    
+    func createMandelbrotEntity(viewContext: NSManagedObjectContext) -> Void {
+        let mandelbrotEntity = MandelbrotEntity(context: viewContext)
+        mandelbrotEntity.minReal = mandelbrotRect.minReal
+        mandelbrotEntity.maxReal = mandelbrotRect.maxReal
+        mandelbrotEntity.minImaginary = mandelbrotRect.minImaginary
+        mandelbrotEntity.maxImaginary = mandelbrotRect.maxImaginary
+        mandelbrotEntity.colorMap = colorMap.rawValue
+        mandelbrotEntity.maxIter = Int32(maxIter.rawValue)
+        mandelbrotEntity.image = mandelbrotImage?.pngData()
+        
+        save(viewContext: viewContext)
+    }
+    
+    private func save(viewContext: NSManagedObjectContext) -> Void {
+        do {
+            try viewContext.save()
+        } catch {
+            logger.log("Error while saving data")
         }
     }
 }

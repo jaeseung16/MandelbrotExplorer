@@ -13,7 +13,7 @@ struct MandelbrotListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var viewModel: MandelbrotExplorerViewModel
     
-    @FetchRequest(entity: MandelbrotEntity.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \MandelbrotEntity.created, ascending: false)]) private var entities: FetchedResults<MandelbrotEntity>
+    @FetchRequest(entity: MandelbrotEntity.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \MandelbrotEntity.created, ascending: true)]) private var entities: FetchedResults<MandelbrotEntity>
     
     var body: some View {
         NavigationView {
