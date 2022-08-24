@@ -27,6 +27,7 @@ struct MandelbrotListView: View {
                         Text("N/A")
                     }
                 }
+                .onDelete(perform: deleteEntity)
             }
         }
     }
@@ -40,6 +41,15 @@ struct MandelbrotListView: View {
             }
             
             Text(entity.description)
+        }
+    }
+    
+    private func deleteEntity(offsets: IndexSet) {
+        if !offsets.contains(0) {
+            withAnimation {
+                viewModel.delete(offsets.map { entities[$0] }, viewContext: viewContext)
+                entity = entities[0]
+            }
         }
     }
 }

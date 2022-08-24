@@ -123,4 +123,10 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
             logger.log("Error while saving data")
         }
     }
+    
+    func delete(_ entities: [MandelbrotEntity], viewContext: NSManagedObjectContext) -> Void {
+        entities.forEach { viewContext.delete($0) }
+        save(viewContext: viewContext)
+    }
+    
 }
