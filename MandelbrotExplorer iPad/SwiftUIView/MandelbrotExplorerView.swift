@@ -19,17 +19,30 @@ struct MandelbrotExplorerView: View {
             let bodyLength = geometry.size.width < geometry.size.height ? 0.45 * geometry.size.width : 0.45 * geometry.size.height
             
             VStack {
+                Spacer()
+                
                 HStack {
+                    Spacer()
+                    
+                    ZoomedMandelbrotView(uiImage: $viewModel.mandelbrotImage)
+                        .frame(width: bodyLength, height: bodyLength)
+                        .onChange(of: viewModel.mandelbrotRect) { _ in
+                            viewModel.generateMandelbrotSet()
+                        }
+
+                    Spacer()
+                    
                     if let data = defaultEntity.image, let uiImage = UIImage(data: data) {
-                        Spacer()
-                        ZoomedMandelbrotView()
+                        MandelbrotView(uiImage: uiImage,
+                                       location: CGPoint(x: 0.5 * bodyLength, y: 0.5 * bodyLength),
+                                       length: bodyLength / viewModel.scale)
                             .frame(width: bodyLength, height: bodyLength)
-                        Spacer()
-                        MandelbrotView(entity: defaultEntity, uiImage: uiImage, location: CGPoint(x: 0.5 * bodyLength, y: 0.5 * bodyLength), length: bodyLength / viewModel.scale)
-                            .frame(width: bodyLength, height: bodyLength)
-                        Spacer()
                     }
+                    
+                    Spacer()
                 }
+                
+                Spacer()
                 
                 infoView()
                 
@@ -43,9 +56,6 @@ struct MandelbrotExplorerView: View {
                                     .font(.title3)
                             }
                         }
-                        .onChange(of: viewModel.colorMap) { _ in
-                            viewModel.generateMandelbrotSet(calculationSize: bodyLength)
-                        }
                     }
                     
                     HStack {
@@ -56,9 +66,6 @@ struct MandelbrotExplorerView: View {
                                 Text("\(maxIter.rawValue)")
                                     .font(.title3)
                             }
-                        }
-                        .onChange(of: viewModel.maxIter) { _ in
-                            viewModel.generateMandelbrotSet(calculationSize: bodyLength)
                         }
                     }
                     
@@ -123,6 +130,5 @@ struct MandelbrotExplorerView: View {
             }
         }
     }
-    
 }
 

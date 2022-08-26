@@ -14,27 +14,42 @@ struct MandelbrotDetailView: View {
     @EnvironmentObject var viewModel: MandelbrotExplorerViewModel
     
     let entity: MandelbrotEntity
+    let minReal: Double
+    let maxReal: Double
+    let minImaginary: Double
+    let maxImaginary: Double
+    let uiImage: UIImage
+    let maxIter: Int
+    let created: Date
+    
+    @State private var explore = false
     
     var body: some View {
         ZStack {
             VStack {
-                Text("\(entity.maxImaginary)")
+                NavigationLink(isActive: $explore) {
+                    MandelbrotExplorerView(defaultEntity: entity)
+                } label: {
+                    Label("Explore", systemImage: "magnifyingglass")
+                }
+                
+                Spacer()
+                
+                Text("\(maxImaginary)")
                 
                 HStack {
-                    Text("\(entity.minReal)")
+                    Text("\(minReal)")
                         .rotationEffect(Angle(degrees: -90.0))
                     
-                    if let data = entity.image, let uiImage = UIImage(data: data) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .scaledToFit()
-                    }
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
                     
-                    Text("\(entity.maxReal)")
+                    Text("\(maxReal)")
                         .rotationEffect(Angle(degrees: -90.0))
                 }
                 
-                Text("\(entity.minImaginary)")
+                Text("\(minImaginary)")
                 
                 Spacer()
             }
@@ -44,33 +59,31 @@ struct MandelbrotDetailView: View {
                 
                 HStack {
                     Spacer()
-                    Text("max iteration: \(entity.maxIter)")
+                    Text("max iteration: \(maxIter)")
                 }
                 
                 HStack {
                     Spacer()
                     
-                    if let created = entity.created {
-                        Text("created on ") + Text(created, format: Date.FormatStyle(date: .numeric, time: .omitted))
-                    } else {
-                        Text("")
-                    }
+                    Text("created on ") + Text(created, format: Date.FormatStyle(date: .numeric, time: .omitted))
                 }
             }
         }
         .padding()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink {
-                    MandelbrotExplorerView(defaultEntity: entity)
+                Button {
+                    explore.toggle()
                 } label: {
                     Label("Explore", systemImage: "magnifyingglass")
                 }
-
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Label("Share", systemImage: "square.and.arrow.up")
             }
+        }
+        .onAppear {
+            viewModel.defaultMandelbrotEntity = entity
         }
     }
     

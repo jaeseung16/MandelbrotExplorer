@@ -12,7 +12,6 @@ struct MandelbrotView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var viewModel: MandelbrotExplorerViewModel
     
-    let entity: MandelbrotEntity
     let uiImage: UIImage
     @State var location: CGPoint
     @State var length: CGFloat
@@ -52,7 +51,7 @@ struct MandelbrotView: View {
                     location = newLocation
                 }
                 .onEnded { _ in
-                    viewModel.updateRange(origin: location, length: length, originalLength: bodyLength, defaultMandelbrotEntity: entity)
+                    viewModel.updateRange(origin: location, length: length, originalLength: bodyLength)
                 }
                 
             let magnificationGesture = MagnificationGesture(minimumScaleDelta: 0.001)
@@ -84,7 +83,7 @@ struct MandelbrotView: View {
                     }
                 }
                 .onEnded { _ in
-                    viewModel.updateRange(origin: location, length: length, originalLength: bodyLength, defaultMandelbrotEntity: entity)
+                    viewModel.updateRange(origin: location, length: length, originalLength: bodyLength)
                 }
             
             ZStack {
@@ -99,13 +98,12 @@ struct MandelbrotView: View {
             .gesture(dragGesture)
             .simultaneousGesture(magnificationGesture)
             .frame(width: bodyLength, height: bodyLength)
-            .onAppear {
-                viewModel.updateRange(origin: location, length: length, originalLength: bodyLength, defaultMandelbrotEntity: entity)
+            .onChange(of: viewModel.colorMap) { _ in
+                viewModel.generateMandelbrotSet()
             }
-            .onChange(of: bodyLength) { newValue in
-                viewModel.updateRange(origin: location, length: length, originalLength: bodyLength, defaultMandelbrotEntity: entity)
+            .onChange(of: viewModel.maxIter) { _ in
+                viewModel.generateMandelbrotSet()
             }
-           
         }
     }
     

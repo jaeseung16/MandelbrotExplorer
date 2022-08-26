@@ -23,11 +23,35 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     @Published var maxIter: MaxIter = .twoHundred
     @Published var colorMap: MandelbrotExplorerColorMap = .green
     
+    var defaultMandelbrotEntity: MandelbrotEntity? {
+        didSet {
+            guard let entity = defaultMandelbrotEntity else {
+                return
+            }
+            
+            logger.log("defaultMandelbrotEntity didSet")
+            
+            let minX = entity.minReal + (0.5  - 0.5 / scale) * (entity.maxReal - entity.minReal)
+            let maxX = entity.minReal + (0.5  + 0.5 / scale) * (entity.maxReal - entity.minReal)
+            
+            let minY = entity.maxImaginary - (0.5 - 0.5 / scale) * (entity.maxImaginary - entity.minImaginary)
+            let maxY = entity.maxImaginary - (0.5 + 0.5 / scale) * (entity.maxImaginary - entity.minImaginary)
+            
+            mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
+            generateMandelbrotSet()
+        }
+    }
+    
     override init() {
         super.init()
     }
     
-    func updateRange(origin: CGPoint, length: CGFloat, originalLength: CGFloat, defaultMandelbrotEntity: MandelbrotEntity) -> Void {
+    func updateRange(origin: CGPoint, length: CGFloat, originalLength: CGFloat) -> Void {
+        guard let defaultMandelbrotEntity = defaultMandelbrotEntity else {
+            logger.log("defaultMandelbrotEntity=\(String(describing: self.defaultMandelbrotEntity))")
+            return
+        }
+
         self.scale = originalLength / length
         
         let minX = defaultMandelbrotEntity.minReal + (origin.x - 0.5 * length) / originalLength * (defaultMandelbrotEntity.maxReal - defaultMandelbrotEntity.minReal)
@@ -37,12 +61,12 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         let maxY = defaultMandelbrotEntity.maxImaginary - (origin.y + 0.5 * length) / originalLength * (defaultMandelbrotEntity.maxImaginary - defaultMandelbrotEntity.minImaginary)
         
         mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
-        
     }
     
     private var mandelbrotSet: MandelbrotSet?
     private var zs = [Complex<Double>]()
-    func generateMandelbrotSet(calculationSize: CGFloat) -> Void {
+    func generateMandelbrotSet() -> Void {
+        let calculationSize = 512
         logger.log("MandelbrotDisplay.generateMandelbrotSet() called for mandelbrotRect=\(self.mandelbrotRect), maxIter = \(self.maxIter.rawValue), calculationSize=\(calculationSize)")
         
         let startTime = Date()
@@ -101,6 +125,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
             
             self.mandelbrotImage = UIImage(cgImage: mandelbrotImageGenerator.cgImage)
         }
+        logger.log("mandelbrotImage=\(String(describing: self.mandelbrotImage))")
     }
     
     func createMandelbrotEntity(viewContext: NSManagedObjectContext) -> Void {

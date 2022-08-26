@@ -19,8 +19,15 @@ struct MandelbrotListView: View {
         NavigationView {
             List {
                 ForEach(entities, id: \.created) { entity in
-                    if let _ = entity.created {
-                        NavigationLink(destination: MandelbrotDetailView(entity: entity)) {
+                    if let created = entity.created, let data = entity.image, let uiImage = UIImage(data: data) {
+                        NavigationLink(destination: MandelbrotDetailView(entity: entity,
+                                                                         minReal: entity.minReal,
+                                                                         maxReal: entity.maxReal,
+                                                                         minImaginary: entity.minImaginary,
+                                                                         maxImaginary: entity.maxImaginary,
+                                                                         uiImage: uiImage,
+                                                                         maxIter: Int(entity.maxIter),
+                                                                         created: created)) {
                             itemView(entity: entity)
                         }
                     } else {
@@ -48,7 +55,6 @@ struct MandelbrotListView: View {
         if !offsets.contains(0) {
             withAnimation {
                 viewModel.delete(offsets.map { entities[$0] }, viewContext: viewContext)
-                entity = entities[0]
             }
         }
     }
