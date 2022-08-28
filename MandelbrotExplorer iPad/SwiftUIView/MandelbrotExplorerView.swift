@@ -14,7 +14,7 @@ struct MandelbrotExplorerView: View {
     
     let defaultEntity: MandelbrotEntity
     
-    @State private var showConfirmationDialog = false
+    @State private var showAlert = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -70,9 +70,9 @@ struct MandelbrotExplorerView: View {
                 
                 Spacer()
             }
-            .confirmationDialog("Saved", isPresented: $showConfirmationDialog, actions: {
-                Button("Saved", role: .destructive) {
-                    showConfirmationDialog.toggle()
+            .alert("Saved", isPresented: $showAlert, actions: {
+                Button("Dismiss") {
+                    //
                 }
             })
             .frame(alignment:. center)
@@ -82,7 +82,7 @@ struct MandelbrotExplorerView: View {
                     Button {
                         viewModel.createMandelbrotEntity(viewContext: viewContext) { success in
                             if success {
-                                showConfirmationDialog.toggle()
+                                showAlert.toggle()
                             }
                         }
                     } label: {
