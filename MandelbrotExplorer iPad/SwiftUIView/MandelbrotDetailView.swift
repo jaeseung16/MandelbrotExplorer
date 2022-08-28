@@ -72,13 +72,6 @@ struct MandelbrotDetailView: View {
         .padding()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    explore.toggle()
-                } label: {
-                    Label("Explore", systemImage: "magnifyingglass")
-                }
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
                 Label("Share", systemImage: "square.and.arrow.up")
             }
         }
