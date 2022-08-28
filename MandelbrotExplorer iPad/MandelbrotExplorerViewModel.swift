@@ -23,6 +23,11 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     @Published var maxIter: MaxIter = .twoHundred
     @Published var colorMap: MandelbrotExplorerColorMap = .green
     
+    @Published var needToRefresh: Bool = false
+    @Published var refresh: Bool = false
+    
+    private var subscriptions: Set<AnyCancellable> = []
+    
     var defaultMandelbrotEntity: MandelbrotEntity? {
         didSet {
             guard let entity = defaultMandelbrotEntity else {
@@ -44,6 +49,12 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
+        
+        $needToRefresh
+            .throttle(for: 2.0, scheduler: RunLoop.main, latest: true)
+            .sink(receiveCompletion: { print("completion: \($0)") },
+                  receiveValue: { _ in self.refresh.toggle() })
+            .store(in: &subscriptions)
     }
     
     func updateRange(origin: CGPoint, length: CGFloat, originalLength: CGFloat) -> Void {

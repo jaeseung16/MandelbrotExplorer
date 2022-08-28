@@ -18,7 +18,7 @@ struct MandelbrotView: View {
     
     @GestureState private var startLocation: CGPoint? = nil
     @GestureState var magnifyBy: CGFloat?
-   
+    
     var body: some View {
         GeometryReader { geometry in
             let bodyLength = geometry.size.width < geometry.size.height ? geometry.size.width : geometry.size.height
@@ -103,6 +103,13 @@ struct MandelbrotView: View {
             }
             .onChange(of: viewModel.maxIter) { _ in
                 viewModel.generateMandelbrotSet()
+            }
+            .onChange(of: geometry.size) { _ in
+                viewModel.needToRefresh.toggle()
+            }
+            .onChange(of: viewModel.refresh) { _ in
+                let bodyLength = geometry.size.width < geometry.size.height ? geometry.size.width : geometry.size.height
+                viewModel.updateRange(origin: location, length: length, originalLength: bodyLength)
             }
         }
     }
