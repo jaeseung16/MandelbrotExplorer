@@ -21,58 +21,54 @@ struct MandelbrotExplorerView: View {
             VStack {
                 Spacer()
                 
-                HStack {
+                HStack(alignment: .top) {
                     Spacer()
                     
-                    ZoomedMandelbrotView(uiImage: $viewModel.mandelbrotImage)
-                        .frame(width: bodyLength, height: bodyLength)
-                        .onChange(of: viewModel.mandelbrotRect) { _ in
-                            viewModel.generateMandelbrotSet()
+                    VStack {
+                        ZoomedMandelbrotView(uiImage: $viewModel.mandelbrotImage)
+                            .scaledToFit()
+                            .onChange(of: viewModel.mandelbrotRect) { _ in
+                                viewModel.generateMandelbrotSet()
+                            }
+                            //.frame(width: bodyLength, height: bodyLength)
+                            
+                        Divider()
+                        
+                        MandelbrotInfoView(minReal: viewModel.mandelbrotRect.minReal,
+                                           maxReal: viewModel.mandelbrotRect.maxReal,
+                                           minImaginary: viewModel.mandelbrotRect.minImaginary,
+                                           maxImaginary: viewModel.mandelbrotRect.maxImaginary)
+                        
+                        Text("Scale: \(viewModel.scale)")
+                        
+                        optionView
+                    }
+                    
+                    Spacer()
+                    
+                    VStack {
+                        if let data = defaultEntity.image, let uiImage = UIImage(data: data) {
+                            MandelbrotView(uiImage: uiImage,
+                                           location: CGPoint(x: 0.5 * bodyLength, y: 0.5 * bodyLength),
+                                           length: bodyLength / viewModel.scale)
+                            .scaledToFit()
+                                //.frame(width: bodyLength, height: bodyLength)
                         }
-
-                    Spacer()
-                    
-                    if let data = defaultEntity.image, let uiImage = UIImage(data: data) {
-                        MandelbrotView(uiImage: uiImage,
-                                       location: CGPoint(x: 0.5 * bodyLength, y: 0.5 * bodyLength),
-                                       length: bodyLength / viewModel.scale)
-                            .frame(width: bodyLength, height: bodyLength)
+                        
+                        Divider()
+                        
+                        MandelbrotInfoView(minReal: defaultEntity.minReal,
+                                           maxReal: defaultEntity.maxReal,
+                                           minImaginary: defaultEntity.minImaginary,
+                                           maxImaginary: defaultEntity.maxImaginary)
                     }
                     
                     Spacer()
                 }
                 
-                Spacer()
-                
-                infoView()
-                
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("Color Map")
-                            .font(.callout)
-                        Picker("Color Map", selection: $viewModel.colorMap) {
-                            ForEach(MandelbrotExplorerColorMap.allCases) { colorMap in
-                                Text(colorMap.rawValue)
-                                    .font(.title3)
-                            }
-                        }
-                    }
-                    
-                    HStack {
-                        Text("Maximum Iteration")
-                            .font(.callout)
-                        Picker("Maximum Iteration", selection: $viewModel.maxIter) {
-                            ForEach(MaxIter.allCases) { maxIter in
-                                Text("\(maxIter.rawValue)")
-                                    .font(.title3)
-                            }
-                        }
-                    }
-                    
-                }
-
                 Spacer()
             }
+            .frame(alignment:. center)
             .padding()
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -89,43 +85,57 @@ struct MandelbrotExplorerView: View {
         }
     }
     
-    private func infoView() -> some View {
+    private var optionView: some View {
+        HStack {
+            Spacer()
+            
+            Text("Color Map")
+                .font(.callout)
+            Picker("Color Map", selection: $viewModel.colorMap) {
+                ForEach(MandelbrotExplorerColorMap.allCases) { colorMap in
+                    Text(colorMap.rawValue)
+                        .font(.title3)
+                }
+            }
+            
+            Spacer()
+            
+            Text("Maximum Iterations")
+                .font(.callout)
+            Picker("Maximum Iterations", selection: $viewModel.maxIter) {
+                ForEach(MaxIter.allCases) { maxIter in
+                    Text("\(maxIter.rawValue)")
+                        .font(.title3)
+                }
+            }
+            
+            Spacer()
+        }
+    }
+    
+    private var infoView: some View {
         VStack {
             HStack {
                 Spacer()
-                Text("Range")
+                
+                MandelbrotInfoView(minReal: viewModel.mandelbrotRect.minReal,
+                                   maxReal: viewModel.mandelbrotRect.maxReal,
+                                   minImaginary: viewModel.mandelbrotRect.minImaginary,
+                                   maxImaginary: viewModel.mandelbrotRect.maxImaginary)
+                
                 Spacer()
-                Text("Min")
-                Spacer()
-                Text("Max")
-                Spacer()
-            }
-            
-            HStack {
-                Spacer()
-                Text("Real")
-                Spacer()
-                Text("\(viewModel.mandelbrotRect.minReal)")
-                Spacer()
-                Text("\(viewModel.mandelbrotRect.maxReal)")
+                
+                MandelbrotInfoView(minReal: defaultEntity.minReal,
+                                   maxReal: defaultEntity.maxReal,
+                                   minImaginary: defaultEntity.minImaginary,
+                                   maxImaginary: defaultEntity.maxImaginary)
+                
                 Spacer()
             }
             
             HStack {
                 Spacer()
-                Text("Imaginary")
-                Spacer()
-                Text("\(viewModel.mandelbrotRect.minImaginary)")
-                Spacer()
-                Text("\(viewModel.mandelbrotRect.maxImaginary)")
-                Spacer()
-            }
-            
-            HStack {
-                Spacer()
-                Text("Scale")
-                Spacer()
-                Text("\(viewModel.scale)")
+                Text("Scale: \(viewModel.scale)")
                 Spacer()
             }
         }
