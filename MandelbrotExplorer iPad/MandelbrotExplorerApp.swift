@@ -9,33 +9,20 @@
 import SwiftUI
 import OSLog
 import CoreData
+import Persistence
 
 @main
 struct MandelbrotExplorerApp: App {
     private static let logger = Logger()
     
-    private var persistentContainer: NSPersistentContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-        */
-        let container = NSPersistentContainer(name: "MandelbrotExplorer_iPad")
-        container.loadPersistentStores { (storeDescription, error) in
-            if let error = error {
-                MandelbrotExplorerApp.logger.log("Failed to save: \(error.localizedDescription)")
-            }
-            MandelbrotExplorerApp.logger.log("storeDescription=\(storeDescription)")
-        }
-        return container
-    }()
-    
     var body: some Scene {
+        let persistence = Persistence(name: "MandelbrotExplorer_iPad", identifier: "", isCloud: false)
+        let viewModel = MandelbrotExplorerViewModel(persistence: persistence)
+        
         WindowGroup {
             MandelbrotListView()
-                .environment(\.managedObjectContext, persistentContainer.viewContext)
-                .environmentObject(MandelbrotExplorerViewModel())
+                .environment(\.managedObjectContext, persistence.container.viewContext)
+                .environmentObject(viewModel)
         }
     }
 }

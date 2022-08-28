@@ -12,6 +12,7 @@ import CoreData
 import os
 import ComplexModule
 import UIKit
+import Persistence
 
 class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     let logger = Logger()
@@ -47,7 +48,14 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         }
     }
     
-    override init() {
+    private let persistence: Persistence
+    private var persistenceContainer: NSPersistentContainer {
+        persistence.container
+    }
+    
+    init(persistence: Persistence) {
+        self.persistence = persistence
+        
         super.init()
         
         $needToRefresh
@@ -55,6 +63,8 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
             .sink(receiveCompletion: { print("completion: \($0)") },
                   receiveValue: { _ in self.refresh.toggle() })
             .store(in: &subscriptions)
+        
+        self.persistence.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
     
     func updateRange(origin: CGPoint, length: CGFloat, originalLength: CGFloat) -> Void {

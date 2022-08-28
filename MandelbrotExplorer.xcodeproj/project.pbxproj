@@ -69,6 +69,8 @@
 		90898F69252BE55C0084ACB4 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = 90898F68252BE55C0084ACB4 /* ComplexModule */; };
 		90898F70252BE56C0084ACB4 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = 90898F6F252BE56C0084ACB4 /* ComplexModule */; };
 		908BFCD228B19AF800E8E6C0 /* ZoomedMandelbrotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908BFCD128B19AF800E8E6C0 /* ZoomedMandelbrotView.swift */; };
+		908C0B2228BBFF2A004A8BDF /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = 908C0B2128BBFF2A004A8BDF /* Persistence */; };
+		908C0B2428BBFF7A004A8BDF /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = 908C0B2328BBFF7A004A8BDF /* Persistence */; };
 		908C7BC7252A74D2003D803B /* AppDelegateIPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908C7BC6252A74D2003D803B /* AppDelegateIPad.swift */; };
 		908C7BC9252A74D2003D803B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908C7BC8252A74D2003D803B /* SceneDelegate.swift */; };
 		908C7BCB252A74D2003D803B /* MandelbrotExplorerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908C7BCA252A74D2003D803B /* MandelbrotExplorerDetailViewController.swift */; };
@@ -198,6 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				908C0B2228BBFF2A004A8BDF /* Persistence in Frameworks */,
 				90898F69252BE55C0084ACB4 /* ComplexModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,6 +223,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				908C0B2428BBFF7A004A8BDF /* Persistence in Frameworks */,
 				90898F70252BE56C0084ACB4 /* ComplexModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,6 +432,7 @@
 			name = MandelbrotExplorer;
 			packageProductDependencies = (
 				90898F68252BE55C0084ACB4 /* ComplexModule */,
+				908C0B2128BBFF2A004A8BDF /* Persistence */,
 			);
 			productName = MandelbrotExplorer;
 			productReference = 905DA900247C16A300B9DA71 /* MandelbrotExplorer.app */;
@@ -484,6 +489,7 @@
 			name = "MandelbrotExplorer iPad";
 			packageProductDependencies = (
 				90898F6F252BE56C0084ACB4 /* ComplexModule */,
+				908C0B2328BBFF7A004A8BDF /* Persistence */,
 			);
 			productName = "MandelbrotExplorer iPad";
 			productReference = 908C7BC4252A74D2003D803B /* MandelbrotExplorer iPad.app */;
@@ -527,6 +533,7 @@
 			packageReferences = (
 				90898F67252BE55C0084ACB4 /* XCRemoteSwiftPackageReference "swift-numerics" */,
 				909217AF255845100058596D /* XCRemoteSwiftPackageReference "Swifter" */,
+				908C0B2028BBFF2A004A8BDF /* XCRemoteSwiftPackageReference "PersistenceSwift" */,
 			);
 			productRefGroup = 905DA901247C16A300B9DA71 /* Products */;
 			projectDirPath = "";
@@ -1089,6 +1096,14 @@
 				minimumVersion = 0.0.5;
 			};
 		};
+		908C0B2028BBFF2A004A8BDF /* XCRemoteSwiftPackageReference "PersistenceSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jaeseung16/PersistenceSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.3;
+			};
+		};
 		909217AF255845100058596D /* XCRemoteSwiftPackageReference "Swifter" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mattdonnelly/Swifter";
@@ -1109,6 +1124,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 90898F67252BE55C0084ACB4 /* XCRemoteSwiftPackageReference "swift-numerics" */;
 			productName = ComplexModule;
+		};
+		908C0B2128BBFF2A004A8BDF /* Persistence */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 908C0B2028BBFF2A004A8BDF /* XCRemoteSwiftPackageReference "PersistenceSwift" */;
+			productName = Persistence;
+		};
+		908C0B2328BBFF7A004A8BDF /* Persistence */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 908C0B2028BBFF2A004A8BDF /* XCRemoteSwiftPackageReference "PersistenceSwift" */;
+			productName = Persistence;
 		};
 /* End XCSwiftPackageProductDependency section */
 
