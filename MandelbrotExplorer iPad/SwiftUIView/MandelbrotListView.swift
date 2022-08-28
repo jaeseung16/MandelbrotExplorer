@@ -37,6 +37,11 @@ struct MandelbrotListView: View {
                 .onDelete(perform: deleteEntity)
             }
         }
+        .alert("Failed to save data", isPresented: $viewModel.showAlert) {
+            Button("Dismiss", role: .cancel) {
+                //
+            }
+        }
     }
     
     private func itemView(entity: MandelbrotEntity) -> some View {

@@ -14,6 +14,8 @@ struct MandelbrotExplorerView: View {
     
     let defaultEntity: MandelbrotEntity
     
+    @State private var showConfirmationDialog = false
+    
     var body: some View {
         GeometryReader { geometry in
             let bodyLength = geometry.size.width < geometry.size.height ? 0.45 * geometry.size.width : 0.45 * geometry.size.height
@@ -68,12 +70,21 @@ struct MandelbrotExplorerView: View {
                 
                 Spacer()
             }
+            .confirmationDialog("Saved", isPresented: $showConfirmationDialog, actions: {
+                Button("Saved", role: .destructive) {
+                    showConfirmationDialog.toggle()
+                }
+            })
             .frame(alignment:. center)
             .padding()
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        viewModel.createMandelbrotEntity(viewContext: viewContext)
+                        viewModel.createMandelbrotEntity(viewContext: viewContext) { success in
+                            if success {
+                                showConfirmationDialog.toggle()
+                            }
+                        }
                     } label: {
                         Label("Save", systemImage: "square.and.arrow.down")
                     }

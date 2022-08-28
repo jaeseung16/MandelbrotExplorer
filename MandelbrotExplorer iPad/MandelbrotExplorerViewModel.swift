@@ -26,6 +26,8 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
     @Published var needToRefresh: Bool = false
     @Published var refresh: Bool = false
+    @Published var toggle: Bool = false
+    @Published var showAlert: Bool = false
     
     private var subscriptions: Set<AnyCancellable> = []
     
@@ -149,7 +151,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         logger.log("mandelbrotImage=\(String(describing: self.mandelbrotImage))")
     }
     
-    func createMandelbrotEntity(viewContext: NSManagedObjectContext) -> Void {
+    func createMandelbrotEntity(viewContext: NSManagedObjectContext, completionHandler: ((Bool) -> Void)?) -> Void {
         let mandelbrotEntity = MandelbrotEntity(context: viewContext)
         mandelbrotEntity.minReal = mandelbrotRect.minReal
         mandelbrotEntity.maxReal = mandelbrotRect.maxReal
@@ -159,7 +161,30 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         mandelbrotEntity.maxIter = Int32(maxIter.rawValue)
         mandelbrotEntity.image = mandelbrotImage?.pngData()
         
-        save(viewContext: viewContext)
+        save(viewContext: viewContext, completionHandler: completionHandler)
+    }
+    
+    private func save(viewContext: NSManagedObjectContext, completionHandler: ((Bool) -> Void)?) -> Void {
+        persistence.save { result in
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async {
+                    self.toggle.toggle()
+                    if completionHandler != nil {
+                        completionHandler!(true)
+                    }
+                }
+            case .failure(let error):
+                self.logger.log("Error while saving data: \(error.localizedDescription, privacy: .public)")
+                self.logger.log("Error while saving data: \(Thread.callStackSymbols, privacy: .public)")
+                DispatchQueue.main.async {
+                    self.showAlert.toggle()
+                    if completionHandler != nil {
+                        completionHandler!(false)
+                    }
+                }
+            }
+        }
     }
     
     private func save(viewContext: NSManagedObjectContext) -> Void {
