@@ -29,8 +29,6 @@
 		903E91E2254E218700659377 /* MandelbrotExplorerColorMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903E91E1254E218700659377 /* MandelbrotExplorerColorMapTests.swift */; };
 		9042D2F3255CA3BD0002CEE0 /* MaxIter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042D2F2255CA3BD0002CEE0 /* MaxIter.swift */; };
 		9042D2F4255CA3BD0002CEE0 /* MaxIter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042D2F2255CA3BD0002CEE0 /* MaxIter.swift */; };
-		9042D2FF255CAF010002CEE0 /* MandelbrotShareUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042D2FD255CAF010002CEE0 /* MandelbrotShareUIView.swift */; };
-		9042D30D255CBC260002CEE0 /* MandelbrotShareUIView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9042D30B255CBC260002CEE0 /* MandelbrotShareUIView.xib */; };
 		90481D8724AFA7E300DDACF9 /* MandelbrotSetFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90481D8624AFA7E300DDACF9 /* MandelbrotSetFactory.swift */; };
 		90481D8D24AFBA8E00DDACF9 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 90481D8C24AFBA8E00DDACF9 /* README.md */; };
 		905C80D3252D2C94003B5954 /* MandelbrotViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B7FA824982AD20082B8F6 /* MandelbrotViewDelegate.swift */; };
@@ -60,7 +58,6 @@
 		908079D0254CDCC8006B461A /* Winter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079CF254CDCC8006B461A /* Winter.swift */; };
 		908079D1254CDCC8006B461A /* Winter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079CF254CDCC8006B461A /* Winter.swift */; };
 		9082CCF828BD4A5E00B7C70B /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9082CCF728BD4A5E00B7C70B /* ShareView.swift */; };
-		90898F3D252BDB660084ACB4 /* MandelbrotUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90898F3C252BDB660084ACB4 /* MandelbrotUIView.swift */; };
 		90898F42252BDC050084ACB4 /* ComplexRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5C247C4C3400A1A47F /* ComplexRect.swift */; };
 		90898F48252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90898F47252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift */; };
 		90898F4D252BDD380084ACB4 /* MandelbrotID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E9D36024A90F5900FCB3A4 /* MandelbrotID.swift */; };
@@ -129,8 +126,6 @@
 		903E91D5254E174B00659377 /* ColorMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMap.swift; sourceTree = "<group>"; };
 		903E91E1254E218700659377 /* MandelbrotExplorerColorMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerColorMapTests.swift; sourceTree = "<group>"; };
 		9042D2F2255CA3BD0002CEE0 /* MaxIter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxIter.swift; sourceTree = "<group>"; };
-		9042D2FD255CAF010002CEE0 /* MandelbrotShareUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotShareUIView.swift; sourceTree = "<group>"; };
-		9042D30B255CBC260002CEE0 /* MandelbrotShareUIView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MandelbrotShareUIView.xib; sourceTree = "<group>"; };
 		90481D8624AFA7E300DDACF9 /* MandelbrotSetFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotSetFactory.swift; sourceTree = "<group>"; };
 		90481D8C24AFBA8E00DDACF9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		905DA900247C16A300B9DA71 /* MandelbrotExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandelbrotExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,7 +153,6 @@
 		908079C8254CDCBF006B461A /* Autumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autumn.swift; sourceTree = "<group>"; };
 		908079CF254CDCC8006B461A /* Winter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Winter.swift; sourceTree = "<group>"; };
 		9082CCF728BD4A5E00B7C70B /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
-		90898F3C252BDB660084ACB4 /* MandelbrotUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotUIView.swift; sourceTree = "<group>"; };
 		90898F47252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotDisplayIPad.swift; sourceTree = "<group>"; };
 		908BFCD128B19AF800E8E6C0 /* ZoomedMandelbrotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomedMandelbrotView.swift; sourceTree = "<group>"; };
 		908C0B2528BC22D4004A8BDF /* ShareActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareActivityView.swift; sourceTree = "<group>"; };
@@ -375,11 +369,8 @@
 				908C7BD2252A74D4003D803B /* Assets.xcassets */,
 				908C7BD7252A74D4003D803B /* Info.plist */,
 				908C7BCF252A74D2003D803B /* MandelbrotExplorer_iPad.xcdatamodeld */,
-				90898F3C252BDB660084ACB4 /* MandelbrotUIView.swift */,
 				90898F47252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift */,
 				90CA90692548DBED001EA6F5 /* MandelbrotEntity+Extension.swift */,
-				9042D2FD255CAF010002CEE0 /* MandelbrotShareUIView.swift */,
-				9042D30B255CBC260002CEE0 /* MandelbrotShareUIView.xib */,
 			);
 			path = "MandelbrotExplorer iPad";
 			sourceTree = "<group>";
@@ -387,13 +378,13 @@
 		908D79A928A85EB800445DFC /* SwiftUIView */ = {
 			isa = PBXGroup;
 			children = (
-				908C0B2528BC22D4004A8BDF /* ShareActivityView.swift */,
 				908D79AA28A85EEC00445DFC /* MandelbrotDetailView.swift */,
+				90A5BCB228BACE5C0007F3F4 /* MandelbrotInfoView.swift */,
 				908D79AC28A860DA00445DFC /* MandelbrotListView.swift */,
 				90AA8A7428AD84DD00CBDDE9 /* MandelbrotExplorerView.swift */,
 				90AA8A7628AD9E1100CBDDE9 /* MandelbrotView.swift */,
 				908BFCD128B19AF800E8E6C0 /* ZoomedMandelbrotView.swift */,
-				90A5BCB228BACE5C0007F3F4 /* MandelbrotInfoView.swift */,
+				908C0B2528BC22D4004A8BDF /* ShareActivityView.swift */,
 				9082CCF728BD4A5E00B7C70B /* ShareView.swift */,
 			);
 			path = SwiftUIView;
@@ -562,7 +553,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				908C7BD3252A74D4003D803B /* Assets.xcassets in Resources */,
-				9042D30D255CBC260002CEE0 /* MandelbrotShareUIView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,9 +620,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90898F3D252BDB660084ACB4 /* MandelbrotUIView.swift in Sources */,
 				9042D2F4255CA3BD0002CEE0 /* MaxIter.swift in Sources */,
-				9042D2FF255CAF010002CEE0 /* MandelbrotShareUIView.swift in Sources */,
 				90898F48252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift in Sources */,
 				90AA8A7528AD84DD00CBDDE9 /* MandelbrotExplorerView.swift in Sources */,
 				908C7BC7252A74D2003D803B /* AppDelegateIPad.swift in Sources */,
