@@ -12,16 +12,12 @@ struct ShareActivityView: UIViewControllerRepresentable {
     let image: UIImage
     let applicationActivities: [UIActivity]?
     
-    @Binding var failedToRemoveItem: Bool
-    
     func makeUIViewController(context: Context) -> UIActivityViewController {
-        print("image=\(image)")
         let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: applicationActivities)
 
         activityViewController.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList,
                                                         UIActivity.ActivityType.assignToContact,
-                                                        UIActivity.ActivityType.openInIBooks,
-                                                        UIActivity.ActivityType.saveToCameraRoll]
+                                                        UIActivity.ActivityType.openInIBooks]
         
         return activityViewController
     }

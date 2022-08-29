@@ -24,27 +24,22 @@ struct MandelbrotDetailView: View {
     
     @State private var explore = false
     @State private var presentShareSheet = false
-    @State private var showAlert = false
     
     var body: some View {
-        ZStack {
-            VStack {
-                NavigationLink(isActive: $explore) {
-                    MandelbrotExplorerView(defaultEntity: entity)
-                } label: {
-                    Label("Explore", systemImage: "magnifyingglass")
-                }
-                
-                Spacer()
-                
-                detailView
-                
-                Spacer()
+        VStack {
+            NavigationLink(isActive: $explore) {
+                MandelbrotExplorerView(defaultEntity: entity)
+            } label: {
+                Label("Explore", systemImage: "magnifyingglass")
             }
-            VStack(alignment: .trailing) {
-                Spacer()
-                summaryView
-            }
+            
+            Spacer()
+            
+            detailView
+            
+            summaryView
+            
+            Spacer()
         }
         .padding()
         .toolbar {
@@ -57,7 +52,6 @@ struct MandelbrotDetailView: View {
                                               maxIter: maxIter,
                                               created: created,
                                               uiImage: uiImage)
-                    //print("viewToShare=\(viewToShare)")
                     viewModel.generateImage(from: shareView)
                     presentShareSheet.toggle()
                 } label: {
@@ -69,26 +63,15 @@ struct MandelbrotDetailView: View {
             viewModel.defaultMandelbrotEntity = entity
         }
         .sheet(isPresented: $presentShareSheet) {
-            //print("imageToShare=\(viewModel.imageToShare)")
-            
-            ZStack {
-                if let imageToShare = viewModel.imageToShare {
-                    ShareActivityView(image: imageToShare, applicationActivities: nil, failedToRemoveItem: $showAlert)
-                }
-                
+            if let imageToShare = viewModel.imageToShare {
+                ShareActivityView(image: imageToShare, applicationActivities: nil)
+            } else {
                 Button {
                     presentShareSheet.toggle()
                 } label: {
-                    Text("Dismiss")
+                    Text("The image is not ready. Try again.")
                 }
-
             }
-            
-            //let snapshot = shareView.snapshot()
-            //ShareActivityView(image: generateImage(), applicationActivities: nil, failedToRemoveItem: $showAlert)
-        }
-        .alert("Failed to share", isPresented: $showAlert) {
-            //
         }
         
     }

@@ -19,7 +19,6 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     let logger = Logger()
     
     @Published var mandelbrotRect = ComplexRect(Complex<Double>(-2.1, -1.5), Complex<Double>(0.9, 1.5))
-    //@Published var range: CGRect
     @Published var scale = CGFloat(10.0)
     
     @Published var maxIter: MaxIter = .twoHundred
@@ -29,6 +28,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     @Published var refresh: Bool = false
     @Published var toggle: Bool = false
     @Published var showAlert: Bool = false
+    @Published var imageToShare: UIImage?
     
     private var subscriptions: Set<AnyCancellable> = []
     
@@ -203,20 +203,20 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
     public func generateImage(from viewToShare: ShareView) {
         let controller = UIHostingController(rootView: viewToShare)
-        let view = controller.view
         
-        let targetSize = controller.view.intrinsicContentSize
-        view?.bounds = CGRect(origin: .zero, size: targetSize)
-        view?.backgroundColor = .clear
-        
-        
-        let renderer = UIGraphicsImageRenderer(size: targetSize)
-        let renderedImage = renderer.image { ctx in
-            view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
+        if let view = controller.view {
+            let targetSize = view.intrinsicContentSize
+            
+            view.bounds = CGRect(origin: .zero, size: targetSize)
+            view.backgroundColor = .clear
+            
+            let renderer = UIGraphicsImageRenderer(size: targetSize)
+            let renderedImage = renderer.image { _ in
+                view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+            }
+            
+            imageToShare = renderedImage
         }
-        
-        imageToShare = renderedImage
     }
     
-    @Published var imageToShare: UIImage?
 }

@@ -18,41 +18,56 @@ struct ShareView: View {
     let created: Date
     let uiImage: UIImage
     
+    private let fontColor = Color.white
+    private let backgroundColor = Color.black
+    
     var body: some View {
-        VStack {
-            Text("\(maxImaginary)")
-                .font(.caption)
-                .foregroundColor(.black)
-            
-            HStack {
-                Text("\(minReal)")
-                    .font(.caption)
-                    .foregroundColor(.black)
-                    .rotationEffect(Angle(degrees: -90.0))
-                
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFit()
-                
-                Text("\(maxReal)")
-                    .font(.caption)
-                    .foregroundColor(.black)
-                    .rotationEffect(Angle(degrees: -90.0))
-            }
-            
-            Text("\(minImaginary)")
-                .font(.caption)
-                .foregroundColor(.black)
+        VStack(spacing: 0.0) {
+            detailView
+                .scaledToFill()
             
             HStack {
                 Spacer()
                 Text("max iteration: \(maxIter)\ncreated on ") + Text(created, format: Date.FormatStyle(date: .numeric, time: .omitted))
             }
             .font(.caption)
-            .foregroundColor(.black)
+            .foregroundColor(fontColor)
+            .padding()
         }
-        .background(Color.white)
-        .frame(width: 400, height: 400)
+        .background(backgroundColor)
+    }
+    
+    private var detailView: some View {
+        VStack {
+            Text("\(maxImaginary)")
+                .font(.caption)
+                .foregroundColor(fontColor)
+                .offset(x: 0.0, y: 10.0)
+            
+            HStack {
+                Text("\(minReal)")
+                    .font(.caption)
+                    .foregroundColor(fontColor)
+                    .rotationEffect(Angle(degrees: -90.0))
+                    .offset(x: 30.0, y: 0.0)
+                
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+                    .border(Color.white, width: 1.0)
+                
+                Text("\(maxReal)")
+                    .font(.caption)
+                    .foregroundColor(fontColor)
+                    .rotationEffect(Angle(degrees: -90.0))
+                    .offset(x: -30.0, y: 0.0)
+            }
+            
+            Text("\(minImaginary)")
+                .font(.caption)
+                .foregroundColor(fontColor)
+                .offset(x: 0.0, y: -5.0)
+        }
     }
 }
 
