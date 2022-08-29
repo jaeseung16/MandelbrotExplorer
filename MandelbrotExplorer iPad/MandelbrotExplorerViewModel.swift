@@ -13,6 +13,7 @@ import os
 import ComplexModule
 import UIKit
 import Persistence
+import SwiftUI
 
 class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     let logger = Logger()
@@ -200,4 +201,22 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         save(viewContext: viewContext)
     }
     
+    public func generateImage(from viewToShare: ShareView) {
+        let controller = UIHostingController(rootView: viewToShare)
+        let view = controller.view
+        
+        let targetSize = controller.view.intrinsicContentSize
+        view?.bounds = CGRect(origin: .zero, size: targetSize)
+        view?.backgroundColor = .clear
+        
+        
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+        let renderedImage = renderer.image { ctx in
+            view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
+        }
+        
+        imageToShare = renderedImage
+    }
+    
+    @Published var imageToShare: UIImage?
 }

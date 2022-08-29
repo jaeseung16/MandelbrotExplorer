@@ -23,6 +23,8 @@ struct MandelbrotDetailView: View {
     let created: Date
     
     @State private var explore = false
+    @State private var presentShareSheet = false
+    @State private var showAlert = false
     
     var body: some View {
         ZStack {
@@ -35,50 +37,135 @@ struct MandelbrotDetailView: View {
                 
                 Spacer()
                 
-                Text("\(maxImaginary)")
-                
-                HStack {
-                    Text("\(minReal)")
-                        .rotationEffect(Angle(degrees: -90.0))
-                    
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .scaledToFit()
-                    
-                    Text("\(maxReal)")
-                        .rotationEffect(Angle(degrees: -90.0))
-                }
-                
-                Text("\(minImaginary)")
+                detailView
                 
                 Spacer()
             }
-            
             VStack(alignment: .trailing) {
                 Spacer()
-                
-                HStack {
-                    Spacer()
-                    Text("max iteration: \(maxIter)")
-                }
-                
-                HStack {
-                    Spacer()
-                    
-                    Text("created on ") + Text(created, format: Date.FormatStyle(date: .numeric, time: .omitted))
-                }
+                summaryView
             }
         }
         .padding()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Label("Share", systemImage: "square.and.arrow.up")
+                Button {
+                    let shareView = ShareView(minReal: minReal,
+                                              maxReal: maxReal,
+                                              minImaginary: minImaginary,
+                                              maxImaginary: maxImaginary,
+                                              maxIter: maxIter,
+                                              created: created,
+                                              uiImage: uiImage)
+                    //print("viewToShare=\(viewToShare)")
+                    viewModel.generateImage(from: shareView)
+                    presentShareSheet.toggle()
+                } label: {
+                    Label("Share", systemImage: "square.and.arrow.up")
+                }
             }
         }
         .onAppear {
             viewModel.defaultMandelbrotEntity = entity
         }
+        .sheet(isPresented: $presentShareSheet) {
+            //print("imageToShare=\(viewModel.imageToShare)")
+            
+            ZStack {
+                if let imageToShare = viewModel.imageToShare {
+                    ShareActivityView(image: imageToShare, applicationActivities: nil, failedToRemoveItem: $showAlert)
+                }
+                
+                Button {
+                    presentShareSheet.toggle()
+                } label: {
+                    Text("Dismiss")
+                }
+
+            }
+            
+            //let snapshot = shareView.snapshot()
+            //ShareActivityView(image: generateImage(), applicationActivities: nil, failedToRemoveItem: $showAlert)
+        }
+        .alert("Failed to share", isPresented: $showAlert) {
+            //
+        }
+        
+    }
+    
+    private var detailView: some View {
+        VStack {
+            Text("\(maxImaginary)")
+            
+            HStack {
+                Text("\(minReal)")
+                    .rotationEffect(Angle(degrees: -90.0))
+                
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+                
+                Text("\(maxReal)")
+                    .rotationEffect(Angle(degrees: -90.0))
+            }
+            
+            Text("\(minImaginary)")
+        }
+    }
+    
+    private var summaryView: some View {
+        HStack {
+            Spacer()
+            Text("max iteration: \(maxIter)\ncreated on ") + Text(created, format: Date.FormatStyle(date: .numeric, time: .omitted))
+        }
+    }
+    
+    private var shareView: some View {
+        VStack {
+            detailView
+            summaryView
+        }
+        .frame(width: 500, height: 500)
+    }
+    
+    private func generateImage() -> UIImage {
+        let controller = UIHostingController(rootView: shareView)
+        let view = controller.view
+        
+        let targetSize = controller.view.intrinsicContentSize
+        view?.bounds = CGRect(origin: .zero, size: targetSize)
+        view?.backgroundColor = .clear
+        
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        
+        let renderer = UIGraphicsImageRenderer(size: targetSize, format: format)
+        let renderedImage = renderer.image { ctx in
+            view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
+        }
+        return renderedImage
     }
     
 }
 
+extension View {
+    func snapshot() -> UIImage {
+        var uiImage = UIImage(systemName: "exclamationmark.triangle.fill")!
+        
+        let controller = UIHostingController(rootView: self)
+        
+        if let view = controller.view {
+            let contentSize = controller.view.intrinsicContentSize
+            view.bounds = CGRect(origin: .zero, size: contentSize)
+            view.backgroundColor = .clear
+            
+            let renderer = UIGraphicsImageRenderer(size: contentSize)
+            
+            uiImage = renderer.image { _ in
+                view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+            }
+        }
+        
+        return uiImage
+    }
+}
