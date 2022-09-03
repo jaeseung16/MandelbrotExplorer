@@ -21,5 +21,18 @@ class MandelbrotSetFactory {
         }
         return mandelbrotSet
     }
+    
+    static func createMandelbrotSet(with device: MandelbrotSetGeneratingDevice, inZs: [Complex<Double>], inMaxIter: Int, inColorMap: [SIMD4<Float>]) -> MandelbrotSet {
+        let mandelbrotSet: MandelbrotSet
+        switch device {
+        case .cpu:
+            mandelbrotSet = MandelbrotSetCPU(inZs: inZs, inMaxIter: inMaxIter, inColorMap: inColorMap)
+        case .gpu:
+            mandelbrotSet = MandelbrotSetGPU(inZs: inZs, inMaxIter: inMaxIter, inColorMap: inColorMap)
+        case .unknown:
+            mandelbrotSet = MandelbrotSetCPU(inZs: inZs, inMaxIter: inMaxIter, inColorMap: inColorMap)
+        }
+        return mandelbrotSet
+    }
 }
 

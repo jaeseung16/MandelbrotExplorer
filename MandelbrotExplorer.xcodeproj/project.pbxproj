@@ -58,6 +58,7 @@
 		908079D0254CDCC8006B461A /* Winter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079CF254CDCC8006B461A /* Winter.swift */; };
 		908079D1254CDCC8006B461A /* Winter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079CF254CDCC8006B461A /* Winter.swift */; };
 		9082CCF828BD4A5E00B7C70B /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9082CCF728BD4A5E00B7C70B /* ShareView.swift */; };
+		9089052728C3EF5D00C7941C /* MandelbrotExplorerPrepartionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9089052628C3EF5D00C7941C /* MandelbrotExplorerPrepartionView.swift */; };
 		90898F42252BDC050084ACB4 /* ComplexRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5C247C4C3400A1A47F /* ComplexRect.swift */; };
 		90898F48252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90898F47252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift */; };
 		90898F4D252BDD380084ACB4 /* MandelbrotID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E9D36024A90F5900FCB3A4 /* MandelbrotID.swift */; };
@@ -65,6 +66,8 @@
 		90898F62252BDF2E0084ACB4 /* MandelbrotSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905DA92F247C16D800B9DA71 /* MandelbrotSet.swift */; };
 		90898F69252BE55C0084ACB4 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = 90898F68252BE55C0084ACB4 /* ComplexModule */; };
 		90898F70252BE56C0084ACB4 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = 90898F6F252BE56C0084ACB4 /* ComplexModule */; };
+		9089E4B228C01577000A921B /* MandelbrotSetGeneratingDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9089E4B128C01577000A921B /* MandelbrotSetGeneratingDevice.swift */; };
+		9089E4B328C01577000A921B /* MandelbrotSetGeneratingDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9089E4B128C01577000A921B /* MandelbrotSetGeneratingDevice.swift */; };
 		908BFCD228B19AF800E8E6C0 /* ZoomedMandelbrotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908BFCD128B19AF800E8E6C0 /* ZoomedMandelbrotView.swift */; };
 		908C0B2228BBFF2A004A8BDF /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = 908C0B2128BBFF2A004A8BDF /* Persistence */; };
 		908C0B2428BBFF7A004A8BDF /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = 908C0B2328BBFF7A004A8BDF /* Persistence */; };
@@ -153,7 +156,9 @@
 		908079C8254CDCBF006B461A /* Autumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autumn.swift; sourceTree = "<group>"; };
 		908079CF254CDCC8006B461A /* Winter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Winter.swift; sourceTree = "<group>"; };
 		9082CCF728BD4A5E00B7C70B /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
+		9089052628C3EF5D00C7941C /* MandelbrotExplorerPrepartionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerPrepartionView.swift; sourceTree = "<group>"; };
 		90898F47252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotDisplayIPad.swift; sourceTree = "<group>"; };
+		9089E4B128C01577000A921B /* MandelbrotSetGeneratingDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotSetGeneratingDevice.swift; sourceTree = "<group>"; };
 		908BFCD128B19AF800E8E6C0 /* ZoomedMandelbrotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomedMandelbrotView.swift; sourceTree = "<group>"; };
 		908C0B2528BC22D4004A8BDF /* ShareActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareActivityView.swift; sourceTree = "<group>"; };
 		908C7BC4252A74D2003D803B /* MandelbrotExplorer iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MandelbrotExplorer iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -257,6 +262,7 @@
 				900FB59B2487065000695AD4 /* Shaders.metal */,
 				9042D2F2255CA3BD0002CEE0 /* MaxIter.swift */,
 				90045E14256496A100E99A02 /* MandelbrotConstants.swift */,
+				9089E4B128C01577000A921B /* MandelbrotSetGeneratingDevice.swift */,
 			);
 			path = MandelbrotSet;
 			sourceTree = "<group>";
@@ -386,6 +392,7 @@
 				908BFCD128B19AF800E8E6C0 /* ZoomedMandelbrotView.swift */,
 				908C0B2528BC22D4004A8BDF /* ShareActivityView.swift */,
 				9082CCF728BD4A5E00B7C70B /* ShareView.swift */,
+				9089052628C3EF5D00C7941C /* MandelbrotExplorerPrepartionView.swift */,
 			);
 			path = SwiftUIView;
 			sourceTree = "<group>";
@@ -585,6 +592,7 @@
 				901CD3F5248074D8005F1F9C /* PixelData.swift in Sources */,
 				90045E15256496A100E99A02 /* MandelbrotConstants.swift in Sources */,
 				906DAE5D247C4C3400A1A47F /* ComplexRect.swift in Sources */,
+				9089E4B228C01577000A921B /* MandelbrotSetGeneratingDevice.swift in Sources */,
 				908079C2254CDCAD006B461A /* Summer.swift in Sources */,
 				9042D2F3255CA3BD0002CEE0 /* MaxIter.swift in Sources */,
 				908079D0254CDCC8006B461A /* Winter.swift in Sources */,
@@ -622,6 +630,7 @@
 			files = (
 				9042D2F4255CA3BD0002CEE0 /* MaxIter.swift in Sources */,
 				90898F48252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift in Sources */,
+				9089052728C3EF5D00C7941C /* MandelbrotExplorerPrepartionView.swift in Sources */,
 				90AA8A7528AD84DD00CBDDE9 /* MandelbrotExplorerView.swift in Sources */,
 				908C7BC7252A74D2003D803B /* AppDelegateIPad.swift in Sources */,
 				90898F4D252BDD380084ACB4 /* MandelbrotID.swift in Sources */,
@@ -648,6 +657,7 @@
 				90898F42252BDC050084ACB4 /* ComplexRect.swift in Sources */,
 				9027F820253E597C00F4EBB3 /* Parula256.swift in Sources */,
 				903DD7B9254F324A00288FA5 /* MandelbrotExplorerColorMap.swift in Sources */,
+				9089E4B328C01577000A921B /* MandelbrotSetGeneratingDevice.swift in Sources */,
 				908D79A628A8580000445DFC /* MandelbrotExplorerApp.swift in Sources */,
 				908BFCD228B19AF800E8E6C0 /* ZoomedMandelbrotView.swift in Sources */,
 				90AF89FC254248DF008A5472 /* ColorConverter.swift in Sources */,
