@@ -52,7 +52,7 @@ class MandelbrotDisplayIPad {
         let timeToPrepare = Date()
         
         mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(inZs: zs, inMaxIter: maxIter, inColorMap: colorMap!)
-        mandelbrotSet?.calculate()
+        mandelbrotSet?.calculate(completionHandler: nil)
         
         let timeToCalculate = Date()
         

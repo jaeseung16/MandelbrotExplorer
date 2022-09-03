@@ -58,7 +58,6 @@
 		908079D0254CDCC8006B461A /* Winter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079CF254CDCC8006B461A /* Winter.swift */; };
 		908079D1254CDCC8006B461A /* Winter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908079CF254CDCC8006B461A /* Winter.swift */; };
 		9082CCF828BD4A5E00B7C70B /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9082CCF728BD4A5E00B7C70B /* ShareView.swift */; };
-		9089052728C3EF5D00C7941C /* MandelbrotExplorerPrepartionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9089052628C3EF5D00C7941C /* MandelbrotExplorerPrepartionView.swift */; };
 		90898F42252BDC050084ACB4 /* ComplexRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906DAE5C247C4C3400A1A47F /* ComplexRect.swift */; };
 		90898F48252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90898F47252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift */; };
 		90898F4D252BDD380084ACB4 /* MandelbrotID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E9D36024A90F5900FCB3A4 /* MandelbrotID.swift */; };
@@ -156,7 +155,6 @@
 		908079C8254CDCBF006B461A /* Autumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autumn.swift; sourceTree = "<group>"; };
 		908079CF254CDCC8006B461A /* Winter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Winter.swift; sourceTree = "<group>"; };
 		9082CCF728BD4A5E00B7C70B /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
-		9089052628C3EF5D00C7941C /* MandelbrotExplorerPrepartionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerPrepartionView.swift; sourceTree = "<group>"; };
 		90898F47252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotDisplayIPad.swift; sourceTree = "<group>"; };
 		9089E4B128C01577000A921B /* MandelbrotSetGeneratingDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotSetGeneratingDevice.swift; sourceTree = "<group>"; };
 		908BFCD128B19AF800E8E6C0 /* ZoomedMandelbrotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomedMandelbrotView.swift; sourceTree = "<group>"; };
@@ -392,7 +390,6 @@
 				908BFCD128B19AF800E8E6C0 /* ZoomedMandelbrotView.swift */,
 				908C0B2528BC22D4004A8BDF /* ShareActivityView.swift */,
 				9082CCF728BD4A5E00B7C70B /* ShareView.swift */,
-				9089052628C3EF5D00C7941C /* MandelbrotExplorerPrepartionView.swift */,
 			);
 			path = SwiftUIView;
 			sourceTree = "<group>";
@@ -630,7 +627,6 @@
 			files = (
 				9042D2F4255CA3BD0002CEE0 /* MaxIter.swift in Sources */,
 				90898F48252BDD2D0084ACB4 /* MandelbrotDisplayIPad.swift in Sources */,
-				9089052728C3EF5D00C7941C /* MandelbrotExplorerPrepartionView.swift in Sources */,
 				90AA8A7528AD84DD00CBDDE9 /* MandelbrotExplorerView.swift in Sources */,
 				908C7BC7252A74D2003D803B /* AppDelegateIPad.swift in Sources */,
 				90898F4D252BDD380084ACB4 /* MandelbrotID.swift in Sources */,

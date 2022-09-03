@@ -22,12 +22,11 @@ struct MandelbrotDetailView: View {
     let maxIter: Int
     let created: Date
     
-    @State private var explore = false
     @State private var presentShareSheet = false
     
     var body: some View {
         VStack {
-            NavigationLink(isActive: $explore) {
+            NavigationLink {
                 MandelbrotExplorerView(defaultEntity: entity)
             } label: {
                 Label("Explore", systemImage: "magnifyingglass")

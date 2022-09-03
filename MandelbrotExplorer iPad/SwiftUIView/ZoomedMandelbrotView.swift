@@ -12,13 +12,11 @@ struct ZoomedMandelbrotView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var viewModel: MandelbrotExplorerViewModel
     
-    @Binding var uiImage: UIImage?
-    
     var body: some View {
         GeometryReader { geometry in
             let length = geometry.size.width < geometry.size.height ? geometry.size.width : geometry.size.height
             
-            if let uiImage = uiImage {
+            if let uiImage = viewModel.mandelbrotImage {
                 Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFit()
@@ -30,14 +28,4 @@ struct ZoomedMandelbrotView: View {
         }
     }
     
-    /*
-    @ViewBuilder
-    private var image: some View {
-        if let uiImage = viewModel.mandelbrotImage {
-            Image(uiImage: uiImage)
-        } else {
-            Rectangle()
-        }
-    }
-     */
 }

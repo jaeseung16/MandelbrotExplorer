@@ -15,10 +15,11 @@ struct MandelbrotExplorerView: View {
     let defaultEntity: MandelbrotEntity
     
     @State private var showAlert = false
+    @State private var showProgress = false
     
     var body: some View {
         GeometryReader { geometry in
-            let bodyLength = geometry.size.width < geometry.size.height ? 0.45 * geometry.size.width : 0.45 * geometry.size.height
+            let bodyLength = geometry.size.width < geometry.size.height ? 0.5 * geometry.size.width : 0.5 * geometry.size.height
             
             VStack {
                 Spacer()
@@ -27,12 +28,16 @@ struct MandelbrotExplorerView: View {
                     Spacer()
                     
                     VStack {
-                        ZoomedMandelbrotView(uiImage: $viewModel.mandelbrotImage)
+                        ZoomedMandelbrotView()
                             .scaledToFit()
                             .onChange(of: viewModel.mandelbrotRect) { _ in
                                 viewModel.generateMandelbrotSet()
                             }
-                            //.frame(width: bodyLength, height: bodyLength)
+                            .overlay {
+                                ProgressView("Please wait...")
+                                    .progressViewStyle(CircularProgressViewStyle())
+                                    .opacity(viewModel.calculating ? 1 : 0)
+                            }
                             
                         Divider()
                         
@@ -54,7 +59,6 @@ struct MandelbrotExplorerView: View {
                                            location: CGPoint(x: 0.5 * bodyLength, y: 0.5 * bodyLength),
                                            length: bodyLength / viewModel.scale)
                             .scaledToFit()
-                                //.frame(width: bodyLength, height: bodyLength)
                         }
                         
                         Divider()
@@ -63,9 +67,18 @@ struct MandelbrotExplorerView: View {
                                            maxReal: defaultEntity.maxReal,
                                            minImaginary: defaultEntity.minImaginary,
                                            maxImaginary: defaultEntity.maxImaginary)
+                        
                     }
                     
                     Spacer()
+                }
+                
+                if viewModel.useCPU {
+                    Label("Using CPU", systemImage: "cpu")
+                        .foregroundColor(.red)
+                } else {
+                    Label("Using GPU", systemImage: "cpu")
+                        .foregroundColor(.green)
                 }
                 
                 Spacer()
