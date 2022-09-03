@@ -73,12 +73,30 @@ struct MandelbrotExplorerView: View {
                     Spacer()
                 }
                 
-                if viewModel.useCPU {
-                    Label("Using CPU", systemImage: "cpu")
-                        .foregroundColor(.red)
-                } else {
-                    Label("Using GPU", systemImage: "cpu")
-                        .foregroundColor(.green)
+                VStack {
+                    HStack {
+                        Spacer()
+                        
+                        Label("Mandelbrot Set Generator", systemImage: "cpu")
+                        
+                        Picker(selection: $viewModel.generatingDevice) {
+                            Text("CPU").tag(MandelbrotSetGeneratingDevice.cpu)
+                            Text("GPU").tag(MandelbrotSetGeneratingDevice.gpu)
+                        } label: {
+                            Label("Mandelbrot Set Generator", systemImage: "cpu")
+                        }
+                        .onChange(of: viewModel.generatingDevice) { _ in
+                            viewModel.generateMandelbrotSet()
+                        }
+                        
+                        Spacer()
+                    }
+                    
+                    if viewModel.isTooSmallToUseGPU() {
+                        Text("CPU Recommended")
+                    } else {
+                        EmptyView()
+                    }
                 }
                 
                 Spacer()

@@ -29,8 +29,8 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     @Published var toggle: Bool = false
     @Published var showAlert: Bool = false
     @Published var imageToShare: UIImage?
-    @Published var useCPU: Bool = false
     @Published var calculating: Bool = false
+    @Published var generatingDevice: MandelbrotSetGeneratingDevice = .gpu
     
     private var subscriptions: Set<AnyCancellable> = []
     private let calculationSize = 512
@@ -51,7 +51,6 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
             let maxY = entity.maxImaginary - (0.5 + 0.5 / scale) * (entity.maxImaginary - entity.minImaginary)
             
             mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
-            useCPU = isTooSmallToExplore()
             generateMandelbrotSet()
         }
     }
@@ -90,7 +89,6 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         let maxY = defaultMandelbrotEntity.maxImaginary - (origin.y + 0.5 * length) / originalLength * (defaultMandelbrotEntity.maxImaginary - defaultMandelbrotEntity.minImaginary)
         
         mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
-        useCPU = isTooSmallToExplore()
     }
     
     private var mandelbrotSet: MandelbrotSet?
@@ -111,7 +109,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         
         let timeToPrepare = Date()
     
-        mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(with: useCPU ? .cpu : .gpu, inZs: zs, inMaxIter: maxIter.rawValue, inColorMap: ColorMapFactory.getColorMap(colorMap, length: 256).colorMapInSIMD4)
+        mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(with: generatingDevice, inZs: zs, inMaxIter: maxIter.rawValue, inColorMap: ColorMapFactory.getColorMap(colorMap, length: 256).colorMapInSIMD4)
         
         self.calculating.toggle()
         DispatchQueue.global(qos: .userInitiated).async {
@@ -236,7 +234,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         }
     }
     
-    private func isTooSmallToExplore() -> Bool {
+    func isTooSmallToUseGPU() -> Bool {
         let diffReal = Float(mandelbrotRect.maxReal - mandelbrotRect.minReal)
         let diffImaginary = Float(mandelbrotRect.maxImaginary - mandelbrotRect.minImaginary)
         let allowedDiff = Float.ulpOfOne * Float(calculationSize) / 2.0
