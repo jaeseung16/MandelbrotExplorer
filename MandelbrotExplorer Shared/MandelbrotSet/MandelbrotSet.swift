@@ -16,5 +16,5 @@ protocol MandelbrotSet {
     var maxIter: Int { get set }
     var cgImage: CGImage {get set}
     
-    func calculate() -> Void
+    func calculate(completionHandler: ((CGImage) -> Void)?) -> Void
 }

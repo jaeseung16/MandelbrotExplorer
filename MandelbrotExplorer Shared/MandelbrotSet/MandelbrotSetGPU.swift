@@ -122,7 +122,7 @@ class MandelbrotSetGPU: MandelbrotSet {
         maxIterTexture = device.makeTexture(descriptor: maxIterTextureDescriptor)!
     }
     
-    func calculate() -> Void {
+    func calculate(completionHandler: ((CGImage) -> Void)? = nil) -> Void {
         populateInputTexture()
         populateColorValueTexture()
         populateMaxIterTexture()
@@ -142,6 +142,8 @@ class MandelbrotSetGPU: MandelbrotSet {
         commandBuffer.waitUntilCompleted()
         
         generateCGImage()
+        
+        completionHandler?(cgImage)
     }
     
     private func encode(_ computeCommandEncoder: MTLComputeCommandEncoder) -> Void {

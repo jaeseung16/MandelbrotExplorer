@@ -65,15 +65,21 @@ class MandelbrotSetCPU: MandelbrotSet {
         _values = [Int](repeating: 0, count: _zs.count)
         imgBytes = [SIMD4<Float>](repeating: SIMD4<Float>(x: 0.0, y: 0.0, z: 0.0, w: 1.0), count: _zs.count)
         colorMap = inColorMap
-
-        calculate()
-        generateCGImage(lengthOfRow: Int(sqrt(Double(values.count))))
     }
     
-    func calculate() -> Void {
+    func calculate(completionHandler: ((CGImage) -> Void)? = nil) -> Void {
         values = zs.map({ (z0) -> Int in
             mandelbrotFormula(z0: z0)
         })
+        
+        
+        let mandelbrotImageGenerator = MandelbrotImageGenerator(cgColors: colorMap)
+        mandelbrotImageGenerator.generateCGImage(values: values, lengthOfRow: Int(sqrt(Double(values.count))))
+        
+        cgImage = mandelbrotImageGenerator.cgImage
+        
+        completionHandler?(cgImage)
+        
     }
     
     private func mandelbrotFormula(z0: Complex<Double>) -> Int {
