@@ -241,4 +241,10 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         let allowedDiff = Float.ulpOfOne * Float(calculationSize) / 2.0
         return diffReal < allowedDiff || diffImaginary < allowedDiff
     }
+    
+    private let originalRange = 3.0
+    func getScale(entity: MandelbrotEntity) -> Double {
+        return originalRange / (entity.maxReal - entity.minReal)
+    }
+    
 }

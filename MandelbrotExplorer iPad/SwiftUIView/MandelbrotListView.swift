@@ -54,13 +54,27 @@ struct MandelbrotListView: View {
                     .scaledToFit()
             }
             
-            VStack {
-                Label(entity.centerDescription, systemImage: "dot.squareshape.split.2x2")
-                    .fixedSize()
-                Label("\(entity.maxIter)", systemImage: "repeat.circle")
+            VStack(alignment: .leading) {
+                Label(entity.centerDescription, systemImage: "dot.viewfinder")
+                Label(getFormattedScale(entity: entity), systemImage: "arrow.up.left.and.down.right.magnifyingglass" )
+                Label("\(entity.maxIter)", systemImage: "repeat")
                 Label(entity.generator ?? "gpu", systemImage: "cpu")
             }
+            .fixedSize()
         }
+    }
+    
+    private var formatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .scientific
+        formatter.minimumSignificantDigits = 2
+        formatter.maximumSignificantDigits = 5
+        return formatter
+    }
+    
+    private func getFormattedScale(entity: MandelbrotEntity) -> String {
+        let scale = viewModel.getScale(entity: entity)
+        return scale < 100000 ? String(format: "%.2f", scale) : (formatter.string(from: scale as NSNumber) ?? "unknown")
     }
     
     private func deleteEntity(offsets: IndexSet) {
