@@ -68,10 +68,9 @@ class MandelbrotSetCPU: MandelbrotSet {
     }
     
     func calculate(completionHandler: ((CGImage) -> Void)? = nil) -> Void {
-        values = zs.map({ (z0) -> Int in
-            mandelbrotFormula(z0: z0)
-        })
-        
+        DispatchQueue.concurrentPerform(iterations: zs.count) { k in
+            _values[k] = mandelbrotFormula(z0: zs[k])
+        }
         
         let mandelbrotImageGenerator = MandelbrotImageGenerator(cgColors: colorMap)
         mandelbrotImageGenerator.generateCGImage(values: values, lengthOfRow: Int(sqrt(Double(values.count))))
