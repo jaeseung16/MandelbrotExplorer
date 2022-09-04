@@ -52,7 +52,12 @@ struct MandelbrotListView: View {
                     .scaledToFit()
             }
             
-            Text(entity.description)
+            VStack {
+                Label(entity.centerDescription, systemImage: "dot.squareshape.split.2x2")
+                    .fixedSize()
+                Label("\(entity.maxIter)", systemImage: "repeat.circle")
+                Label(entity.generator ?? "gpu", systemImage: "cpu")
+            }
         }
     }
     

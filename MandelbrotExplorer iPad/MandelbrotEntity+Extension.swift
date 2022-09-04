@@ -8,6 +8,8 @@
 
 import Foundation
 import CoreData
+import CoreGraphics
+import SwiftUI
 
 extension MandelbrotEntity {
     public override func awakeFromInsert() {
@@ -33,5 +35,18 @@ extension MandelbrotEntity {
         let maxImaginary = String(format: format, self.maxImaginary)
         
         return "Real: (\(minReal), \(maxReal))\nImaginary: (\(minImaginary), \(maxImaginary))\nMax Iter: \(maxIter)"
+    }
+    
+    private var avgReal: Double {
+        0.5 * (self.minReal + self.maxReal)
+    }
+    
+    private var avgImaginary: Double {
+        0.5 * (self.minImaginary + self.maxImaginary)
+    }
+    
+    public var centerDescription: String {
+        let format = "%.3f"
+        return "(\(String(format: format, self.avgReal)), \(String(format: format, self.avgImaginary)))"
     }
 }

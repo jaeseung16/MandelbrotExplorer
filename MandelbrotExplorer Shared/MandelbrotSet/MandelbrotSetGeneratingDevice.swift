@@ -6,7 +6,7 @@
 //  Copyright © 2022 Jae Seung Lee. All rights reserved.
 //
 
-enum MandelbrotSetGeneratingDevice {
+enum MandelbrotSetGeneratingDevice: String {
     case cpu
     case gpu
     case unknown
