@@ -19,7 +19,7 @@ struct MandelbrotListView: View {
         NavigationView {
             List {
                 ForEach(entities, id: \.created) { entity in
-                    if let created = entity.created, let data = entity.image, let uiImage = UIImage(data: data) {
+                    if let created = entity.created, let data = entity.image, let uiImage = UIImage(data: data), let colorMap = entity.colorMap {
                         NavigationLink(destination: MandelbrotDetailView(entity: entity,
                                                                          minReal: entity.minReal,
                                                                          maxReal: entity.maxReal,
@@ -27,6 +27,8 @@ struct MandelbrotListView: View {
                                                                          maxImaginary: entity.maxImaginary,
                                                                          uiImage: uiImage,
                                                                          maxIter: Int(entity.maxIter),
+                                                                         colorMap: colorMap,
+                                                                         generator: entity.generator ?? "gpu",
                                                                          created: created)) {
                             itemView(entity: entity)
                         }

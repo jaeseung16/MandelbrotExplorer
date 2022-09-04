@@ -20,6 +20,8 @@ struct MandelbrotDetailView: View {
     let maxImaginary: Double
     let uiImage: UIImage
     let maxIter: Int
+    let colorMap: String
+    let generator: String
     let created: Date
     
     @State private var presentShareSheet = false
@@ -98,7 +100,13 @@ struct MandelbrotDetailView: View {
     private var summaryView: some View {
         HStack {
             Spacer()
-            Text("max iteration: \(maxIter)\ncreated on ") + Text(created, format: Date.FormatStyle(date: .numeric, time: .omitted))
+            
+            VStack(alignment: .trailing) {
+                Text("color map: \(colorMap)")
+                Text("maximum iterations: \(entity.maxIter)")
+                Label(generator, systemImage: "cpu")
+                Text("created on ").font(.caption) + Text(created, format: Date.FormatStyle(date: .numeric, time: .omitted)).font(.caption)
+            }
         }
     }
     
