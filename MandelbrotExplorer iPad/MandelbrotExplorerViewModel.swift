@@ -176,6 +176,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         mandelbrotEntity.colorMap = colorMap.rawValue
         mandelbrotEntity.maxIter = Int32(maxIter.rawValue)
         mandelbrotEntity.image = mandelbrotImage?.pngData()
+        mandelbrotEntity.generator = generatingDevice.rawValue
         
         save(viewContext: viewContext, completionHandler: completionHandler)
     }
