@@ -22,7 +22,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     @Published var scale = CGFloat(10.0)
     
     @Published var maxIter: MaxIter = .twoHundred
-    @Published var colorMap: MandelbrotExplorerColorMap = .green
+    @Published var colorMap: MandelbrotExplorerColorMap = .jet
     
     @Published var needToRefresh: Bool = false
     @Published var refresh: Bool = false
@@ -263,4 +263,18 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         }
     }
     
+    // MARK: - Persistence History Request
+    private lazy var historyRequestQueue = DispatchQueue(label: "history")
+    private func fetchUpdates(_ notification: Notification) -> Void {
+        persistence.fetchUpdates(notification) { result in
+            switch result {
+            case .success(()):
+                DispatchQueue.main.async {
+                    self.toggle.toggle()
+                }
+            case .failure(let error):
+                self.logger.log("Error while updating history: \(error.localizedDescription, privacy: .public) \(Thread.callStackSymbols, privacy: .public)")
+            }
+        }
+    }
 }

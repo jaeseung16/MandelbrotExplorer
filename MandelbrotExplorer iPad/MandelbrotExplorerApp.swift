@@ -13,22 +13,21 @@ import Persistence
 
 @main
 struct MandelbrotExplorerApp: App {
+    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     @AppStorage("HasLaunchedBefore", store: UserDefaults.standard) var hasLaunchedBefore: Bool = false
     
     private static let logger = Logger()
     
     var body: some Scene {
-        let viewModel = MandelbrotExplorerViewModel(persistence: persistence)
-        
         WindowGroup {
             if !hasLaunchedBefore {
                 FirstLaunchView()
-                    .environment(\.managedObjectContext, viewModel.persistenceContainer.viewContext)
-                    .environmentObject(viewModel)
+                    .environment(\.managedObjectContext, appDelegate.persistence.container.viewContext)
+                    .environmentObject(appDelegate.viewModel)
             } else {
                 MandelbrotListView()
-                    .environment(\.managedObjectContext, viewModel.persistenceContainer.viewContext)
-                    .environmentObject(viewModel)
+                    .environment(\.managedObjectContext, appDelegate.persistence.container.viewContext)
+                    .environmentObject(appDelegate.viewModel)
             }
         }
     }
