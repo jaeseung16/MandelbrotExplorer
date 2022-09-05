@@ -19,8 +19,6 @@ struct MandelbrotExplorerView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            let bodyLength = geometry.size.width < geometry.size.height ? 0.5 * geometry.size.width : 0.5 * geometry.size.height
-            
             VStack {
                 Spacer()
                 
@@ -57,7 +55,7 @@ struct MandelbrotExplorerView: View {
                         if let data = defaultEntity.image, let uiImage = UIImage(data: data) {
                             MandelbrotView(uiImage: uiImage,
                                            scaledLocation: CGPoint(x: 0.5, y: 0.5),
-                                           length: bodyLength / viewModel.scale)
+                                           scaledLength: 1.0 / viewModel.scale)
                             .scaledToFit()
                         }
                         

@@ -14,7 +14,7 @@ struct MandelbrotView: View {
     
     let uiImage: UIImage
     @State var scaledLocation: CGPoint
-    @State var length: CGFloat
+    @State var scaledLength: CGFloat
     
     @GestureState private var startLocation: CGPoint? = nil
     @GestureState var magnifyBy: CGFloat?
@@ -31,7 +31,7 @@ struct MandelbrotView: View {
                     var newLocation = startLocation ?? getLocation(in: bodyLength)
                     newLocation.x += value.translation.width
                     newLocation.y += value.translation.height
-                    let validatedLocation = validate(location: newLocation, in: geometry.size, given: length)
+                    let validatedLocation = validate(location: newLocation, in: geometry.size, given: getLength(in: bodyLength))
                     scaledLocation = CGPoint(x: validatedLocation.x / bodyLength, y: validatedLocation.y / bodyLength)
                 }
                 .onEnded { _ in
@@ -43,8 +43,9 @@ struct MandelbrotView: View {
                     gestureState = gestureState ?? 1.0
                 }
                 .onChanged { value in
-                    let newLength = length + 5.0 * (value - 1.0)
-                    length = validate(length: newLength, in: geometry.size, given: getLocation(in: bodyLength))
+                    let newLength = getLength(in: bodyLength) + 5.0 * (value - 1.0)
+                    let validatedLength = validate(length: newLength, in: geometry.size, given: getLocation(in: bodyLength))
+                    scaledLength = validatedLength / bodyLength
                 }
                 .onEnded { _ in
                     viewModel.needToRefresh.toggle()
@@ -56,6 +57,7 @@ struct MandelbrotView: View {
                     .scaledToFit()
                 
                 rect
+                    .frame(width: getLength(in: bodyLength), height: getLength(in: bodyLength))
                     .position(getLocation(in: bodyLength))
                     
             }
@@ -69,17 +71,19 @@ struct MandelbrotView: View {
                 viewModel.generateMandelbrotSet()
             }
             .onChange(of: geometry.size) { _ in
-                if length > bodyLength {
-                    length = bodyLength
+                if getLength(in: bodyLength) >= bodyLength {
+                    scaledLength = 1.0
+                    scaledLocation = CGPoint(x: 0.5, y: 0.5)
+                } else {
+                    let validatedLocation = validate(location: getLocation(in: bodyLength), in: geometry.size, given: getLength(in: bodyLength))
+                    scaledLocation = CGPoint(x: validatedLocation.x / bodyLength, y: validatedLocation.y / bodyLength)
+                    
                 }
-                
-                let validatedLocation = validate(location: getLocation(in: bodyLength), in: geometry.size, given: length)
-                scaledLocation = CGPoint(x: validatedLocation.x / bodyLength, y: validatedLocation.y / bodyLength)
                 
                 viewModel.needToRefresh.toggle()
             }
             .onChange(of: viewModel.refresh) { _ in
-                viewModel.updateRange(origin: getLocation(in: bodyLength), length: length, originalLength: bodyLength)
+                viewModel.updateRange(origin: getLocation(in: bodyLength), length: getLength(in: bodyLength), originalLength: bodyLength)
             }
         }
     }
@@ -87,11 +91,14 @@ struct MandelbrotView: View {
     private var rect: some View {
         return Rectangle()
             .strokeBorder(Color.white, lineWidth: 2.0)
-            .frame(width: length, height: length)
     }
     
     private func getLocation(in bodyLength: CGFloat) -> CGPoint {
         return CGPoint(x: scaledLocation.x * bodyLength, y: scaledLocation.y * bodyLength)
+    }
+    
+    private func getLength(in bodyLength: CGFloat) -> CGFloat {
+        return scaledLength * bodyLength
     }
     
     private func validate(location: CGPoint, in frame: CGSize, given length: CGFloat) -> CGPoint {
