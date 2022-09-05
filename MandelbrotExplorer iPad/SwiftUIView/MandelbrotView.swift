@@ -62,7 +62,7 @@ struct MandelbrotView: View {
             .simultaneousGesture(magnificationGesture)
             .frame(width: bodyLength, height: bodyLength)
             .onChange(of: viewModel.colorMap) { _ in
-                viewModel.generateMandelbrotSet()
+                viewModel.update(viewModel.colorMap)
             }
             .onChange(of: viewModel.maxIter) { _ in
                 viewModel.generateMandelbrotSet()

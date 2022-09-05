@@ -153,6 +153,22 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         return Complex<Double>(r, i)
     }
     
+    func update(_ colorMap: MandelbrotExplorerColorMap) -> Void {
+        guard let mandelbrotSet = self.mandelbrotSet else {
+            print("self.mandelbrotSet is null")
+            return
+        }
+        
+        self.colorMap = colorMap
+        
+        if mandelbrotSet is MandelbrotSetGPU {
+            generateMandelbrotSet()
+        } else {
+            setImage(for: mandelbrotSet)
+        }
+    }
+    
+    
     @Published var mandelbrotImage: UIImage?
     private func setImage(for mandelbrotSet: MandelbrotSet?) -> Void {
         guard let mandelbrotSet = self.mandelbrotSet else {
