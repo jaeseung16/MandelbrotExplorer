@@ -56,7 +56,7 @@ struct MandelbrotExplorerView: View {
                     VStack {
                         if let data = defaultEntity.image, let uiImage = UIImage(data: data) {
                             MandelbrotView(uiImage: uiImage,
-                                           location: CGPoint(x: 0.5 * bodyLength, y: 0.5 * bodyLength),
+                                           scaledLocation: CGPoint(x: 0.5, y: 0.5),
                                            length: bodyLength / viewModel.scale)
                             .scaledToFit()
                         }
