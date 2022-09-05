@@ -56,7 +56,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     }
     
     private let persistence: Persistence
-    private var persistenceContainer: NSPersistentContainer {
+    var persistenceContainer: NSPersistentContainer {
         persistence.container
     }
     
@@ -70,6 +70,11 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
             .sink(receiveCompletion: { print("completion: \($0)") },
                   receiveValue: { _ in self.refresh.toggle() })
             .store(in: &subscriptions)
+        
+        NotificationCenter.default
+          .publisher(for: .NSPersistentStoreRemoteChange)
+          .sink { self.fetchUpdates($0) }
+          .store(in: &subscriptions)
         
         self.persistence.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
@@ -245,6 +250,17 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     private let originalRange = 3.0
     func getScale(entity: MandelbrotEntity) -> Double {
         return originalRange / (entity.maxReal - entity.minReal)
+    }
+    
+    func firstLaunch(context: NSManagedObjectContext, completionHandler: ((Bool) -> Void)?) -> Void {
+        let entityCount = persistence.count("MandelbrotEntity")
+        
+        logger.log("firstLaunch: entityCount=\(entityCount)")
+        if entityCount < 1 {
+            createMandelbrotEntity(viewContext: context, completionHandler: completionHandler)
+        } else {
+            completionHandler?(true)
+        }
     }
     
 }
