@@ -964,7 +964,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = "MandelbrotExplorer iPad/MandelbrotExplorer iPad.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U8VSJXRJTQ;
 				INFOPLIST_FILE = "MandelbrotExplorer iPad/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -989,7 +989,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = "MandelbrotExplorer iPad/MandelbrotExplorer iPad.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U8VSJXRJTQ;
 				INFOPLIST_FILE = "MandelbrotExplorer iPad/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
