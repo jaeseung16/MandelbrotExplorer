@@ -119,7 +119,11 @@ struct MandelbrotExplorerView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Label("Reset", systemImage: "square.and.arrow.up")
+                    Button {
+                        viewModel.prepareExploring()
+                    } label: {
+                        Text("Reset")
+                    }
                 }
             }
         }

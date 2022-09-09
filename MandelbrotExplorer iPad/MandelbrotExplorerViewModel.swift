@@ -32,6 +32,8 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     @Published var calculating: Bool = false
     @Published var generatingDevice: MandelbrotSetGeneratingDevice = .gpu
     
+    @Published var prepared: Bool = false
+    
     private var subscriptions: Set<AnyCancellable> = []
     private let calculationSize = 512
     
@@ -43,7 +45,9 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
             
             logger.log("defaultMandelbrotEntity didSet")
             scale = CGFloat(10.0)
+            mandelbrotImage = nil
             
+            /*
             let minX = entity.minReal + (0.5  - 0.5 / scale) * (entity.maxReal - entity.minReal)
             let maxX = entity.minReal + (0.5  + 0.5 / scale) * (entity.maxReal - entity.minReal)
             
@@ -51,7 +55,9 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
             let maxY = entity.maxImaginary - (0.5 + 0.5 / scale) * (entity.maxImaginary - entity.minImaginary)
             
             mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
+            
             generateMandelbrotSet()
+            */
         }
     }
     
@@ -77,6 +83,23 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
           .store(in: &subscriptions)
         
         self.persistence.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+    }
+    
+    func prepareExploring() -> Void {
+        guard let entity = defaultMandelbrotEntity else {
+            return
+        }
+        
+        let minX = entity.minReal + (0.5  - 0.5 / scale) * (entity.maxReal - entity.minReal)
+        let maxX = entity.minReal + (0.5  + 0.5 / scale) * (entity.maxReal - entity.minReal)
+        
+        let minY = entity.maxImaginary - (0.5 - 0.5 / scale) * (entity.maxImaginary - entity.minImaginary)
+        let maxY = entity.maxImaginary - (0.5 + 0.5 / scale) * (entity.maxImaginary - entity.minImaginary)
+        
+        mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
+        mandelbrotImage = nil
+        prepared.toggle()
+        //generateMandelbrotSet()
     }
     
     func updateRange(origin: CGPoint, length: CGFloat, originalLength: CGFloat) -> Void {

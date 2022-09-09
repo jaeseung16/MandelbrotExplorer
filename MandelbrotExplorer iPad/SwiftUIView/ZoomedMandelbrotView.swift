@@ -22,9 +22,14 @@ struct ZoomedMandelbrotView: View {
                     .scaledToFit()
                     .frame(width: length, height: length)
             } else {
-                Rectangle()
-                    .frame(width: length, height: length)
+                Button {
+                    viewModel.needToRefresh.toggle()
+                } label: {
+                    Text("Start Exploring")
+                }
+                .frame(width: length, height: length)
             }
+            
         }
     }
     

@@ -85,6 +85,10 @@ struct MandelbrotView: View {
             .onChange(of: viewModel.refresh) { _ in
                 viewModel.updateRange(origin: getLocation(in: bodyLength), length: getLength(in: bodyLength), originalLength: bodyLength)
             }
+            .onChange(of: viewModel.prepared) { _ in
+                scaledLocation = CGPoint(x: 0.5, y: 0.5)
+                viewModel.needToRefresh.toggle()
+            }
         }
     }
     

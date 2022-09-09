@@ -61,7 +61,9 @@ struct MandelbrotDetailView: View {
             }
         }
         .onAppear {
-            viewModel.defaultMandelbrotEntity = entity
+            if viewModel.defaultMandelbrotEntity == nil || viewModel.defaultMandelbrotEntity != entity {
+                viewModel.defaultMandelbrotEntity = entity
+            }
         }
         .sheet(isPresented: $presentShareSheet) {
             if let imageToShare = viewModel.imageToShare {
