@@ -29,7 +29,7 @@ struct FirstLaunchView: View {
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                viewModel.generateMandelbrotSet()
+                viewModel.generateMandelbrotImage()
             }
         }
         .onDisappear() {

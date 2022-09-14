@@ -15,6 +15,7 @@ extension MandelbrotEntity {
     public override func awakeFromInsert() {
         super.awakeFromInsert()
         created = Date()
+        lastupd = Date()
     }
     
     public override var description: String {

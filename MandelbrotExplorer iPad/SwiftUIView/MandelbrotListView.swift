@@ -27,9 +27,9 @@ struct MandelbrotListView: View {
                                                  minImaginary: entity.minImaginary,
                                                  maxImaginary: entity.maxImaginary,
                                                  uiImage: uiImage,
-                                                 maxIter: Int(entity.maxIter),
-                                                 colorMap: colorMap,
-                                                 generator: entity.generator ?? "gpu",
+                                                 maxIter: MaxIter(rawValue: Int(entity.maxIter)) ?? .twoHundred,
+                                                 colorMap: MandelbrotExplorerColorMap(rawValue: colorMap) ?? .jet,
+                                                 generator: MandelbrotSetGeneratingDevice(rawValue: entity.generator ?? "cpu") ?? .cpu,
                                                  created: created)
                         } label: {
                             itemView(entity: entity)
@@ -85,11 +85,5 @@ struct MandelbrotListView: View {
                 viewModel.delete(offsets.map { entities[$0] }, viewContext: viewContext)
             }
         }
-    }
-}
-
-struct MandelbrotListView_Previews: PreviewProvider {
-    static var previews: some View {
-        MandelbrotListView()
     }
 }

@@ -32,6 +32,9 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     @Published var calculating: Bool = false
     @Published var generatingDevice: MandelbrotSetGeneratingDevice = .gpu
     
+    @Published var defaultMandelbrotImage: UIImage?
+    @Published var mandelbrotImage: UIImage?
+    
     @Published var prepared: Bool = false
     
     private var subscriptions: Set<AnyCancellable> = []
@@ -46,18 +49,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
             logger.log("defaultMandelbrotEntity didSet")
             scale = CGFloat(10.0)
             mandelbrotImage = nil
-            
-            /*
-            let minX = entity.minReal + (0.5  - 0.5 / scale) * (entity.maxReal - entity.minReal)
-            let maxX = entity.minReal + (0.5  + 0.5 / scale) * (entity.maxReal - entity.minReal)
-            
-            let minY = entity.maxImaginary - (0.5 - 0.5 / scale) * (entity.maxImaginary - entity.minImaginary)
-            let maxY = entity.maxImaginary - (0.5 + 0.5 / scale) * (entity.maxImaginary - entity.minImaginary)
-            
-            mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
-            
-            generateMandelbrotSet()
-            */
+            mandelbrotRect = ComplexRect(Complex<Double>(entity.minReal, entity.minImaginary), Complex<Double>(entity.maxReal, entity.maxImaginary))
         }
     }
     
@@ -121,7 +113,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
     private var mandelbrotSet: MandelbrotSet?
     private var zs = [Complex<Double>]()
-    func generateMandelbrotSet() -> Void {
+    func generateMandelbrotSet(completionHandler: @escaping ((CGImage) -> Void)) -> Void {
         logger.log("MandelbrotDisplay.generateMandelbrotSet() called for mandelbrotRect=\(self.mandelbrotRect), maxIter = \(self.maxIter.rawValue), calculationSize=\(self.calculationSize), calculating=\(self.calculating)")
         
         let startTime = Date()
@@ -142,19 +134,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         self.calculating.toggle()
         DispatchQueue.global(qos: .userInitiated).async {
             self.mandelbrotSet?.calculate() { cgImage in
-                guard self.mandelbrotSet != nil else {
-                    print("self.mandelbrotSet is null")
-                    return
-                }
-                
-                DispatchQueue.main.async {
-                    self.mandelbrotImage = UIImage(cgImage: cgImage)
-                    
-                    let timeToSetImage = Date()
-                    self.logger.log("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToSetImage.timeIntervalSince(startTime)) seconds, calculating=\(self.calculating)")
-                
-                    self.calculating.toggle()
-                }
+                completionHandler(cgImage)
             }
         }
         
@@ -163,6 +143,44 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         logger.log("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToPrepare.timeIntervalSince(startTime)) seconds to populate inputs")
         
         logger.log("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToCalculate.timeIntervalSince(timeToPrepare)) seconds to generate mandelbrotSet")
+    }
+    
+    func generateDefaultMandelbrotImage() -> Void {
+        let startTime = Date()
+        generateMandelbrotSet() { cgImage in
+            guard self.mandelbrotSet != nil else {
+                print("self.mandelbrotSet is null")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.defaultMandelbrotImage = UIImage(cgImage: cgImage)
+                
+                let timeToSetImage = Date()
+                self.logger.log("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToSetImage.timeIntervalSince(startTime)) seconds, calculating=\(self.calculating)")
+            
+                self.calculating.toggle()
+            }
+        }
+    }
+    
+    func generateMandelbrotImage() -> Void {
+        let startTime = Date()
+        generateMandelbrotSet() { cgImage in
+            guard self.mandelbrotSet != nil else {
+                print("self.mandelbrotSet is null")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.mandelbrotImage = UIImage(cgImage: cgImage)
+                
+                let timeToSetImage = Date()
+                self.logger.log("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToSetImage.timeIntervalSince(startTime)) seconds, calculating=\(self.calculating)")
+            
+                self.calculating.toggle()
+            }
+        }
     }
     
     private func viewCoordinatesToComplexCoordinates(x: Double, y: Double, displaySize: CGSize) -> Complex<Double> {
@@ -176,7 +194,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         return Complex<Double>(r, i)
     }
     
-    func update(_ colorMap: MandelbrotExplorerColorMap) -> Void {
+    func update(_ colorMap: MandelbrotExplorerColorMap, isDefault: Bool) -> Void {
         guard let mandelbrotSet = self.mandelbrotSet else {
             print("self.mandelbrotSet is null")
             return
@@ -185,28 +203,38 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         self.colorMap = colorMap
         
         if mandelbrotSet is MandelbrotSetGPU {
-            generateMandelbrotSet()
+            if isDefault {
+                generateDefaultMandelbrotImage()
+            } else {
+                generateMandelbrotImage()
+            }
         } else {
-            setImage(for: mandelbrotSet)
+            setImage(for: mandelbrotSet, isDefault: isDefault)
         }
     }
     
-    
-    @Published var mandelbrotImage: UIImage?
-    private func setImage(for mandelbrotSet: MandelbrotSet?) -> Void {
+    private func setImage(for mandelbrotSet: MandelbrotSet?, isDefault: Bool) -> Void {
         guard let mandelbrotSet = self.mandelbrotSet else {
             print("self.mandelbrotSet is null")
             return
         }
         
         if mandelbrotSet is MandelbrotSetGPU {
-            self.mandelbrotImage = UIImage(cgImage: mandelbrotSet.cgImage)
+            if isDefault {
+                self.defaultMandelbrotImage = UIImage(cgImage: mandelbrotSet.cgImage)
+            } else {
+                self.mandelbrotImage = UIImage(cgImage: mandelbrotSet.cgImage)
+            }
         } else {
             let mandelbrotImageGenerator: MandelbrotImageGenerator
             mandelbrotImageGenerator = MandelbrotImageGenerator(cgColors: ColorMapFactory.getColorMap(colorMap, length: 256).colorMapInSIMD4)
             mandelbrotImageGenerator.generateCGImage(values: mandelbrotSet.values, lengthOfRow: Int(sqrt(Double(mandelbrotSet.values.count))))
             
-            self.mandelbrotImage = UIImage(cgImage: mandelbrotImageGenerator.cgImage)
+            if isDefault {
+                self.defaultMandelbrotImage = UIImage(cgImage: mandelbrotImageGenerator.cgImage)
+            } else {
+                self.mandelbrotImage = UIImage(cgImage: mandelbrotImageGenerator.cgImage)
+            }
         }
         logger.log("mandelbrotImage=\(String(describing: self.mandelbrotImage))")
     }
@@ -221,6 +249,16 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         mandelbrotEntity.maxIter = Int32(maxIter.rawValue)
         mandelbrotEntity.image = mandelbrotImage?.pngData()
         mandelbrotEntity.generator = generatingDevice.rawValue
+        
+        save(viewContext: viewContext, completionHandler: completionHandler)
+    }
+    
+    func update(_ entity: MandelbrotEntity, viewContext: NSManagedObjectContext, completionHandler: ((Bool) -> Void)?) -> Void {
+        entity.colorMap = colorMap.rawValue
+        entity.maxIter = Int32(maxIter.rawValue)
+        entity.image = defaultMandelbrotImage?.pngData()
+        entity.generator = generatingDevice.rawValue
+        entity.lastupd = Date()
         
         save(viewContext: viewContext, completionHandler: completionHandler)
     }

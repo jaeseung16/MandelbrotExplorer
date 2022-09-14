@@ -29,7 +29,7 @@ struct MandelbrotExplorerView: View {
                         ZoomedMandelbrotView()
                             .scaledToFit()
                             .onChange(of: viewModel.mandelbrotRect) { _ in
-                                viewModel.generateMandelbrotSet()
+                                viewModel.generateMandelbrotImage()
                             }
                             .overlay {
                                 ProgressView("Please wait...")
@@ -84,7 +84,7 @@ struct MandelbrotExplorerView: View {
                             Label("Mandelbrot Set Generator", systemImage: "cpu")
                         }
                         .onChange(of: viewModel.generatingDevice) { _ in
-                            viewModel.generateMandelbrotSet()
+                            viewModel.generateMandelbrotImage()
                         }
                         
                         Spacer()

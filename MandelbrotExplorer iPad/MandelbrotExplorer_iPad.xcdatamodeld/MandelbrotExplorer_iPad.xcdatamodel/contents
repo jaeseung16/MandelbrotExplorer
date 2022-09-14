@@ -5,6 +5,7 @@
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="generator" optional="YES" attributeType="String"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="lastupd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="maxImaginary" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="maxIter" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="maxReal" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -12,6 +13,6 @@
         <attribute name="minReal" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="MandelbrotEntity" positionX="-63" positionY="-18" width="128" height="164"/>
+        <element name="MandelbrotEntity" positionX="-63" positionY="-18" width="128" height="179"/>
     </elements>
 </model>
