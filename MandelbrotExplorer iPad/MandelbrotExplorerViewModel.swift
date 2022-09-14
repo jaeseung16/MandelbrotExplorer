@@ -18,6 +18,8 @@ import SwiftUI
 class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     let logger = Logger()
     
+    private let largestMandelbrotRect = ComplexRect(Complex<Double>(-2.1, -1.5), Complex<Double>(0.9, 1.5))
+    
     @Published var mandelbrotRect = ComplexRect(Complex<Double>(-2.1, -1.5), Complex<Double>(0.9, 1.5))
     @Published var scale = CGFloat(10.0)
     
@@ -42,7 +44,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
     var defaultMandelbrotEntity: MandelbrotEntity? {
         didSet {
-            guard let entity = defaultMandelbrotEntity else {
+            guard defaultMandelbrotEntity != nil else {
                 return
             }
             
@@ -50,7 +52,6 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
             scale = CGFloat(10.0)
             defaultMandelbrotImage = nil
             mandelbrotImage = nil
-            mandelbrotRect = ComplexRect(Complex<Double>(entity.minReal, entity.minImaginary), Complex<Double>(entity.maxReal, entity.maxImaginary))
         }
     }
     
@@ -114,8 +115,8 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
     private var mandelbrotSet: MandelbrotSet?
     private var zs = [Complex<Double>]()
-    func generateMandelbrotSet(completionHandler: @escaping ((CGImage) -> Void)) -> Void {
-        logger.log("MandelbrotDisplay.generateMandelbrotSet() called for mandelbrotRect=\(self.mandelbrotRect), maxIter = \(self.maxIter.rawValue), calculationSize=\(self.calculationSize), calculating=\(self.calculating)")
+    func generateMandelbrotSet(within mandelbrotRect: ComplexRect, completionHandler: @escaping ((CGImage) -> Void)) -> Void {
+        logger.log("MandelbrotDisplay.generateMandelbrotSet() called for mandelbrotRect=\(mandelbrotRect), maxIter = \(self.maxIter.rawValue), calculationSize=\(self.calculationSize), calculating=\(self.calculating)")
         
         let startTime = Date()
         
@@ -124,7 +125,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         let displaySize = CGSize(width: calculationSize - 1, height: calculationSize - 1)
         for x in 0..<Int(calculationSize) {
             for y in 0..<Int(calculationSize) {
-                zs[y * Int(calculationSize) + x] = viewCoordinatesToComplexCoordinates(x: Double(x), y: Double((Int(calculationSize) - 1 - y)), displaySize: displaySize)
+                zs[y * Int(calculationSize) + x] = viewCoordinatesToComplexCoordinates(x: Double(x), y: Double((Int(calculationSize) - 1 - y)), displaySize: displaySize, in: mandelbrotRect)
             }
         }
         
@@ -146,11 +147,19 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         logger.log("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToCalculate.timeIntervalSince(timeToPrepare)) seconds to generate mandelbrotSet")
     }
     
+    
+    private var defaultMandelbrotRect: ComplexRect {
+        guard let entity = defaultMandelbrotEntity else {
+            return largestMandelbrotRect
+        }
+        return ComplexRect(Complex<Double>(entity.minReal, entity.minImaginary), Complex<Double>(entity.maxReal, entity.maxImaginary))
+    }
+    
     func generateDefaultMandelbrotImage() -> Void {
         let startTime = Date()
-        generateMandelbrotSet() { cgImage in
+        generateMandelbrotSet(within: self.defaultMandelbrotRect) { cgImage in
             guard self.mandelbrotSet != nil else {
-                print("self.mandelbrotSet is null")
+                self.logger.log("It was not successful to generate Mandelbrot set within \(self.defaultMandelbrotRect)")
                 return
             }
             
@@ -167,9 +176,9 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
     func generateMandelbrotImage() -> Void {
         let startTime = Date()
-        generateMandelbrotSet() { cgImage in
+        generateMandelbrotSet(within: self.mandelbrotRect) { cgImage in
             guard self.mandelbrotSet != nil else {
-                print("self.mandelbrotSet is null")
+                self.logger.log("It was not successful to generate Mandelbrot set within \(self.mandelbrotRect)")
                 return
             }
             
@@ -184,7 +193,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         }
     }
     
-    private func viewCoordinatesToComplexCoordinates(x: Double, y: Double, displaySize: CGSize) -> Complex<Double> {
+    private func viewCoordinatesToComplexCoordinates(x: Double, y: Double, displaySize: CGSize, in mandelbrotRect: ComplexRect) -> Complex<Double> {
         let minReal = mandelbrotRect.minReal
         let maxReal = mandelbrotRect.maxReal
         let minImaginary = mandelbrotRect.minImaginary
