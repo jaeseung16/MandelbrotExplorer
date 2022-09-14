@@ -44,14 +44,22 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
     var defaultMandelbrotEntity: MandelbrotEntity? {
         didSet {
-            guard defaultMandelbrotEntity != nil else {
+            guard let entity = defaultMandelbrotEntity else {
                 return
             }
             
             logger.log("defaultMandelbrotEntity didSet")
-            scale = CGFloat(10.0)
+            
             defaultMandelbrotImage = nil
             mandelbrotImage = nil
+            
+            colorMap = MandelbrotExplorerColorMap(rawValue: entity.colorMap ?? "jet") ?? .jet
+            generatingDevice = MandelbrotSetGeneratingDevice(rawValue: entity.generator ?? "gpu") ?? .gpu
+            
+            // In order to avoid a long wait
+            maxIter = .twoHundred
+            
+            scale = CGFloat(10.0)
         }
     }
     
@@ -84,6 +92,8 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
             return
         }
         
+        scale = CGFloat(10.0)
+        
         let minX = entity.minReal + (0.5  - 0.5 / scale) * (entity.maxReal - entity.minReal)
         let maxX = entity.minReal + (0.5  + 0.5 / scale) * (entity.maxReal - entity.minReal)
         
@@ -91,9 +101,9 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         let maxY = entity.maxImaginary - (0.5 + 0.5 / scale) * (entity.maxImaginary - entity.minImaginary)
         
         mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
-        mandelbrotImage = nil
+        generateMandelbrotImage()
         prepared.toggle()
-        //generateMandelbrotSet()
+        
     }
     
     func updateRange(origin: CGPoint, length: CGFloat, originalLength: CGFloat) -> Void {
