@@ -48,6 +48,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
             
             logger.log("defaultMandelbrotEntity didSet")
             scale = CGFloat(10.0)
+            defaultMandelbrotImage = nil
             mandelbrotImage = nil
             mandelbrotRect = ComplexRect(Complex<Double>(entity.minReal, entity.minImaginary), Complex<Double>(entity.maxReal, entity.maxImaginary))
         }
