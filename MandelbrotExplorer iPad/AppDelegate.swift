@@ -18,8 +18,14 @@ class AppDelegate: NSObject {
     
     private let subscriptionID = "compound-updated"
     private let didCreateCompoundSubscription = "didCreateCompoundSubscription"
-    private let recordType = "CD_Compound"
-    private let recordValueKey = "CD_name"
+    private let recordType = "CD_MandelbrotEntity"
+    private let maxIterValueKey = "CD_maxIter"
+    private let generatorValueKey = "CD_generator"
+    private let minRealValueKey = "CD_minReal"
+    private let maxRealValueKey = "CD_maxReal"
+    private let minImaginaryValueKey = "CD_minImaginaryValueKey"
+    private let maxImaginaryValueKey = "CD_maxImaginaryValueKey"
+    
     
     private let databaseOperationHelper = DatabaseOperationHelper(appName: MandelbrotExplorerConstants.modelName.rawValue)
     
@@ -94,13 +100,39 @@ class AppDelegate: NSObject {
             return
         }
         
-        guard let name = record.value(forKey: recordValueKey) as? String else {
-            return
+        let maxIter = record.value(forKey: maxIterValueKey) as? Double
+        let generator = record.value(forKey: generatorValueKey) as? String
+        
+        let minReal = record.value(forKey: minRealValueKey) as? Double
+        let maxReal = record.value(forKey: maxRealValueKey) as? Double
+        let minImaginary = record.value(forKey: minImaginaryValueKey) as? Double
+        let maxImaginary = record.value(forKey: maxImaginaryValueKey) as? Double
+        
+        let avgReal = (minReal != nil && maxReal != nil) ? 0.5 * (minReal! + maxReal!) : nil
+        let avgImaginary = (minImaginary != nil && maxImaginary != nil) ? 0.5 * (minImaginary! + maxImaginary!) : nil
+        
+        let format = "%.3f"
+        let centerDescription = (avgReal != nil && avgImaginary != nil) ? "(\(String(format: format, avgReal!)), \(String(format: format, avgImaginary!)))" : "N/A"
+        
+        let originalRange = 3.0
+        let scale = (minReal != nil && maxReal != nil) ? originalRange / (maxReal! - minReal!) : nil
+        let scaleDescription = scale == nil ? "N/A" : (scale! < 100000 ? String(format: "%.2f", scale!) : formatter.string(from: scale! as NSNumber))
+        
+        
+        var body = "􁇝 \(centerDescription)"
+        if let scaleDescription = scaleDescription {
+            body += ", 􀥩 \(scaleDescription)"
         }
-
+        if let maxIter = maxIter {
+            body += ", 􀊞 \(maxIter)"
+        }
+        if let generator = generator {
+            body += ", 􀫥 \(generator)"
+        }
+        
         let content = UNMutableNotificationContent()
         content.title = MandelbrotExplorerConstants.appName.rawValue
-        content.body = name
+        content.body = body
         content.sound = UNNotificationSound.default
         
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
@@ -108,6 +140,15 @@ class AppDelegate: NSObject {
         
         logger.log("Processed \(record)")
     }
+    
+    private var formatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .scientific
+        formatter.minimumSignificantDigits = 2
+        formatter.maximumSignificantDigits = 5
+        return formatter
+    }
+    
 }
 
 extension AppDelegate: UIApplicationDelegate {
