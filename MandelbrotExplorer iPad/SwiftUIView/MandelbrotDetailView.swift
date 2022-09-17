@@ -82,8 +82,8 @@ struct MandelbrotDetailView: View {
         .onAppear {
             if viewModel.defaultMandelbrotEntity == nil || viewModel.defaultMandelbrotEntity != entity {
                 viewModel.defaultMandelbrotEntity = entity
-                viewModel.prepareExploring()
             }
+            viewModel.prepareExploring()
         }
         .sheet(isPresented: $presentShareSheet) {
             if let imageToShare = viewModel.imageToShare {
