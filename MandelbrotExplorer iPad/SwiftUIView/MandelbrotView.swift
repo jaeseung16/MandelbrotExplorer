@@ -77,7 +77,6 @@ struct MandelbrotView: View {
                 } else {
                     let validatedLocation = validate(location: getLocation(in: bodyLength), in: geometry.size, given: getLength(in: bodyLength))
                     scaledLocation = CGPoint(x: validatedLocation.x / bodyLength, y: validatedLocation.y / bodyLength)
-                    
                 }
                 
                 viewModel.needToRefresh.toggle()
@@ -87,6 +86,7 @@ struct MandelbrotView: View {
             }
             .onChange(of: viewModel.prepared) { _ in
                 scaledLocation = CGPoint(x: 0.5, y: 0.5)
+                scaledLength = 1.0 / viewModel.scale
                 viewModel.needToRefresh.toggle()
             }
         }

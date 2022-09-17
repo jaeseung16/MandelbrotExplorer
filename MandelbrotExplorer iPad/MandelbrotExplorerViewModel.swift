@@ -102,8 +102,6 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         
         mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
         generateMandelbrotImage()
-        prepared.toggle()
-        
     }
     
     func updateRange(origin: CGPoint, length: CGFloat, originalLength: CGFloat) -> Void {
@@ -143,7 +141,6 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
         mandelbrotSet = MandelbrotSetFactory.createMandelbrotSet(with: generatingDevice, inZs: zs, inMaxIter: maxIter.rawValue, inColorMap: ColorMapFactory.getColorMap(colorMap, length: 256).colorMapInSIMD4)
         
-        self.calculating.toggle()
         DispatchQueue.global(qos: .userInitiated).async {
             self.mandelbrotSet?.calculate() { cgImage in
                 completionHandler(cgImage)
@@ -167,6 +164,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
     func generateDefaultMandelbrotImage() -> Void {
         let startTime = Date()
+        self.calculating.toggle()
         generateMandelbrotSet(within: self.defaultMandelbrotRect) { cgImage in
             guard self.mandelbrotSet != nil else {
                 self.logger.log("It was not successful to generate Mandelbrot set within \(self.defaultMandelbrotRect)")
@@ -186,6 +184,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
     func generateMandelbrotImage() -> Void {
         let startTime = Date()
+        self.calculating.toggle()
         generateMandelbrotSet(within: self.mandelbrotRect) { cgImage in
             guard self.mandelbrotSet != nil else {
                 self.logger.log("It was not successful to generate Mandelbrot set within \(self.mandelbrotRect)")

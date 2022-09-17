@@ -15,7 +15,6 @@ struct MandelbrotExplorerView: View {
     let defaultEntity: MandelbrotEntity
     
     @State private var showAlert = false
-    @State private var showProgress = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -65,6 +64,14 @@ struct MandelbrotExplorerView: View {
                                            maxReal: defaultEntity.maxReal,
                                            minImaginary: defaultEntity.minImaginary,
                                            maxImaginary: defaultEntity.maxImaginary)
+                        
+                        HStack {
+                            Spacer()
+                            Text("Color Map: \(defaultEntity.colorMap ?? "jet")")
+                            Spacer()
+                            Text("Maximum Iterations: \(defaultEntity.maxIter)")
+                            Spacer()
+                        }
                         
                     }
                     
@@ -121,7 +128,7 @@ struct MandelbrotExplorerView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        viewModel.prepareExploring()
+                        viewModel.prepared.toggle()
                     } label: {
                         Text("Reset")
                     }
