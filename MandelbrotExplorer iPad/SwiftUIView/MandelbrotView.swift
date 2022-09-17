@@ -86,6 +86,7 @@ struct MandelbrotView: View {
             }
             .onChange(of: viewModel.prepared) { _ in
                 scaledLocation = CGPoint(x: 0.5, y: 0.5)
+                viewModel.scale = 10.0
                 scaledLength = 1.0 / viewModel.scale
                 viewModel.needToRefresh.toggle()
             }
