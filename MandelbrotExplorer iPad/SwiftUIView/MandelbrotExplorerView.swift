@@ -99,6 +99,7 @@ struct MandelbrotExplorerView: View {
                 
                 Spacer()
             }
+            .disabled(viewModel.calculating)
             .alert("Saved", isPresented: $showAlert, actions: {
                 Button("Dismiss") {
                     //

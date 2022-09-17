@@ -45,6 +45,7 @@ struct MandelbrotDetailView: View {
             
             Spacer()
         }
+        .disabled(viewModel.calculating)
         .padding()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
