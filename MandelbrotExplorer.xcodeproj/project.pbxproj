@@ -80,6 +80,7 @@
 		908D79AB28A85EEC00445DFC /* MandelbrotDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D79AA28A85EEC00445DFC /* MandelbrotDetailView.swift */; };
 		908D79AD28A860DA00445DFC /* MandelbrotListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D79AC28A860DA00445DFC /* MandelbrotListView.swift */; };
 		90925DCC28B2A73B00B5A771 /* MandelbrotExplorerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90925DCB28B2A73B00B5A771 /* MandelbrotExplorerViewModel.swift */; };
+		9097F5FA28D7C8A700169115 /* MandelbrotExplorerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9097F5F928D7C8A700169115 /* MandelbrotExplorerHelper.swift */; };
 		90A5BCB328BACE5C0007F3F4 /* MandelbrotInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A5BCB228BACE5C0007F3F4 /* MandelbrotInfoView.swift */; };
 		90AA8A7528AD84DD00CBDDE9 /* MandelbrotExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AA8A7428AD84DD00CBDDE9 /* MandelbrotExplorerView.swift */; };
 		90AA8A7728AD9E1100CBDDE9 /* MandelbrotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AA8A7628AD9E1100CBDDE9 /* MandelbrotView.swift */; };
@@ -172,6 +173,7 @@
 		908D79AA28A85EEC00445DFC /* MandelbrotDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotDetailView.swift; sourceTree = "<group>"; };
 		908D79AC28A860DA00445DFC /* MandelbrotListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotListView.swift; sourceTree = "<group>"; };
 		90925DCB28B2A73B00B5A771 /* MandelbrotExplorerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerViewModel.swift; sourceTree = "<group>"; };
+		9097F5F928D7C8A700169115 /* MandelbrotExplorerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerHelper.swift; sourceTree = "<group>"; };
 		90A5BCB228BACE5C0007F3F4 /* MandelbrotInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotInfoView.swift; sourceTree = "<group>"; };
 		90AA8A7428AD84DD00CBDDE9 /* MandelbrotExplorerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotExplorerView.swift; sourceTree = "<group>"; };
 		90AA8A7628AD9E1100CBDDE9 /* MandelbrotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelbrotView.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				908D79A528A8580000445DFC /* MandelbrotExplorerApp.swift */,
 				9072B83028C6798B00849011 /* MandelbrotExplorerConstants.swift */,
 				9072B82E28C677F900849011 /* AppDelegate.swift */,
+				9097F5F928D7C8A700169115 /* MandelbrotExplorerHelper.swift */,
 				90925DCB28B2A73B00B5A771 /* MandelbrotExplorerViewModel.swift */,
 				908C7BD2252A74D4003D803B /* Assets.xcassets */,
 				908C7BD7252A74D4003D803B /* Info.plist */,
@@ -633,6 +636,7 @@
 				9042D2F4255CA3BD0002CEE0 /* MaxIter.swift in Sources */,
 				90AA8A7528AD84DD00CBDDE9 /* MandelbrotExplorerView.swift in Sources */,
 				90898F4D252BDD380084ACB4 /* MandelbrotID.swift in Sources */,
+				9097F5FA28D7C8A700169115 /* MandelbrotExplorerHelper.swift in Sources */,
 				903DD7B2254F322D00288FA5 /* ColorMapFactory.swift in Sources */,
 				903DD7C7254F360800288FA5 /* MandelbrotExplorerColors.swift in Sources */,
 				90045E16256496A100E99A02 /* MandelbrotConstants.swift in Sources */,
@@ -964,7 +968,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = MandelbrotNavigator2/MandelbrotNavigator2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = U8VSJXRJTQ;
 				INFOPLIST_FILE = MandelbrotNavigator2/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Mandelbrot Navigator 2";
@@ -994,7 +998,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = MandelbrotNavigator2/MandelbrotNavigator2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = U8VSJXRJTQ;
 				INFOPLIST_FILE = MandelbrotNavigator2/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Mandelbrot Navigator 2";
