@@ -124,7 +124,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     private var mandelbrotSet: MandelbrotSet?
     private var zs = [Complex<Double>]()
     func generateMandelbrotSet(within mandelbrotRect: ComplexRect, completionHandler: @escaping ((CGImage) -> Void)) -> Void {
-        logger.log("MandelbrotDisplay.generateMandelbrotSet() called for mandelbrotRect=\(mandelbrotRect), maxIter = \(self.maxIter.rawValue), calculationSize=\(self.calculationSize), calculating=\(self.calculating)")
+        logger.log("MandelbrotExplorerViewModel.generateMandelbrotSet() called for mandelbrotRect=\(mandelbrotRect, privacy: .public), maxIter = \(self.maxIter.rawValue, privacy: .public), calculationSize=\(self.calculationSize, privacy: .public), calculating=\(self.calculating, privacy: .public)")
         
         let startTime = Date()
         
@@ -149,9 +149,9 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         
         let timeToCalculate = Date()
         
-        logger.log("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToPrepare.timeIntervalSince(startTime)) seconds to populate inputs")
+        logger.log("MandelbrotExplorerViewModel.generateMandelbrotSet(): It took \(timeToPrepare.timeIntervalSince(startTime), privacy: .public) seconds to populate inputs")
         
-        logger.log("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToCalculate.timeIntervalSince(timeToPrepare)) seconds to generate mandelbrotSet")
+        logger.log("MandelbrotExplorerViewModel.generateMandelbrotSet(): It took \(timeToCalculate.timeIntervalSince(timeToPrepare), privacy: .public) seconds to generate mandelbrotSet")
     }
     
     
@@ -167,7 +167,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         self.calculating.toggle()
         generateMandelbrotSet(within: self.defaultMandelbrotRect) { cgImage in
             guard self.mandelbrotSet != nil else {
-                self.logger.log("It was not successful to generate Mandelbrot set within \(self.defaultMandelbrotRect)")
+                self.logger.log("It was not successful to generate Mandelbrot set within \(self.defaultMandelbrotRect, privacy: .public)")
                 return
             }
             
@@ -175,7 +175,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
                 self.defaultMandelbrotImage = UIImage(cgImage: cgImage)
                 
                 let timeToSetImage = Date()
-                self.logger.log("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToSetImage.timeIntervalSince(startTime)) seconds, calculating=\(self.calculating)")
+                self.logger.log("MandelbrotExplorerViewModel.generateDefaultMandelbrotImage(): It took \(timeToSetImage.timeIntervalSince(startTime), privacy: .public) seconds, calculating=\(self.calculating, privacy: .public)")
             
                 self.calculating.toggle()
             }
@@ -187,7 +187,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         self.calculating.toggle()
         generateMandelbrotSet(within: self.mandelbrotRect) { cgImage in
             guard self.mandelbrotSet != nil else {
-                self.logger.log("It was not successful to generate Mandelbrot set within \(self.mandelbrotRect)")
+                self.logger.log("It was not successful to generate Mandelbrot set within \(self.mandelbrotRect, privacy: .public)")
                 return
             }
             
@@ -195,7 +195,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
                 self.mandelbrotImage = UIImage(cgImage: cgImage)
                 
                 let timeToSetImage = Date()
-                self.logger.log("MandelbrotDisplay.generateMandelbrotSet(): It took \(timeToSetImage.timeIntervalSince(startTime)) seconds, calculating=\(self.calculating)")
+                self.logger.log("MandelbrotExplorerViewModel.generateMandelbrotImage(): It took \(timeToSetImage.timeIntervalSince(startTime)) seconds, calculating=\(self.calculating, privacy: .public)")
             
                 self.calculating.toggle()
             }
@@ -351,7 +351,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     func firstLaunch(context: NSManagedObjectContext, completionHandler: ((Bool) -> Void)?) -> Void {
         let entityCount = persistence.count("MandelbrotEntity")
         
-        logger.log("firstLaunch: entityCount=\(entityCount)")
+        logger.log("firstLaunch: entityCount=\(entityCount, privacy: .public)")
         if entityCount < 1 {
             createMandelbrotEntity(viewContext: context, completionHandler: completionHandler)
         } else {
