@@ -95,7 +95,7 @@ class AppDelegate: NSObject {
     }
     
     private func processRecord(_ record: CKRecord) {
-        logger.log("Processing \(record)")
+        logger.log("Processing \(record, privacy: .public)")
         
         guard record.recordType == recordType else {
             return
@@ -109,10 +109,10 @@ class AppDelegate: NSObject {
         let minImaginary = record.value(forKey: minImaginaryValueKey) as? Double
         let maxImaginary = record.value(forKey: maxImaginaryValueKey) as? Double
         
-        logger.log("minReal=\(String(describing: minReal))")
-        logger.log("maxReal=\(String(describing: maxReal))")
-        logger.log("minImaginary=\(String(describing: minImaginary))")
-        logger.log("maxImaginary=\(String(describing: maxImaginary))")
+        logger.log("minReal=\(String(describing: minReal), privacy: .public)")
+        logger.log("maxReal=\(String(describing: maxReal), privacy: .public)")
+        logger.log("minImaginary=\(String(describing: minImaginary), privacy: .public)")
+        logger.log("maxImaginary=\(String(describing: maxImaginary), privacy: .public)")
         
         let avgReal = (minReal != nil && maxReal != nil) ? 0.5 * (minReal! + maxReal!) : nil
         let avgImaginary = (minImaginary != nil && maxImaginary != nil) ? 0.5 * (minImaginary! + maxImaginary!) : nil
@@ -143,7 +143,7 @@ class AppDelegate: NSObject {
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request)
         
-        logger.log("Processed \(record)")
+        logger.log("Processed \(record, privacy: .public)")
     }
     
     private var formatter: NumberFormatter {
