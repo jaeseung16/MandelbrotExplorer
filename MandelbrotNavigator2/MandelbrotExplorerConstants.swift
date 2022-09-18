@@ -9,7 +9,7 @@
 import Foundation
 
 enum MandelbrotExplorerConstants: String {
-    case appName = "MandelbrotNavigator"
+    case appName = "MandelbrotNavigator2"
     case modelName = "MandelbrotExplorer_iPad"
     case containerIdentifier = "iCloud.com.resonance.jlee.MandelbrotExplorer"
 }
