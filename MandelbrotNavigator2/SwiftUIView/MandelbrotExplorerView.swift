@@ -46,6 +46,12 @@ struct MandelbrotExplorerView: View {
                         Text("Scale: \(viewModel.scale)")
                         
                         optionView
+                            .onChange(of: viewModel.colorMap) { _ in
+                                viewModel.generateMandelbrotImage()
+                            }
+                            .onChange(of: viewModel.maxIter) { _ in
+                                viewModel.generateMandelbrotImage()
+                            }
                     }
                     
                     Spacer()

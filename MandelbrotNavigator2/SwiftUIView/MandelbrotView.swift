@@ -64,12 +64,6 @@ struct MandelbrotView: View {
             .gesture(dragGesture)
             .simultaneousGesture(magnificationGesture)
             .frame(width: bodyLength, height: bodyLength)
-            .onChange(of: viewModel.colorMap) { _ in
-                viewModel.update(viewModel.colorMap, isDefault: false)
-            }
-            .onChange(of: viewModel.maxIter) { _ in
-                viewModel.generateMandelbrotImage()
-            }
             .onChange(of: geometry.size) { _ in
                 if getLength(in: bodyLength) >= bodyLength {
                     scaledLength = 1.0
