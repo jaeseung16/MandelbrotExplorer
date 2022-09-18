@@ -23,8 +23,8 @@ class AppDelegate: NSObject {
     private let generatorValueKey = "CD_generator"
     private let minRealValueKey = "CD_minReal"
     private let maxRealValueKey = "CD_maxReal"
-    private let minImaginaryValueKey = "CD_minImaginaryValueKey"
-    private let maxImaginaryValueKey = "CD_maxImaginaryValueKey"
+    private let minImaginaryValueKey = "CD_minImaginary"
+    private let maxImaginaryValueKey = "CD_maxImaginary"
     
     private let databaseOperationHelper = DatabaseOperationHelper(appName: MandelbrotExplorerConstants.modelName.rawValue)
     
