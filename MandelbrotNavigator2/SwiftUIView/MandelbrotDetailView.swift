@@ -66,7 +66,6 @@ struct MandelbrotDetailView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     viewModel.update(entity, viewContext: viewContext) { success in
-                        print("update success=\(success)")
                         if success {
                             modified = false
                         } else {
@@ -191,7 +190,6 @@ struct MandelbrotDetailView: View {
                     }
                 }
                 
-                
                 Text("created on ").font(.caption) + Text(created, format: Date.FormatStyle(date: .numeric, time: .omitted)).font(.caption)
             }
         }
@@ -205,44 +203,4 @@ struct MandelbrotDetailView: View {
         .frame(width: 500, height: 500)
     }
     
-    private func generateImage() -> UIImage {
-        let controller = UIHostingController(rootView: shareView)
-        let view = controller.view
-        
-        let targetSize = controller.view.intrinsicContentSize
-        view?.bounds = CGRect(origin: .zero, size: targetSize)
-        view?.backgroundColor = .clear
-        
-        let format = UIGraphicsImageRendererFormat()
-        format.scale = 1
-        
-        let renderer = UIGraphicsImageRenderer(size: targetSize, format: format)
-        let renderedImage = renderer.image { ctx in
-            view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
-        }
-        return renderedImage
-    }
-    
-}
-
-extension View {
-    func snapshot() -> UIImage {
-        var uiImage = UIImage(systemName: "exclamationmark.triangle.fill")!
-        
-        let controller = UIHostingController(rootView: self)
-        
-        if let view = controller.view {
-            let contentSize = controller.view.intrinsicContentSize
-            view.bounds = CGRect(origin: .zero, size: contentSize)
-            view.backgroundColor = .clear
-            
-            let renderer = UIGraphicsImageRenderer(size: contentSize)
-            
-            uiImage = renderer.image { _ in
-                view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
-            }
-        }
-        
-        return uiImage
-    }
 }
