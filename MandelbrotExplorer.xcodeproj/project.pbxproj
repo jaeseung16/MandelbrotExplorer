@@ -968,7 +968,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = MandelbrotNavigator2/MandelbrotNavigator2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = U8VSJXRJTQ;
 				INFOPLIST_FILE = MandelbrotNavigator2/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Mandelbrot Navigator 2";
@@ -998,7 +998,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = MandelbrotNavigator2/MandelbrotNavigator2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = U8VSJXRJTQ;
 				INFOPLIST_FILE = MandelbrotNavigator2/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Mandelbrot Navigator 2";
