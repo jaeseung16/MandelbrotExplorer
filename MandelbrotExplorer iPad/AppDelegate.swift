@@ -16,8 +16,8 @@ import Persistence
 class AppDelegate: NSObject {
     private let logger = Logger()
     
-    private let subscriptionID = "compound-updated"
-    private let didCreateCompoundSubscription = "didCreateCompoundSubscription"
+    private let subscriptionID = "mandelbrotentity-updated"
+    private let didCreateMandelbrotEntitySubscription = "didCreateMandelbrotEntitySubscription"
     private let recordType = "CD_MandelbrotEntity"
     private let maxIterValueKey = "CD_maxIter"
     private let generatorValueKey = "CD_generator"
@@ -25,7 +25,6 @@ class AppDelegate: NSObject {
     private let maxRealValueKey = "CD_maxReal"
     private let minImaginaryValueKey = "CD_minImaginaryValueKey"
     private let maxImaginaryValueKey = "CD_maxImaginaryValueKey"
-    
     
     private let databaseOperationHelper = DatabaseOperationHelper(appName: MandelbrotExplorerConstants.modelName.rawValue)
     
@@ -65,8 +64,8 @@ class AppDelegate: NSObject {
     }
     
     private func subscribe() {
-        guard !UserDefaults.standard.bool(forKey: didCreateCompoundSubscription) else {
-            logger.log("alredy true: didCreateCompoundSubscription=\(UserDefaults.standard.bool(forKey: self.didCreateCompoundSubscription))")
+        guard !UserDefaults.standard.bool(forKey: didCreateMandelbrotEntitySubscription) else {
+            logger.log("alredy true: didCreateMandelbrotEntitySubscription=\(UserDefaults.standard.bool(forKey: self.didCreateMandelbrotEntitySubscription))")
             return
         }
         
@@ -75,11 +74,11 @@ class AppDelegate: NSObject {
             switch result {
             case .success(let subscription):
                 self.logger.log("Subscribed to \(subscription, privacy: .public)")
-                UserDefaults.standard.setValue(true, forKey: self.didCreateCompoundSubscription)
-                self.logger.log("set: didCreateCompoundSubscription=\(UserDefaults.standard.bool(forKey: self.didCreateCompoundSubscription))")
+                UserDefaults.standard.setValue(true, forKey: self.didCreateMandelbrotEntitySubscription)
+                self.logger.log("set: didCreateMandelbrotEntitySubscription=\(UserDefaults.standard.bool(forKey: self.didCreateMandelbrotEntitySubscription))")
             case .failure(let error):
                 self.logger.log("Failed to modify subscription: \(error.localizedDescription, privacy: .public)")
-                UserDefaults.standard.setValue(false, forKey: self.didCreateCompoundSubscription)
+                UserDefaults.standard.setValue(false, forKey: self.didCreateMandelbrotEntitySubscription)
             }
         }
     }
