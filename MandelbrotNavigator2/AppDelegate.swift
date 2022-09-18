@@ -43,13 +43,12 @@ class AppDelegate: NSObject {
     }
     
     private func registerForPushNotifications() {
-        UNUserNotificationCenter.current()
-            .requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
-                guard granted else {
-                    return
-                }
-                self?.getNotificationSettings()
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
+            guard granted else {
+                return
             }
+            self?.getNotificationSettings()
+        }
     }
 
     private func getNotificationSettings() {
@@ -109,11 +108,6 @@ class AppDelegate: NSObject {
         let minImaginary = record.value(forKey: minImaginaryValueKey) as? Double
         let maxImaginary = record.value(forKey: maxImaginaryValueKey) as? Double
         
-        logger.log("minReal=\(String(describing: minReal), privacy: .public)")
-        logger.log("maxReal=\(String(describing: maxReal), privacy: .public)")
-        logger.log("minImaginary=\(String(describing: minImaginary), privacy: .public)")
-        logger.log("maxImaginary=\(String(describing: maxImaginary), privacy: .public)")
-        
         let avgReal = (minReal != nil && maxReal != nil) ? 0.5 * (minReal! + maxReal!) : nil
         let avgImaginary = (minImaginary != nil && maxImaginary != nil) ? 0.5 * (minImaginary! + maxImaginary!) : nil
         
@@ -158,28 +152,21 @@ class AppDelegate: NSObject {
 
 extension AppDelegate: UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-       
         logger.log("didFinishLaunchingWithOptions")
         UNUserNotificationCenter.current().delegate = self
-        
         registerForPushNotifications()
-        
-        // TODO: - Remove or comment out after testing
-        //UserDefaults.standard.setValue(false, forKey: didCreateCompoundSubscription)
-        
         subscribe()
-
         return true
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { String(format: "%02.2hhx", $0) }
         let token = tokenParts.joined()
-        logger.log("Device Token: \(token)")
+        logger.log("Device Token: \(token, privacy: .public)")
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        logger.log("Failed to register: \(String(describing: error))")
+        logger.log("Failed to register: \(error.localizedDescription, privacy: .public)")
     }
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
@@ -196,25 +183,24 @@ extension AppDelegate: UIApplicationDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         guard let notification = CKNotification(fromRemoteNotificationDictionary: userInfo) else {
-            logger.log("notification=failed")
+            logger.log("didReceiveRemoteNotification: notification is nil")
             completionHandler(.failed)
             return
         }
-        logger.log("notification=\(String(describing: notification))")
+        logger.log("didReceiveRemoteNotification: notification=\(String(describing: notification))")
         if !notification.isPruned && notification.notificationType == .database {
             if let databaseNotification = notification as? CKDatabaseNotification, databaseNotification.subscriptionID == subscriptionID {
-                logger.log("databaseNotification=\(String(describing: databaseNotification.subscriptionID))")
+                logger.log("didReceiveRemoteNotification: databaseNotification=\(String(describing: databaseNotification.subscriptionID))")
                 processRemoteNotification()
             }
         }
-        
         completionHandler(.newData)
     }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        logger.info("userNotificationCenter: notification=\(notification)")
+        logger.info("userNotificationCenter: notification=\(notification, privacy: .public)")
         completionHandler([.banner, .sound])
     }
     
