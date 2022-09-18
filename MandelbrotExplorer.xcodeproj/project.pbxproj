@@ -381,7 +381,6 @@
 				908C7BD7252A74D4003D803B /* Info.plist */,
 				908C7BCF252A74D2003D803B /* MandelbrotExplorer_iPad.xcdatamodeld */,
 				90CA90692548DBED001EA6F5 /* MandelbrotEntity+Extension.swift */,
-				906F632D28C63FBE00C988AA /* FirstLaunchView.swift */,
 			);
 			path = MandelbrotNavigator2;
 			sourceTree = "<group>";
@@ -389,6 +388,7 @@
 		908D79A928A85EB800445DFC /* SwiftUIView */ = {
 			isa = PBXGroup;
 			children = (
+				906F632D28C63FBE00C988AA /* FirstLaunchView.swift */,
 				908D79AA28A85EEC00445DFC /* MandelbrotDetailView.swift */,
 				90A5BCB228BACE5C0007F3F4 /* MandelbrotInfoView.swift */,
 				908D79AC28A860DA00445DFC /* MandelbrotListView.swift */,
