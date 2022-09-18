@@ -95,17 +95,24 @@ class AppDelegate: NSObject {
     }
     
     private func processRecord(_ record: CKRecord) {
+        logger.log("Processing \(record)")
+        
         guard record.recordType == recordType else {
             return
         }
         
-        let maxIter = record.value(forKey: maxIterValueKey) as? Double
+        let maxIter = record.value(forKey: maxIterValueKey) as? Int
         let generator = record.value(forKey: generatorValueKey) as? String
         
         let minReal = record.value(forKey: minRealValueKey) as? Double
         let maxReal = record.value(forKey: maxRealValueKey) as? Double
         let minImaginary = record.value(forKey: minImaginaryValueKey) as? Double
         let maxImaginary = record.value(forKey: maxImaginaryValueKey) as? Double
+        
+        logger.log("minReal=\(String(describing: minReal))")
+        logger.log("maxReal=\(String(describing: maxReal))")
+        logger.log("minImaginary=\(String(describing: minImaginary))")
+        logger.log("maxImaginary=\(String(describing: maxImaginary))")
         
         let avgReal = (minReal != nil && maxReal != nil) ? 0.5 * (minReal! + maxReal!) : nil
         let avgImaginary = (minImaginary != nil && maxImaginary != nil) ? 0.5 * (minImaginary! + maxImaginary!) : nil
@@ -117,16 +124,15 @@ class AppDelegate: NSObject {
         let scale = (minReal != nil && maxReal != nil) ? originalRange / (maxReal! - minReal!) : nil
         let scaleDescription = scale == nil ? "N/A" : (scale! < 100000 ? String(format: "%.2f", scale!) : formatter.string(from: scale! as NSNumber))
         
-        
-        var body = "􁇝 \(centerDescription)"
+        var body = "center: \(centerDescription)\n"
         if let scaleDescription = scaleDescription {
-            body += ", 􀥩 \(scaleDescription)"
+            body += "scale: \(scaleDescription)\n"
         }
         if let maxIter = maxIter {
-            body += ", 􀊞 \(maxIter)"
+            body += "iterations: \(maxIter)\n"
         }
         if let generator = generator {
-            body += ", 􀫥 \(generator)"
+            body += "device: \(generator)"
         }
         
         let content = UNMutableNotificationContent()
