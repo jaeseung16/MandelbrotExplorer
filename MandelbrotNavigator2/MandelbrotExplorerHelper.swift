@@ -9,6 +9,7 @@
 import Foundation
 import os
 import ComplexModule
+import CoreGraphics
 
 class MandelbrotExplorerHelper {
     static let logger = Logger()
