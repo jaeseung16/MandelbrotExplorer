@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import ComplexModule
 
 struct FirstLaunchView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -14,6 +15,9 @@ struct FirstLaunchView: View {
     @Environment(\.dismiss) private var dismiss
     
     private let hasLaunchedBeforeKey = "HasLaunchedBefore"
+    private let parameters = MandelbrotExplorerParameters(maxIter: .twoHundred,
+                                                          colorMap: .jet,
+                                                          generatingDevice: .gpu)
     
     @State private var showAlert = false
     
@@ -29,13 +33,10 @@ struct FirstLaunchView: View {
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                viewModel.generateMandelbrotImage()
+                viewModel.generateDefaultMandelbrotImage(parameters: parameters)
             }
         }
-        .onDisappear() {
-            viewModel.toggle.toggle()
-        }
-        .onChange(of: viewModel.mandelbrotImage, perform: { _ in
+        .onChange(of: viewModel.defaultMandelbrotImage, perform: { _ in
             viewModel.firstLaunch(context: viewContext) { success in
                 if success {
                     UserDefaults.standard.set(true, forKey: hasLaunchedBeforeKey)

@@ -45,10 +45,16 @@ struct MandelbrotDetailView: View {
     @State private var presentExplorerView = false
     @State private var calculating = false
     
+    @State private var zoomedMandelbrotImage: UIImage?
+    
     var body: some View {
         VStack {
             NavigationLink {
-                MandelbrotExplorerView(defaultEntity: entity)
+                MandelbrotExplorerView(defaultEntity: entity,
+                                       maxIter: MaxIter(rawValue: Int(entity.maxIter)) ?? .twoHundred,
+                                       colorMap: MandelbrotExplorerColorMap(rawValue: entity.colorMap ?? "jet") ?? .jet,
+                                       generatingDevice: MandelbrotSetGeneratingDevice(rawValue: entity.generator ?? "gpu") ?? .gpu,
+                                       zoomedMandelbrotImage: zoomedMandelbrotImage)
             } label: {
                 Label("Explore", systemImage: "magnifyingglass")
             }
@@ -100,7 +106,9 @@ struct MandelbrotDetailView: View {
             if viewModel.defaultMandelbrotEntity == nil || viewModel.defaultMandelbrotEntity != entity {
                 viewModel.defaultMandelbrotEntity = entity
             }
-            viewModel.prepareExploring()
+            viewModel.prepareExploring() { uiImage in
+                zoomedMandelbrotImage = uiImage
+            }
         }
         .sheet(isPresented: $presentShareSheet) {
             if let imageToShare = viewModel.imageToShare {

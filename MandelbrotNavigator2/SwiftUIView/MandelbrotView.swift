@@ -7,12 +7,15 @@
 //
 
 import SwiftUI
+import Combine
 
 struct MandelbrotView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var viewModel: MandelbrotExplorerViewModel
     
     let uiImage: UIImage
+    @Binding var needToUpdate: Bool
+    @Binding var reset: Bool
     @State var scaledLocation: CGPoint
     @State var scaledLength: CGFloat
     
@@ -35,7 +38,8 @@ struct MandelbrotView: View {
                     scaledLocation = CGPoint(x: validatedLocation.x / bodyLength, y: validatedLocation.y / bodyLength)
                 }
                 .onEnded { _ in
-                    viewModel.needToRefresh.toggle()
+                    print("DragGesture onEnded")
+                    prepareForUpdate(bodyLength)
                 }
                 
             let magnificationGesture = MagnificationGesture(minimumScaleDelta: 0.001)
@@ -48,7 +52,7 @@ struct MandelbrotView: View {
                     scaledLength = validatedLength / bodyLength
                 }
                 .onEnded { _ in
-                    viewModel.needToRefresh.toggle()
+                    prepareForUpdate(bodyLength)
                 }
             
             ZStack {
@@ -73,16 +77,14 @@ struct MandelbrotView: View {
                     scaledLocation = CGPoint(x: validatedLocation.x / bodyLength, y: validatedLocation.y / bodyLength)
                 }
                 
-                viewModel.needToRefresh.toggle()
+                prepareForUpdate(bodyLength)
             }
-            .onChange(of: viewModel.refresh) { _ in
-                viewModel.updateRange(origin: getLocation(in: bodyLength), length: getLength(in: bodyLength), originalLength: bodyLength)
-            }
-            .onChange(of: viewModel.prepared) { _ in
+            .onChange(of: reset) { _ in
+                print("**** reset=\(reset)")
                 scaledLocation = CGPoint(x: 0.5, y: 0.5)
                 viewModel.scale = 10.0
                 scaledLength = 1.0 / viewModel.scale
-                viewModel.needToRefresh.toggle()
+                prepareForUpdate(bodyLength)
             }
         }
     }
@@ -148,5 +150,9 @@ struct MandelbrotView: View {
         return newLength
     }
     
+    private func prepareForUpdate(_ bodyLength: CGFloat) -> Void {
+        viewModel.updateRange(origin: getLocation(in: bodyLength), length: getLength(in: bodyLength), originalLength: bodyLength)
+        needToUpdate.toggle()
+    }
 }
 

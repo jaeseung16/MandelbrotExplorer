@@ -20,22 +20,19 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
     private let largestMandelbrotRect = ComplexRect(Complex<Double>(-2.1, -1.5), Complex<Double>(0.9, 1.5))
     
-    @Published var mandelbrotRect = ComplexRect(Complex<Double>(-2.1, -1.5), Complex<Double>(0.9, 1.5))
-    @Published var scale = CGFloat(10.0)
+    var mandelbrotRect = ComplexRect(Complex<Double>(-2.1, -1.5), Complex<Double>(0.9, 1.5))
+    var scale = CGFloat(10.0)
     
-    @Published var maxIter: MaxIter = .twoHundred
-    @Published var colorMap: MandelbrotExplorerColorMap = .jet
+    var maxIter: MaxIter = .twoHundred
+    var colorMap: MandelbrotExplorerColorMap = .jet
     
-    @Published var needToRefresh: Bool = false
-    @Published var refresh: Bool = false
     @Published var toggle: Bool = false
     @Published var showAlert: Bool = false
     @Published var imageToShare: UIImage?
-    @Published var calculating: Bool = false
-    @Published var generatingDevice: MandelbrotSetGeneratingDevice = .gpu
+    var generatingDevice: MandelbrotSetGeneratingDevice = .gpu
     
     @Published var defaultMandelbrotImage: UIImage?
-    @Published var mandelbrotImage: UIImage?
+    var mandelbrotImage: UIImage?
     
     @Published var prepared: Bool = false
     
@@ -53,21 +50,9 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     
     var defaultMandelbrotEntity: MandelbrotEntity? {
         didSet {
-            guard let entity = defaultMandelbrotEntity else {
-                return
-            }
-            
             logger.log("defaultMandelbrotEntity didSet")
-            
             defaultMandelbrotImage = nil
             mandelbrotImage = nil
-            
-            colorMap = MandelbrotExplorerColorMap(rawValue: entity.colorMap ?? "jet") ?? .jet
-            generatingDevice = MandelbrotSetGeneratingDevice(rawValue: entity.generator ?? "gpu") ?? .gpu
-            
-            // In order to avoid a long wait
-            maxIter = .twoHundred
-            
             scale = CGFloat(10.0)
         }
     }
@@ -82,12 +67,6 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         
         super.init()
         
-        $needToRefresh
-            .throttle(for: 2.0, scheduler: RunLoop.main, latest: true)
-            .sink(receiveCompletion: { print("completion: \($0)") },
-                  receiveValue: { _ in self.refresh.toggle() })
-            .store(in: &subscriptions)
-        
         NotificationCenter.default
           .publisher(for: .NSPersistentStoreRemoteChange)
           .sink { self.fetchUpdates($0) }
@@ -96,10 +75,16 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         self.persistence.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
     
-    func prepareExploring() -> Void {
+    func prepareExploring(completionHandler: ((UIImage?) -> Void)? = nil) -> Void {
         guard let entity = defaultMandelbrotEntity else {
             return
         }
+        
+        let parameters = MandelbrotExplorerParameters(
+            maxIter: MaxIter(rawValue: Int(entity.maxIter)) ?? .twoHundred,
+            colorMap: MandelbrotExplorerColorMap(rawValue: entity.colorMap ?? "jet") ?? .jet,
+            generatingDevice: MandelbrotSetGeneratingDevice(rawValue: entity.generator ?? "gpu") ?? .gpu
+        )
         
         scale = CGFloat(10.0)
         
@@ -110,7 +95,12 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         let maxY = entity.maxImaginary - (0.5 + 0.5 / scale) * (entity.maxImaginary - entity.minImaginary)
         
         mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
-        generateMandelbrotImage()
+        
+        generateMandelbrotImage(within: mandelbrotRect, parameters: parameters) {
+            completionHandler?(self.mandelbrotImage)
+        }
+        
+        logger.log("prepareExploring finished")
     }
     
     func updateRange(origin: CGPoint, length: CGFloat, originalLength: CGFloat) -> Void {
@@ -128,6 +118,8 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         let maxY = defaultMandelbrotEntity.maxImaginary - (origin.y + 0.5 * length) / originalLength * (defaultMandelbrotEntity.maxImaginary - defaultMandelbrotEntity.minImaginary)
         
         mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
+        
+        logger.log("Updated mandelbrotRect=\(self.mandelbrotRect, privacy: .public)")
     }
     
     func generateDefaultMandelbrotImage(parameters: MandelbrotExplorerParameters, completionHandler: (() -> Void)? = nil) -> Void {
@@ -143,54 +135,38 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
                 self.defaultMandelbrotImage = UIImage(cgImage: cgImage)
                 
                 let timeToSetImage = Date()
-                self.logger.log("MandelbrotExplorerViewModel.generateDefaultMandelbrotImage(): It took \(timeToSetImage.timeIntervalSince(startTime), privacy: .public) seconds, calculating=\(self.calculating2, privacy: .public)")
+                self.logger.log("MandelbrotExplorerViewModel.generateDefaultMandelbrotImage(): It took \(timeToSetImage.timeIntervalSince(startTime), privacy: .public) seconds")
                 
                 completionHandler?()
             }
         }
     }
     
-    func generateMandelbrotImage() -> Void {
+    func generateMandelbrotImage(within mandelbrotRect: ComplexRect, parameters: MandelbrotExplorerParameters, completionHandler: (() -> Void)? = nil) -> Void {
         let startTime = Date()
-        self.calculating.toggle()
-        MandelbrotExplorerHelper.generateMandelbrotSet(within: self.mandelbrotRect, maxIter: self.maxIter.rawValue, size: self.calculationSize, colorMap: ColorMapFactory.getColorMap(colorMap, length: 256), device: self.generatingDevice) { mandelbrotSet, cgImage in
+        self.update(parameters: parameters)
+        MandelbrotExplorerHelper.generateMandelbrotSet(within: mandelbrotRect,
+                                                       maxIter: parameters.maxIter.rawValue,
+                                                       size: MandelbrotExplorerParameters.calculationSize,
+                                                       colorMap: ColorMapFactory.getColorMap(parameters.colorMap, length: 256),
+                                                       device: parameters.generatingDevice) { mandelbrotSet, cgImage in
             self.mandelbrotSet = mandelbrotSet
             
             DispatchQueue.main.async {
                 self.mandelbrotImage = UIImage(cgImage: cgImage)
                 
                 let timeToSetImage = Date()
-                self.logger.log("MandelbrotExplorerViewModel.generateDefaultMandelbrotImage(): It took \(timeToSetImage.timeIntervalSince(startTime), privacy: .public) seconds, calculating=\(self.calculating, privacy: .public)")
+                self.logger.log("MandelbrotExplorerViewModel.generateDefaultMandelbrotImage(): It took \(timeToSetImage.timeIntervalSince(startTime), privacy: .public) seconds")
                 
-                self.calculating.toggle()
+                completionHandler?()
             }
         }
     }
     
-    private func setImage(for mandelbrotSet: MandelbrotSet?, isDefault: Bool) -> Void {
-        guard let mandelbrotSet = self.mandelbrotSet else {
-            print("self.mandelbrotSet is null")
-            return
-        }
-        
-        if mandelbrotSet is MandelbrotSetGPU {
-            if isDefault {
-                self.defaultMandelbrotImage = UIImage(cgImage: mandelbrotSet.cgImage)
-            } else {
-                self.mandelbrotImage = UIImage(cgImage: mandelbrotSet.cgImage)
-            }
-        } else {
-            let mandelbrotImageGenerator: MandelbrotImageGenerator
-            mandelbrotImageGenerator = MandelbrotImageGenerator(cgColors: ColorMapFactory.getColorMap(colorMap, length: 256).colorMapInSIMD4)
-            mandelbrotImageGenerator.generateCGImage(values: mandelbrotSet.values, lengthOfRow: Int(sqrt(Double(mandelbrotSet.values.count))))
-            
-            if isDefault {
-                self.defaultMandelbrotImage = UIImage(cgImage: mandelbrotImageGenerator.cgImage)
-            } else {
-                self.mandelbrotImage = UIImage(cgImage: mandelbrotImageGenerator.cgImage)
-            }
-        }
-        logger.log("mandelbrotImage=\(String(describing: self.mandelbrotImage))")
+    private func update(parameters: MandelbrotExplorerParameters) -> Void {
+        self.colorMap = parameters.colorMap
+        self.maxIter = parameters.maxIter
+        self.generatingDevice = parameters.generatingDevice
     }
     
     func createMandelbrotEntity(viewContext: NSManagedObjectContext, completionHandler: ((Bool) -> Void)?) -> Void {
@@ -274,7 +250,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     func isTooSmallToUseGPU() -> Bool {
         let diffReal = Float(mandelbrotRect.maxReal - mandelbrotRect.minReal)
         let diffImaginary = Float(mandelbrotRect.maxImaginary - mandelbrotRect.minImaginary)
-        let allowedDiff = Float.ulpOfOne * Float(calculationSize) / 2.0
+        let allowedDiff = Float.ulpOfOne * Float(MandelbrotExplorerParameters.calculationSize) / 2.0
         return diffReal < allowedDiff || diffImaginary < allowedDiff
     }
     
@@ -288,6 +264,7 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         
         logger.log("firstLaunch: entityCount=\(entityCount, privacy: .public)")
         if entityCount < 1 {
+            mandelbrotImage = defaultMandelbrotImage
             createMandelbrotEntity(viewContext: context, completionHandler: completionHandler)
         } else {
             completionHandler?(true)

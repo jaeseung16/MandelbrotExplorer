@@ -14,7 +14,30 @@ struct MandelbrotExplorerView: View {
     
     let defaultEntity: MandelbrotEntity
     
+    @State private var needToUpdate = false
+    @State private var reset = false
     @State private var showAlert = false
+    
+    @State var maxIter: MaxIter
+    @State var colorMap: MandelbrotExplorerColorMap
+    @State var generatingDevice: MandelbrotSetGeneratingDevice
+    
+    private var parameters: MandelbrotExplorerParameters {
+        return MandelbrotExplorerParameters(maxIter: maxIter,
+                                            colorMap: colorMap,
+                                            generatingDevice: generatingDevice)
+    }
+    
+    @State var zoomedMandelbrotImage: UIImage?
+    @State private var calculating = false
+    
+    private func calculate() -> Void {
+        calculating.toggle()
+        viewModel.generateMandelbrotImage(within: viewModel.mandelbrotRect, parameters: parameters) {
+            calculating.toggle()
+            zoomedMandelbrotImage = viewModel.mandelbrotImage
+        }
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -25,15 +48,17 @@ struct MandelbrotExplorerView: View {
                     Spacer()
                     
                     VStack {
-                        ZoomedMandelbrotView()
+                        ZoomedMandelbrotView(uiImage: $zoomedMandelbrotImage)
                             .scaledToFit()
-                            .onChange(of: viewModel.mandelbrotRect) { _ in
-                                viewModel.generateMandelbrotImage()
-                            }
                             .overlay {
                                 ProgressView("Please wait...")
+                                    .foregroundColor(.white)
                                     .progressViewStyle(CircularProgressViewStyle())
-                                    .opacity(viewModel.calculating ? 1 : 0)
+                                    .opacity(calculating ? 1 : 0)
+                            }
+                            .onChange(of: needToUpdate) { newValue in
+                                print("*** needToUpdate=\(newValue)")
+                                calculate()
                             }
                             
                         Divider()
@@ -46,11 +71,13 @@ struct MandelbrotExplorerView: View {
                         Text("Scale: \(viewModel.scale)")
                         
                         optionView
-                            .onChange(of: viewModel.colorMap) { _ in
-                                viewModel.generateMandelbrotImage()
+                            .onChange(of: colorMap) { _ in
+                                print("colorMap updated")
+                                calculate()
                             }
-                            .onChange(of: viewModel.maxIter) { _ in
-                                viewModel.generateMandelbrotImage()
+                            .onChange(of: maxIter) { _ in
+                                print("maxIter updated")
+                                calculate()
                             }
                     }
                     
@@ -59,6 +86,8 @@ struct MandelbrotExplorerView: View {
                     VStack {
                         if let data = defaultEntity.image, let uiImage = UIImage(data: data) {
                             MandelbrotView(uiImage: uiImage,
+                                           needToUpdate: $needToUpdate,
+                                           reset: $reset,
                                            scaledLocation: CGPoint(x: 0.5, y: 0.5),
                                            scaledLength: 1.0 / viewModel.scale)
                             .scaledToFit()
@@ -90,14 +119,15 @@ struct MandelbrotExplorerView: View {
                         
                         Label("Mandelbrot Set Generator", systemImage: "cpu")
                         
-                        Picker(selection: $viewModel.generatingDevice) {
+                        Picker(selection: $generatingDevice) {
                             Text("CPU").tag(MandelbrotSetGeneratingDevice.cpu)
                             Text("GPU").tag(MandelbrotSetGeneratingDevice.gpu)
                         } label: {
                             Label("Mandelbrot Set Generator", systemImage: "cpu")
                         }
-                        .onChange(of: viewModel.generatingDevice) { _ in
-                            viewModel.generateMandelbrotImage()
+                        .onChange(of: generatingDevice) { _ in
+                            print("generatingDevice updated")
+                            calculate()
                         }
                         
                         Spacer()
@@ -112,7 +142,7 @@ struct MandelbrotExplorerView: View {
                 
                 Spacer()
             }
-            .disabled(viewModel.calculating)
+            .disabled(calculating)
             .alert("Saved", isPresented: $showAlert, actions: {
                 Button("Dismiss") {
                     //
@@ -134,7 +164,7 @@ struct MandelbrotExplorerView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        viewModel.prepared.toggle()
+                        reset.toggle()
                     } label: {
                         Text("Reset")
                     }
@@ -149,7 +179,7 @@ struct MandelbrotExplorerView: View {
             
             Text("Color Map")
                 .font(.callout)
-            Picker("Color Map", selection: $viewModel.colorMap) {
+            Picker("Color Map", selection: $colorMap) {
                 ForEach(MandelbrotExplorerColorMap.allCases) { colorMap in
                     Text(colorMap.rawValue)
                         .font(.title3)
@@ -160,7 +190,7 @@ struct MandelbrotExplorerView: View {
             
             Text("Maximum Iterations")
                 .font(.callout)
-            Picker("Maximum Iterations", selection: $viewModel.maxIter) {
+            Picker("Maximum Iterations", selection: $maxIter) {
                 ForEach(MaxIter.allCases) { maxIter in
                     Text("\(maxIter.rawValue)")
                         .font(.title3)
