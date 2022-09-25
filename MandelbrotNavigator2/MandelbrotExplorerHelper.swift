@@ -15,7 +15,7 @@ class MandelbrotExplorerHelper {
     static let logger = Logger()
     
     static func generateMandelbrotSet(within mandelbrotRect: ComplexRect, maxIter: Int, size: Int, colorMap: ColorMap, device: MandelbrotSetGeneratingDevice, completionHandler: @escaping ((MandelbrotSet, CGImage) -> Void)) -> Void {
-        logger.log("MandelbrotExplorerHelper.generateMandelbrotSet() called for mandelbrotRect=\(mandelbrotRect, privacy: .public), maxIter = \(maxIter, privacy: .public), calculationSize=\(size, privacy: .public)")
+        logger.log("MandelbrotExplorerHelper.generateMandelbrotSet() called for mandelbrotRect=\(mandelbrotRect, privacy: .public), maxIter = \(maxIter, privacy: .public), calculationSize=\(size, privacy: .public), device=\(device.rawValue, privacy: .public)")
         
         let startTime = Date()
         
@@ -34,6 +34,7 @@ class MandelbrotExplorerHelper {
         
         DispatchQueue.global(qos: .userInitiated).async {
             mandelbrotSet.calculate() { cgImage in
+                logger.log("MandelbrotExplorerHelper.generateMandelbrotSet(): calling completionHandler")
                 completionHandler(mandelbrotSet, cgImage)
             }
         }
