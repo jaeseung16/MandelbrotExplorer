@@ -22,10 +22,6 @@ struct MandelbrotListView: View {
                     if let created = entity.created, let data = entity.image, let uiImage = UIImage(data: data), let colorMap = entity.colorMap {
                         NavigationLink {
                             MandelbrotDetailView(entity: entity,
-                                                 minReal: entity.minReal,
-                                                 maxReal: entity.maxReal,
-                                                 minImaginary: entity.minImaginary,
-                                                 maxImaginary: entity.maxImaginary,
                                                  uiImage: uiImage,
                                                  maxIter: MaxIter(rawValue: Int(entity.maxIter)) ?? .twoHundred,
                                                  colorMap: MandelbrotExplorerColorMap(rawValue: colorMap) ?? .jet,

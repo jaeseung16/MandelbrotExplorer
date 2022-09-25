@@ -40,8 +40,8 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
     @Published var prepared: Bool = false
     
     private var subscriptions: Set<AnyCancellable> = []
-    private let calculationSize = 512
     
+    private var defaultMandelbrotSet: MandelbrotSet?
     private var mandelbrotSet: MandelbrotSet?
     
     private var defaultMandelbrotRect: ComplexRect {
@@ -130,19 +130,22 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         mandelbrotRect = ComplexRect(Complex<Double>(minX, minY), Complex<Double>(maxX, maxY))
     }
     
-    func generateDefaultMandelbrotImage() -> Void {
+    func generateDefaultMandelbrotImage(parameters: MandelbrotExplorerParameters, completionHandler: (() -> Void)? = nil) -> Void {
         let startTime = Date()
-        self.calculating.toggle()
-        MandelbrotExplorerHelper.generateMandelbrotSet(within: self.defaultMandelbrotRect, maxIter: self.maxIter.rawValue, size: self.calculationSize, colorMap: ColorMapFactory.getColorMap(colorMap, length: 256), device: self.generatingDevice) { mandelbrotSet, cgImage in
-            self.mandelbrotSet = mandelbrotSet
+        MandelbrotExplorerHelper.generateMandelbrotSet(within: self.defaultMandelbrotRect,
+                                                       maxIter: parameters.maxIter.rawValue,
+                                                       size: MandelbrotExplorerParameters.calculationSize,
+                                                       colorMap: ColorMapFactory.getColorMap(parameters.colorMap, length: 256),
+                                                       device: parameters.generatingDevice) { mandelbrotSet, cgImage in
+            self.defaultMandelbrotSet = mandelbrotSet
             
             DispatchQueue.main.async {
                 self.defaultMandelbrotImage = UIImage(cgImage: cgImage)
                 
                 let timeToSetImage = Date()
-                self.logger.log("MandelbrotExplorerViewModel.generateDefaultMandelbrotImage(): It took \(timeToSetImage.timeIntervalSince(startTime), privacy: .public) seconds, calculating=\(self.calculating, privacy: .public)")
-            
-                self.calculating.toggle()
+                self.logger.log("MandelbrotExplorerViewModel.generateDefaultMandelbrotImage(): It took \(timeToSetImage.timeIntervalSince(startTime), privacy: .public) seconds, calculating=\(self.calculating2, privacy: .public)")
+                
+                completionHandler?()
             }
         }
     }
@@ -204,11 +207,11 @@ class MandelbrotExplorerViewModel: NSObject, ObservableObject {
         save(viewContext: viewContext, completionHandler: completionHandler)
     }
     
-    func update(_ entity: MandelbrotEntity, viewContext: NSManagedObjectContext, completionHandler: ((Bool) -> Void)?) -> Void {
-        entity.colorMap = colorMap.rawValue
-        entity.maxIter = Int32(maxIter.rawValue)
+    func update(_ entity: MandelbrotEntity, parameters: MandelbrotExplorerParameters, viewContext: NSManagedObjectContext, completionHandler: ((Bool) -> Void)?) -> Void {
+        entity.colorMap = parameters.colorMap.rawValue
+        entity.maxIter = Int32(parameters.maxIter.rawValue)
         entity.image = defaultMandelbrotImage?.pngData()
-        entity.generator = generatingDevice.rawValue
+        entity.generator = parameters.generatingDevice.rawValue
         entity.lastupd = Date()
         
         save(viewContext: viewContext, completionHandler: completionHandler)

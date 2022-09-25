@@ -15,10 +15,23 @@ struct MandelbrotDetailView: View {
     @Environment(\.dismiss) private var dismiss
     
     let entity: MandelbrotEntity
-    let minReal: Double
-    let maxReal: Double
-    let minImaginary: Double
-    let maxImaginary: Double
+    
+    private var minReal: Double {
+        entity.minReal
+    }
+    
+    private var maxReal: Double {
+        entity.maxReal
+    }
+    
+    private var minImaginary: Double {
+        entity.minImaginary
+    }
+    
+    private var maxImaginary: Double {
+        entity.maxImaginary
+    }
+    
     @State var uiImage: UIImage
     @State var maxIter: MaxIter
     @State var colorMap: MandelbrotExplorerColorMap
@@ -28,6 +41,9 @@ struct MandelbrotDetailView: View {
     @State private var presentShareSheet = false
     @State private var modified = false
     @State private var showAlert = false
+    
+    @State private var presentExplorerView = false
+    @State private var calculating = false
     
     var body: some View {
         VStack {
@@ -45,7 +61,7 @@ struct MandelbrotDetailView: View {
             
             Spacer()
         }
-        .disabled(viewModel.calculating)
+        .disabled(calculating)
         .padding()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -65,7 +81,8 @@ struct MandelbrotDetailView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    viewModel.update(entity, viewContext: viewContext) { success in
+                    let parameters = MandelbrotExplorerParameters(maxIter: maxIter, colorMap: colorMap, generatingDevice: generator)
+                    viewModel.update(entity, parameters: parameters, viewContext: viewContext) { success in
                         if success {
                             modified = false
                         } else {
@@ -79,6 +96,7 @@ struct MandelbrotDetailView: View {
             }
         }
         .onAppear {
+            print("** onAppear")
             if viewModel.defaultMandelbrotEntity == nil || viewModel.defaultMandelbrotEntity != entity {
                 viewModel.defaultMandelbrotEntity = entity
             }
@@ -117,7 +135,7 @@ struct MandelbrotDetailView: View {
                     .overlay {
                         ProgressView("Please wait...")
                             .progressViewStyle(CircularProgressViewStyle())
-                            .opacity(viewModel.calculating ? 1 : 0)
+                            .opacity(calculating ? 1 : 0)
                     }
                     .onChange(of: viewModel.defaultMandelbrotImage) { _ in
                         if let mandelbrotImage = viewModel.defaultMandelbrotImage {
@@ -148,11 +166,7 @@ struct MandelbrotDetailView: View {
                         }
                     }
                     .onChange(of: colorMap) { _ in
-                        viewModel.colorMap = colorMap
-                        viewModel.maxIter = maxIter
-                        viewModel.generatingDevice = generator
-                        viewModel.generateDefaultMandelbrotImage()
-                        modified = true
+                        updateMandelbrotImage()
                     }
                 }
                 HStack {
@@ -165,11 +179,7 @@ struct MandelbrotDetailView: View {
                         }
                     }
                     .onChange(of: maxIter) { _ in
-                        viewModel.colorMap = colorMap
-                        viewModel.maxIter = maxIter
-                        viewModel.generatingDevice = generator
-                        viewModel.generateDefaultMandelbrotImage()
-                        modified = true
+                        updateMandelbrotImage()
                     }
                 }
                 
@@ -182,17 +192,22 @@ struct MandelbrotDetailView: View {
                         Label("Mandelbrot Set Generator", systemImage: "cpu")
                     }
                     .onChange(of: generator) { _ in
-                        viewModel.colorMap = colorMap
-                        viewModel.maxIter = maxIter
-                        viewModel.generatingDevice = generator
-                        viewModel.generateDefaultMandelbrotImage()
-                        modified = true
+                        updateMandelbrotImage()
                     }
                 }
                 
                 Text("created on ").font(.caption) + Text(created, format: Date.FormatStyle(date: .numeric, time: .omitted)).font(.caption)
             }
         }
+    }
+    
+    private func updateMandelbrotImage() -> Void {
+        calculating.toggle()
+        let parameters = MandelbrotExplorerParameters(maxIter: maxIter, colorMap: colorMap, generatingDevice: generator)
+        viewModel.generateDefaultMandelbrotImage(parameters: parameters) {
+            calculating.toggle()
+        }
+        modified = true
     }
     
     private var shareView: some View {
